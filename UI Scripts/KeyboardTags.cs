@@ -17,7 +17,7 @@ public class KeyboardTags : MonoBehaviour {
 	public static string inventory = "inventory";
 	public static string inventorySecondary = "inventorySecondary";
 	public static string pause = "pause";
-	public static string pauseSecondary = "pauseSeconary";
+	public static string pauseSecondary = "pauseSecondary";
 	public static string run = "run";
 	public static string crouch = "crouch";
 	public static string jump = "jump";

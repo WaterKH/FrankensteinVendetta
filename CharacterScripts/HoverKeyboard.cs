@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 public class HoverKeyboard : MonoBehaviour {
 
-	bool hovering;
+	static bool hovering;
 	Vector3 mousePos;
-	GameObject hoverHelper;
+	static GameObject hoverHelper;
 	public static Dictionary<string, string> hoverHelperText;
 	public static Dictionary<string, string> legendText;
 
@@ -36,7 +36,7 @@ public class HoverKeyboard : MonoBehaviour {
 
 	}
 
-	public void keyboardKeyboardExit()
+	public static void keyboardKeyboardExit()
 	{
 
 		hovering = false;

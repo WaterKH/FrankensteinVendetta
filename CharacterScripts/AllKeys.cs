@@ -18,7 +18,8 @@ public class AllKeys : MonoBehaviour {
 			if(key.gameObject.GetComponent<Button>() != null)
 				allKeys.Add(key.gameObject.GetComponent<Button>());
 
-		Debug.Log(allKeys.Count);
+		if(allKeys.Count == 62)
+			Debug.Log("All keys successfully found");
 
 	}
 

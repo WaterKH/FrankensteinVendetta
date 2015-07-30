@@ -100,7 +100,7 @@ public class Inputs {
 	}
 
 	//Called from SaveLoad
-	public void setInputFromData(string aKey, Button aButton)
+	public static void setInputFromData(string aKey, Button aButton)
 	{
 
 		Inputs inputForDict = new Inputs(aKey, aButton.tag, aButton);
@@ -110,7 +110,7 @@ public class Inputs {
 
 	//First argument will be the previous tag to carry over, buttonForInput will be the buton to change to,
 	//aKey will be which key button on keyboard to replace with
-	public void setInput(Button buttonForTag, Button buttonForInput, string aKey)
+	public static void setInput(Button buttonForTag, Button buttonForInput, string aKey)
 	{
 
 		Inputs inputForDict = new Inputs(aKey, buttonForTag.tag, buttonForInput);
@@ -134,7 +134,7 @@ public class Inputs {
 	}
 
 	//Removes the previous button
-	public void removeInput(Button anInput)
+	private static void removeInput(Button anInput)
 	{
 
 		inputDict.Remove(anInput.tag);

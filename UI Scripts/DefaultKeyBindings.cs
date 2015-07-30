@@ -117,4 +117,27 @@ public class DefaultKeyBindings {
 		
 	}
 
+	public static void DEFAULT_LIST_FOR_LEGEND()
+	{
+
+		KeyLevels.legendList.Add(KeyboardUI.buttonList[KeyboardTags.moveForward].getKeyboardButton());
+		KeyLevels.legendList.Add(KeyboardUI.buttonList[KeyboardTags.moveBackward].getKeyboardButton());
+		KeyLevels.legendList.Add(KeyboardUI.buttonList[KeyboardTags.moveLeft].getKeyboardButton());
+		KeyLevels.legendList.Add(KeyboardUI.buttonList[KeyboardTags.moveRight].getKeyboardButton());
+		KeyLevels.legendList.Add(KeyboardUI.buttonList[KeyboardTags.leanLeft].getKeyboardButton());
+		KeyLevels.legendList.Add(KeyboardUI.buttonList[KeyboardTags.leanRight].getKeyboardButton());
+		KeyLevels.legendList.Add(KeyboardUI.buttonList[KeyboardTags.action].getKeyboardButton());
+		KeyLevels.legendList.Add(KeyboardUI.buttonList[KeyboardTags.lightMatch].getKeyboardButton());
+		KeyLevels.legendList.Add(KeyboardUI.buttonList[KeyboardTags.notes].getKeyboardButton());
+		KeyLevels.legendList.Add(KeyboardUI.buttonList[KeyboardTags.lookBehind].getKeyboardButton());
+		KeyLevels.legendList.Add(KeyboardUI.buttonList[KeyboardTags.inventory].getKeyboardButton());
+		KeyLevels.legendList.Add(KeyboardUI.buttonList[KeyboardTags.inventorySecondary].getKeyboardButton());
+		KeyLevels.legendList.Add(KeyboardUI.buttonList[KeyboardTags.pause].getKeyboardButton());
+		KeyLevels.legendList.Add(KeyboardUI.buttonList[KeyboardTags.pauseSecondary].getKeyboardButton());
+		KeyLevels.legendList.Add(KeyboardUI.buttonList[KeyboardTags.run].getKeyboardButton());
+		KeyLevels.legendList.Add(KeyboardUI.buttonList[KeyboardTags.crouch].getKeyboardButton());
+		KeyLevels.legendList.Add(KeyboardUI.buttonList[KeyboardTags.jump].getKeyboardButton());
+
+	}
+
 }

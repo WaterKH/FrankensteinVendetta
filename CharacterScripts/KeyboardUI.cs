@@ -10,7 +10,7 @@ public class KeyboardUI {
 	
 	public static Dictionary<string, KeyboardUI> buttonList;
 	
-	public Color whiteCol = Color.white;
+	public static Color whiteCol = Color.white;
 	public static Color inUseCol = new Color(0,45,178,255);
 	
 	//Default Constructor
@@ -63,7 +63,7 @@ public class KeyboardUI {
 	}
 	
 	//Removes the button within buttonList based on the tag
-	public void removeKeyboardKey(Button input)
+	public static void removeKeyboardKey(Button input)
 	{
 		
 		input.GetComponent<Image>().color = whiteCol;
@@ -72,7 +72,7 @@ public class KeyboardUI {
 	}
 	
 	//Initial call to make another one below
-	public void setKeyBoardBasedOnTags(Button input, string tagString)
+	public static void setKeyBoardBasedOnTags(Button input, string tagString)
 	{
 		
 		//Calls the remove option above
@@ -84,7 +84,7 @@ public class KeyboardUI {
 	}
 	
 	//Changes the color of the button based on the tag
-	private void setKeyboardBasedOnTags(Image input, string tagString)
+	private static void setKeyboardBasedOnTags(Image input, string tagString)
 	{
 		
 		switch(tagString)
@@ -164,6 +164,268 @@ public class KeyboardUI {
 			break;
 			
 		}
+		
+	}
+
+	//This method takes care of all of the odd keys that don't return the KeyCode string
+	public static bool checkSpecialInput(Button buttonInput, bool isOn)
+	{
+		bool foundKey = false;
+		string key = "";
+		string shortenedKey = "";
+		int index = 0;
+		if(Input.GetKeyDown(KeyCode.Tab))
+		{
+			
+			foundKey = true;
+			key = "Tab";
+			shortenedKey = "Tab";
+			index = 51;
+			
+		}
+		else if(Input.GetKeyDown(KeyCode.LeftAlt))
+		{
+			
+			foundKey = true;
+			key = "LeftAlt";
+			shortenedKey = "L Alt";
+			index = 54;
+			
+		}
+		else if(Input.GetKeyDown(KeyCode.LeftShift))
+		{
+			
+			foundKey = true;
+			key = "LeftShift";
+			shortenedKey = "L Shift";
+			index = 49;
+			
+		}
+		else if(Input.GetKeyDown(KeyCode.RightAlt))
+		{
+			
+			foundKey = true;
+			key = "RightAlt";
+			shortenedKey = "R Alt";
+			index = 57;
+			
+		}
+		else if(Input.GetKeyDown(KeyCode.RightShift))
+		{
+			
+			foundKey = true;
+			key = "RightShift";
+			shortenedKey = "R Shift";
+			index = 48;
+			
+		}
+		else if(Input.GetKeyDown(KeyCode.LeftControl))
+		{
+			
+			foundKey = true;
+			key = "LeftControl";
+			shortenedKey = "L Control";
+			index = 55;
+			
+		}
+		else if(Input.GetKeyDown(KeyCode.Backspace))
+		{
+			
+			foundKey = true;
+			key = "Backspace";
+			shortenedKey = "Backspace";
+			index = 43;
+			
+		}
+		else if(Input.GetKeyDown(KeyCode.Space))
+		{
+			
+			foundKey = true;
+			key = "Space";
+			shortenedKey = "Space";
+			index = 56;
+			
+		}
+		else if(Input.GetKeyDown(KeyCode.Escape))
+		{
+			
+			foundKey = true;
+			key = "Escape";
+			shortenedKey = "Escape";
+			index = 53;
+			
+		}
+		else if(Input.GetKeyDown(KeyCode.CapsLock))
+		{
+			
+			foundKey = true;
+			key = "CapsLock";
+			shortenedKey = "C Lock";
+			index = 50;
+			
+		}
+		else if(Input.GetKeyDown(KeyCode.Semicolon))
+		{
+			
+			foundKey = true;
+			key = "Semicolon";
+			shortenedKey = "Semicolon";
+			index = 26;
+			
+		}
+		else if(Input.GetKeyDown(KeyCode.Quote))
+		{
+			
+			foundKey = true;
+			key = "Quote";
+			shortenedKey = "Quote";
+			index = 27;
+			
+		}
+		else if(Input.GetKeyDown(KeyCode.LeftBracket))
+		{
+			
+			foundKey = true;
+			key = "LeftBracket";
+			shortenedKey = "L Bracket";
+			index = 28;
+			
+		}
+		else if(Input.GetKeyDown(KeyCode.RightBracket))
+		{
+			
+			foundKey = true;
+			key = "RightBracket";
+			shortenedKey = "R Bracket";
+			index = 29;
+			
+		}
+		else if(Input.GetKeyDown(KeyCode.Backslash))
+		{
+			
+			foundKey = true;
+			key = "Backslash";
+			shortenedKey = "Backslash";
+			index = 42;
+			
+		}
+		else if(Input.GetKeyDown(KeyCode.Slash))
+		{
+			
+			foundKey = true;
+			key = "Slash";
+			shortenedKey = "Slash";
+			index = 47;
+			
+		}
+		else if(Input.GetKeyDown(KeyCode.Period))
+		{
+			
+			foundKey = true;
+			key = "Period";
+			shortenedKey = "Period";
+			index = 46;
+			
+		}
+		else if(Input.GetKeyDown(KeyCode.Equals))
+		{
+			
+			foundKey = true;
+			key = "Equals";
+			shortenedKey = "Equals";
+			index = 41;
+			
+		}
+		else if(Input.GetKeyDown(KeyCode.BackQuote))
+		{
+			
+			foundKey = true;
+			key = "BackQuote";
+			shortenedKey = "BackQuote";
+			index = 52;
+			
+		}
+		else if(Input.GetKeyDown(KeyCode.Return))
+		{
+			
+			foundKey = true;
+			key = "Return";
+			shortenedKey = "Return";
+			index = 44;
+			
+		}
+		else if(Input.GetKeyDown(KeyCode.Minus))
+		{
+			
+			foundKey = true;
+			key = "Minus";
+			shortenedKey = "Minus";
+			index = 40;
+			
+		}
+		else if(Input.GetKeyDown(KeyCode.RightArrow))
+		{
+			
+			foundKey = true;
+			key = "RightArrow";
+			shortenedKey = "R Arrow";
+			index = 60;
+			
+		}
+		else if(Input.GetKeyDown(KeyCode.LeftArrow))
+		{
+			
+			foundKey = true;
+			key = "LeftArrow";
+			shortenedKey = "L Arrow";
+			index = 61;
+			
+		}
+		else if(Input.GetKeyDown(KeyCode.DownArrow))
+		{
+			
+			foundKey = true;
+			key = "DownArrow";
+			shortenedKey = "D Arrow";
+			index = 59;
+			
+		}
+		else if(Input.GetKeyDown(KeyCode.UpArrow))
+		{
+			
+			foundKey = true;
+			key = "UpArrow";
+			shortenedKey = "U Arrow";
+			index = 58;
+			
+		}
+		else if(Input.GetKeyDown(KeyCode.Comma))
+		{
+			
+			
+			foundKey = true;
+			key = "Comma";
+			shortenedKey = "Comma";
+			index = 45;
+			
+		}
+		
+		if(foundKey)
+		{
+			
+			removeKeyboardKey(buttonInput);
+			Inputs.setInput(buttonInput, AllKeys.allKeys[index], key);
+			setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag);
+			HoverHelperText.setHoverKeys(buttonInput.tag);
+			HoverKeyboard.keyboardKeyboardExit();
+			KeyLevels.setLegendKey(buttonInput.tag, shortenedKey);
+			HoverHelperText.setLegendKeys(buttonInput.tag);
+			isOn = false;
+			return true;
+			
+		}
+		
+		return false;
 		
 	}
 	

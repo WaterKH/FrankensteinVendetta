@@ -4,9 +4,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class DefaultKeyBindings {
-
-	//TODO 
-
+	
 	//For Inputs class
 	public static void DEFAULT_KEYS(List<Button> buttonList)//allKeys.getButtons(); <-- Gets all keys
 	{

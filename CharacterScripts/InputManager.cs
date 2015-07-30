@@ -12,7 +12,7 @@ public class InputManager : MonoBehaviour {
 	bool isOn;
 	Button buttonInput;
 
-	void Awake()
+	void Start()
 	{
 	
 		DEFAULT_LAYOUT(AllKeys.getButtons());

@@ -1,2 +1,3 @@
 # FrankensteinVendetta
-Just another place to store my code
+
+This will be where I list what bugs or ideas need to still be added;

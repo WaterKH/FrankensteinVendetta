@@ -32,25 +32,26 @@ public class KeyboardTags {
 
 	public static void keyboardTags()
 	{
+
 		keyboardTagsList = new List<string>();
 
 		keyboardTagsList.Add(moveForward);
 		keyboardTagsList.Add(moveBackward);
 		keyboardTagsList.Add(moveLeft);
 		keyboardTagsList.Add(moveRight);
+		keyboardTagsList.Add(jump);
 		keyboardTagsList.Add(leanLeft);
 		keyboardTagsList.Add(leanRight);
+		keyboardTagsList.Add(pause);
+		keyboardTagsList.Add(crouch);
+		keyboardTagsList.Add(run);
+		keyboardTagsList.Add(pauseSecondary);
 		keyboardTagsList.Add(action);
 		keyboardTagsList.Add(lightMatch);
 		keyboardTagsList.Add(notes);
 		keyboardTagsList.Add(lookBehind);
 		keyboardTagsList.Add(inventory);
 		keyboardTagsList.Add(inventorySecondary);
-		keyboardTagsList.Add(pause);
-		keyboardTagsList.Add(pauseSecondary);
-		keyboardTagsList.Add(run);
-		keyboardTagsList.Add(crouch);
-		keyboardTagsList.Add(jump);
 
 	}
 

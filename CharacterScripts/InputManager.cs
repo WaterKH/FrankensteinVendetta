@@ -23,7 +23,13 @@ public class InputManager : MonoBehaviour {
 	//Called by Default Button
 	public void DEFAULT_LAYOUT()
 	{
-		
+
+		KeyboardUI.resetKeyboard();
+		KeyboardUI.buttonList.Clear();
+		Inputs.inputDict.Clear();
+		HoverKeyboard.hoverHelperText.Clear();
+		KeyLevels.legendList.Clear();
+
 		DEFAULT_LAYOUT(AllKeys.getButtons());
 		
 	}
@@ -31,7 +37,7 @@ public class InputManager : MonoBehaviour {
 	//Sets the keys to default
 	public void DEFAULT_LAYOUT(List<Button> buttonList)
 	{
-		
+
 		KeyboardTags.keyboardTags();
 		DefaultKeyBindings.DEFAULT_KEYS(buttonList);
 		DefaultKeyBindings.DEFAULT_KEYBOARD(buttonList);
@@ -107,13 +113,13 @@ public class InputManager : MonoBehaviour {
 						//Sets the value of the hover input
 						HoverHelperText.setHoverKeys(buttonInput.tag);
 						//Causes the tool tip to disappear
-						hoverKeyboard.keyboardKeyboardExit();
 						KeyLevels.setLegendKey(buttonInput.tag, Inputs.inputDict[buttonInput.tag].getInputKeyCode().ToString());
 						HoverHelperText.setLegendKeys(buttonInput.tag);
 
 					}
 					
 				}
+				hoverKeyboard.keyboardKeyboardExit();
 				setInput = "";
 				isOn = false;
 				

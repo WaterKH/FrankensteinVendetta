@@ -167,6 +167,14 @@ public class KeyboardUI {
 		
 	}
 
+	public static void resetKeyboard()
+	{
+
+		foreach(Button key in AllKeys.allKeys)
+			key.GetComponent<Image>().color = whiteCol;
+
+	}
+
 	//This method takes care of all of the odd keys that don't return the KeyCode string
 	public static bool checkSpecialInput(Button buttonInput, bool isOn)
 	{
@@ -412,12 +420,11 @@ public class KeyboardUI {
 		
 		if(foundKey)
 		{
-			HoverKeyboard hoverKeyboard = new HoverKeyboard();
+
 			removeKeyboardKey(buttonInput);
 			Inputs.setInput(buttonInput, AllKeys.allKeys[index], key);
 			setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag);
 			HoverHelperText.setHoverKeys(buttonInput.tag);
-			hoverKeyboard.keyboardKeyboardExit();
 			KeyLevels.setLegendKey(buttonInput.tag, shortenedKey);
 			HoverHelperText.setLegendKeys(buttonInput.tag);
 			isOn = false;

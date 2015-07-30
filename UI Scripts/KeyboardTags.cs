@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class KeyboardTags : MonoBehaviour {
+public class KeyboardTags {
+
+	public static List<string> keyboardTagsList;
 
 	//Holds all the tags to be referenced
 	public static string moveForward = "moveForward";
@@ -26,5 +29,29 @@ public class KeyboardTags : MonoBehaviour {
 	public static string Movement = "Movement";
 	public static string Modification = "Modification";
 	public static string Action = "Action";
+
+	public static void keyboardTags()
+	{
+		keyboardTagsList = new List<string>();
+
+		keyboardTagsList.Add(moveForward);
+		keyboardTagsList.Add(moveBackward);
+		keyboardTagsList.Add(moveLeft);
+		keyboardTagsList.Add(moveRight);
+		keyboardTagsList.Add(leanLeft);
+		keyboardTagsList.Add(leanRight);
+		keyboardTagsList.Add(action);
+		keyboardTagsList.Add(lightMatch);
+		keyboardTagsList.Add(notes);
+		keyboardTagsList.Add(lookBehind);
+		keyboardTagsList.Add(inventory);
+		keyboardTagsList.Add(inventorySecondary);
+		keyboardTagsList.Add(pause);
+		keyboardTagsList.Add(pauseSecondary);
+		keyboardTagsList.Add(run);
+		keyboardTagsList.Add(crouch);
+		keyboardTagsList.Add(jump);
+
+	}
 
 }

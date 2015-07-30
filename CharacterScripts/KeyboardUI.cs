@@ -412,12 +412,12 @@ public class KeyboardUI {
 		
 		if(foundKey)
 		{
-			
+			HoverKeyboard hoverKeyboard = new HoverKeyboard();
 			removeKeyboardKey(buttonInput);
 			Inputs.setInput(buttonInput, AllKeys.allKeys[index], key);
 			setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag);
 			HoverHelperText.setHoverKeys(buttonInput.tag);
-			HoverKeyboard.keyboardKeyboardExit();
+			hoverKeyboard.keyboardKeyboardExit();
 			KeyLevels.setLegendKey(buttonInput.tag, shortenedKey);
 			HoverHelperText.setLegendKeys(buttonInput.tag);
 			isOn = false;

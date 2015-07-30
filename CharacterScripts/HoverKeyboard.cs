@@ -36,7 +36,7 @@ public class HoverKeyboard : MonoBehaviour {
 
 	}
 
-	public static void keyboardKeyboardExit()
+	public void keyboardKeyboardExit()
 	{
 
 		hovering = false;

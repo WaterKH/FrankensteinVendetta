@@ -9,6 +9,10 @@ public class AllKeys : MonoBehaviour {
 	public static List<Button> allKeys;
 	public GameObject KeyboardLayout;
 
+	public GameObject movementKeys;
+	public GameObject modificationKeys;
+	public GameObject actionKeys;
+
 	void Awake()
 	{
 
@@ -27,6 +31,13 @@ public class AllKeys : MonoBehaviour {
 	{
 
 		return allKeys;
+
+	}
+
+	public void objectsForDefaultClass()
+	{
+
+		DefaultKeyBindings.DEFAULT_LIST_FOR_LEGEND(movementKeys, modificationKeys, actionKeys);
 
 	}
 

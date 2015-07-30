@@ -4,7 +4,9 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class DefaultKeyBindings {
-	
+
+	public AllKeys allKeys;
+
 	//For Inputs class
 	public static void DEFAULT_KEYS(List<Button> buttonList)//allKeys.getButtons(); <-- Gets all keys
 	{
@@ -32,6 +34,7 @@ public class DefaultKeyBindings {
 
 	}
 
+	//TODO Do we need both an inputDict and a buttonList, seems like they are acting the same way
 	//For KeyboardUI class
 	public static void DEFAULT_KEYBOARD(List<Button> listOfButtons)//allKeys.getButtons(); <-- Gets all keys
 	{
@@ -68,7 +71,7 @@ public class DefaultKeyBindings {
 
 		//String = Tag; String = Keycode
 		HoverKeyboard.hoverHelperText = new Dictionary<string, string>();
-		
+	
 		HoverKeyboard.hoverHelperText.Add(KeyboardTags.moveForward, Inputs.inputDict[KeyboardTags.moveForward].getInputKeyCode().ToString());
 		HoverKeyboard.hoverHelperText.Add(KeyboardTags.moveBackward, Inputs.inputDict[KeyboardTags.moveBackward].getInputKeyCode().ToString());
 		HoverKeyboard.hoverHelperText.Add(KeyboardTags.moveLeft, Inputs.inputDict[KeyboardTags.moveLeft].getInputKeyCode().ToString());
@@ -117,26 +120,30 @@ public class DefaultKeyBindings {
 		
 	}
 
-	public static void DEFAULT_LIST_FOR_LEGEND()
+	public static void DEFAULT_LIST_FOR_LEGEND(GameObject movement, GameObject modification, GameObject action)
 	{
 
-		KeyLevels.legendList.Add(KeyboardUI.buttonList[KeyboardTags.moveForward].getKeyboardButton());
-		KeyLevels.legendList.Add(KeyboardUI.buttonList[KeyboardTags.moveBackward].getKeyboardButton());
-		KeyLevels.legendList.Add(KeyboardUI.buttonList[KeyboardTags.moveLeft].getKeyboardButton());
-		KeyLevels.legendList.Add(KeyboardUI.buttonList[KeyboardTags.moveRight].getKeyboardButton());
-		KeyLevels.legendList.Add(KeyboardUI.buttonList[KeyboardTags.leanLeft].getKeyboardButton());
-		KeyLevels.legendList.Add(KeyboardUI.buttonList[KeyboardTags.leanRight].getKeyboardButton());
-		KeyLevels.legendList.Add(KeyboardUI.buttonList[KeyboardTags.action].getKeyboardButton());
-		KeyLevels.legendList.Add(KeyboardUI.buttonList[KeyboardTags.lightMatch].getKeyboardButton());
-		KeyLevels.legendList.Add(KeyboardUI.buttonList[KeyboardTags.notes].getKeyboardButton());
-		KeyLevels.legendList.Add(KeyboardUI.buttonList[KeyboardTags.lookBehind].getKeyboardButton());
-		KeyLevels.legendList.Add(KeyboardUI.buttonList[KeyboardTags.inventory].getKeyboardButton());
-		KeyLevels.legendList.Add(KeyboardUI.buttonList[KeyboardTags.inventorySecondary].getKeyboardButton());
-		KeyLevels.legendList.Add(KeyboardUI.buttonList[KeyboardTags.pause].getKeyboardButton());
-		KeyLevels.legendList.Add(KeyboardUI.buttonList[KeyboardTags.pauseSecondary].getKeyboardButton());
-		KeyLevels.legendList.Add(KeyboardUI.buttonList[KeyboardTags.run].getKeyboardButton());
-		KeyLevels.legendList.Add(KeyboardUI.buttonList[KeyboardTags.crouch].getKeyboardButton());
-		KeyLevels.legendList.Add(KeyboardUI.buttonList[KeyboardTags.jump].getKeyboardButton());
+		KeyLevels.legendList = new List<Button>();
+		
+		Transform[] children = movement.GetComponentsInChildren<Transform>();
+		foreach(Transform key in children)
+			if(key.gameObject.GetComponent<Button>() != null)
+				KeyLevels.legendList.Add(key.gameObject.GetComponent<Button>());
+		
+		children = modification.GetComponentsInChildren<Transform>();
+		foreach(Transform key in children)
+			if(key.gameObject.GetComponent<Button>() != null)
+				KeyLevels.legendList.Add(key.gameObject.GetComponent<Button>());
+		
+		children = action.GetComponentsInChildren<Transform>();
+		foreach(Transform key in children)
+			if(key.gameObject.GetComponent<Button>() != null)
+				KeyLevels.legendList.Add(key.gameObject.GetComponent<Button>());
+
+		Debug.Log(KeyboardTags.keyboardTagsList[0]);
+
+		for(int i = 0; i < KeyLevels.legendList.Count; i++)
+			KeyLevels.legendList[i].GetComponentInChildren<Text>().text = Inputs.inputDict[KeyboardTags.keyboardTagsList[i]].getInputButton().GetComponentInChildren<Text>().text;
 
 	}
 

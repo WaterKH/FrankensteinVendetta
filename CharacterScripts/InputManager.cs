@@ -8,6 +8,7 @@ public class InputManager : MonoBehaviour {
 	Inputs inputs = new Inputs();
 	KeyboardUI keyboardUI = new KeyboardUI();
 	public HoverKeyboard hoverKeyboard;
+	public AllKeys allKeys;
 
 	bool isOn;
 	Button buttonInput;
@@ -53,10 +54,11 @@ public class InputManager : MonoBehaviour {
 	public void DEFAULT_LAYOUT(List<Button> buttonList)
 	{
 
+		KeyboardTags.keyboardTags();
 		DefaultKeyBindings.DEFAULT_KEYS(buttonList);
 		DefaultKeyBindings.DEFAULT_KEYBOARD(buttonList);
 		DefaultKeyBindings.DEFAULT_HOVER_KEYS();
-		DefaultKeyBindings.DEFAULT_LIST_FOR_LEGEND();
+		allKeys.objectsForDefaultClass();
 
 	}
 
@@ -104,7 +106,7 @@ public class InputManager : MonoBehaviour {
 						KeyboardUI.setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag);
 						//Sets the value of the hover input
 						HoverHelperText.setHoverKeys(buttonInput.tag);
-						HoverKeyboard.keyboardKeyboardExit();
+						hoverKeyboard.keyboardKeyboardExit();
 						KeyLevels.setLegendKey(buttonInput.tag, Inputs.inputDict[buttonInput.tag].getInputKeyCode().ToString());
 						HoverHelperText.setLegendKeys(buttonInput.tag);
 

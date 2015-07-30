@@ -19,13 +19,33 @@ public class InputManager : MonoBehaviour {
 		DEFAULT_LAYOUT(AllKeys.getButtons());
 
 	}
+	
+	//Called by Default Button
+	public void DEFAULT_LAYOUT()
+	{
+		
+		DEFAULT_LAYOUT(AllKeys.getButtons());
+		
+	}
+	
+	//Sets the keys to default
+	public void DEFAULT_LAYOUT(List<Button> buttonList)
+	{
+		
+		KeyboardTags.keyboardTags();
+		DefaultKeyBindings.DEFAULT_KEYS(buttonList);
+		DefaultKeyBindings.DEFAULT_KEYBOARD(buttonList);
+		DefaultKeyBindings.DEFAULT_HOVER_KEYS();
+		allKeys.objectsForDefaultClass();
+		
+	}
 
 	//Called for when a button is clicked on the keyboard
 	public void setINDIVID_KEY(Button aButton)
 	{
 
 		//Button grabbed here for use in the Update method
-		buttonInput = aButton;
+		buttonInput = Inputs.inputDict[aButton.tag].getInputButton();
 		foreach(KeyValuePair<string, KeyboardUI> input in KeyboardUI.buttonList)
 		{
 
@@ -39,27 +59,7 @@ public class InputManager : MonoBehaviour {
 		}
 		if(!isOn)
 			Debug.Log("Please choose a key already binded.");
-
-	}
-
-	//Called by Default Button
-	public void DEFAULT_LAYOUT()
-	{
-
-		DEFAULT_LAYOUT(AllKeys.getButtons());
-
-	}
-
-	//Sets the keys to default
-	public void DEFAULT_LAYOUT(List<Button> buttonList)
-	{
-
-		KeyboardTags.keyboardTags();
-		DefaultKeyBindings.DEFAULT_KEYS(buttonList);
-		DefaultKeyBindings.DEFAULT_KEYBOARD(buttonList);
-		DefaultKeyBindings.DEFAULT_HOVER_KEYS();
-		allKeys.objectsForDefaultClass();
-
+	
 	}
 
 	void Update()
@@ -106,6 +106,7 @@ public class InputManager : MonoBehaviour {
 						KeyboardUI.setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag);
 						//Sets the value of the hover input
 						HoverHelperText.setHoverKeys(buttonInput.tag);
+						//Causes the tool tip to disappear
 						hoverKeyboard.keyboardKeyboardExit();
 						KeyLevels.setLegendKey(buttonInput.tag, Inputs.inputDict[buttonInput.tag].getInputKeyCode().ToString());
 						HoverHelperText.setLegendKeys(buttonInput.tag);

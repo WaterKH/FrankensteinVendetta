@@ -34,40 +34,40 @@ public class HoverHelperText {
 				{
 					
 				case "moveForward":
-					return HoverKeyboard.legendText["moveForward"]+": To move forward, press the "+hoverText.Value+" key.";
+					return HoverKeyboard.legendText[KeyboardTags.moveForward]+": To move forward, press the "+hoverText.Value+" key.";
 				case "moveBackward":
-					return HoverKeyboard.legendText["moveBackward"]+": To move backward, press the "+hoverText.Value+" key.";
+					return HoverKeyboard.legendText[KeyboardTags.moveBackward]+": To move backward, press the "+hoverText.Value+" key.";
 				case "moveLeft":
-					return HoverKeyboard.legendText["moveLeft"]+": To move left, press the "+hoverText.Value+" key.";
+					return HoverKeyboard.legendText[KeyboardTags.moveLeft]+": To move left, press the "+hoverText.Value+" key.";
 				case "moveRight":
-					return HoverKeyboard.legendText["moveRight"]+": To move right, press the "+hoverText.Value+" key.";
+					return HoverKeyboard.legendText[KeyboardTags.moveRight]+": To move right, press the "+hoverText.Value+" key.";
 				case "leanLeft":
-					return HoverKeyboard.legendText["leanLeft"]+": To lean left, press the "+hoverText.Value+" key.";
+					return HoverKeyboard.legendText[KeyboardTags.leanLeft]+": To lean left, press the "+hoverText.Value+" key.";
 				case "leanRight":
-					return HoverKeyboard.legendText["leanRight"]+": To lean right, press the "+hoverText.Value+" key.";
+					return HoverKeyboard.legendText[KeyboardTags.leanRight]+": To lean right, press the "+hoverText.Value+" key.";
 				case "action":
-					return HoverKeyboard.legendText["action"]+": To interact with objects, press the "+hoverText.Value+" key.";
+					return HoverKeyboard.legendText[KeyboardTags.action]+": To interact with objects, press the "+hoverText.Value+" key.";
 				case "lightMatch":
-					return HoverKeyboard.legendText["lightMatch"]+": To light a match, press the "+hoverText.Value+" key.";
+					return HoverKeyboard.legendText[KeyboardTags.lightMatch]+": To light a match, press the "+hoverText.Value+" key.";
 				case "notes":
-					return HoverKeyboard.legendText["notes"]+": To view your notes, press the "+hoverText.Value+" key.";
+					return HoverKeyboard.legendText[KeyboardTags.notes]+": To view your notes, press the "+hoverText.Value+" key.";
 				case "lookBehind":
-					return HoverKeyboard.legendText["lookBehind"]+": To use your mirror , press, and hold, the "+hoverText.Value+" key.";
+					return HoverKeyboard.legendText[KeyboardTags.lookBehind]+": To use your mirror , press, and hold, the "+hoverText.Value+" key.";
 				case "inventory":
-					return HoverKeyboard.legendText["inventory"]+": To view the contents of your rucksack, press the "+hoverText.Value+" key.";
+					return HoverKeyboard.legendText[KeyboardTags.inventory]+": To view the contents of your rucksack, press the "+hoverText.Value+" key.";
 				case "inventorySecondary":
-					return HoverKeyboard.legendText["inventorySecondary"]+": To view the contents of your rucksack, press the "+hoverText.Value+" key.";	
+					return HoverKeyboard.legendText[KeyboardTags.inventorySecondary]+": To view the contents of your rucksack, press the "+hoverText.Value+" key.";	
 				case "pause":
-					return HoverKeyboard.legendText["pause"]+": To pause your session, press the "+hoverText.Value+" key.";
+					return HoverKeyboard.legendText[KeyboardTags.pause]+": To pause your session, press the "+hoverText.Value+" key.";
 				case "pauseSecondary":
-					return HoverKeyboard.legendText["pauseSecondary"]+": To pause your session, press the "+hoverText.Value+" key.";
+					return HoverKeyboard.legendText[KeyboardTags.pauseSecondary]+": To pause your session, press the "+hoverText.Value+" key.";
 				case "run":
-					return HoverKeyboard.legendText["run"]+": To run, press, and hold, the "+hoverText.Value+" key, with any of the Movement" +
+					return HoverKeyboard.legendText[KeyboardTags.run]+": To run, press, and hold, the "+hoverText.Value+" key, with any of the Movement" +
 						" keys.";	
 				case "crouch":
-					return HoverKeyboard.legendText["crouch"]+": To crouch, press the "+hoverText.Value+" key.";	
+					return HoverKeyboard.legendText[KeyboardTags.crouch]+": To crouch, press the "+hoverText.Value+" key.";	
 				case "jump":
-					return HoverKeyboard.legendText["jump"]+": To jump, press the "+hoverText.Value+" key.";
+					return HoverKeyboard.legendText[KeyboardTags.jump]+": To jump, press the "+hoverText.Value+" key.";
 				default:
 					return "No function is binded to this key.";
 					

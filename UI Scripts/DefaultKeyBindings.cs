@@ -35,7 +35,7 @@ public class DefaultKeyBindings {
 	}
 
 	//For KeyboardUI class
-	public void DEFAULT_KEYBOARD(List<Button> listOfButtons)//allKeys.getButtons(); <-- Gets all keys
+	public static void DEFAULT_KEYBOARD(List<Button> listOfButtons)//allKeys.getButtons(); <-- Gets all keys
 	{
 	
 		//String = Tag; Button = Able to change; But set through a list
@@ -57,69 +57,12 @@ public class DefaultKeyBindings {
 		KeyboardUI.buttonList.Add(KeyboardTags.pauseSecondary, new KeyboardUI(KeyboardTags.pauseSecondary, listOfButtons[6]));
 		KeyboardUI.buttonList.Add(KeyboardTags.run, new KeyboardUI(KeyboardTags.run, listOfButtons[49]));
 		KeyboardUI.buttonList.Add(KeyboardTags.crouch, new KeyboardUI(KeyboardTags.crouch, listOfButtons[55]));
-		KeyboardUI.buttonList.Add(KeyboardTags.jump, new KeyboardUI(KeyboardTags, listOfButtons[56]));
+		KeyboardUI.buttonList.Add(KeyboardTags.jump, new KeyboardUI(KeyboardTags.jump, listOfButtons[56]));
 		
-		foreach(KeyValuePair<string, Button> aButton in KeyboardUI.buttonList)
-			aButton.Value.GetComponent<Image>().color = KeyboardUI.inUseCol;
-		
-	}
-
-	//TODO Don't think I need this stuff..
-	/*//For KeyLevels class
-	public static void SETUP_DEFAULT_LEGEND()
-	{
-
-		//String = Tag; Button = Set button, but change text
-		KeyLevels.legendKeyText = new Dictionary<string, Button>();
-
-		KeyLevels.legendKeyText.Add("moveForward", KeyLevels.legendList[0]);
-		KeyLevels.legendKeyText.Add("moveBackward", KeyLevels.legendList[1]);
-		KeyLevels.legendKeyText.Add("moveRight", KeyLevels.legendList[2]);
-		KeyLevels.legendKeyText.Add("moveLeft", KeyLevels.legendList[3]);
-		KeyLevels.legendKeyText.Add("jump", KeyLevels.legendList[4]);
-		
-		KeyLevels.legendKeyText.Add("leanLeft", KeyLevels.legendList[5]);
-		KeyLevels.legendKeyText.Add("leanRight", KeyLevels.legendList[6]);
-		KeyLevels.legendKeyText.Add("crouch", KeyLevels.legendList[7]);
-		KeyLevels.legendKeyText.Add("run", KeyLevels.legendList[8]);
-		KeyLevels.legendKeyText.Add("pause", KeyLevels.legendList[9]);
-		KeyLevels.legendKeyText.Add("pauseSecondary", KeyLevels.legendList[10]);
-		
-		KeyLevels.legendKeyText.Add("lookBehind", KeyLevels.legendList[11]);
-		KeyLevels.legendKeyText.Add("action", KeyLevels.legendList[12]);
-		KeyLevels.legendKeyText.Add("lightMatch", KeyLevels.legendList[13]);
-		KeyLevels.legendKeyText.Add("notes", KeyLevels.legendList[14]);
-		KeyLevels.legendKeyText.Add("inventory", KeyLevels.legendList[15]);
-		KeyLevels.legendKeyText.Add("inventorySecondary", KeyLevels.legendList[16]);
-		
-		DEFAULT_LEGEND_LAYOUT();
+		foreach(KeyValuePair<string, KeyboardUI> aButton in KeyboardUI.buttonList)
+			aButton.Value.getKeyboardButton().GetComponent<Image>().color = KeyboardUI.inUseCol;
 		
 	}
-	
-	public static void DEFAULT_LEGEND_LAYOUT()
-	{
-		
-		KeyLevels.legendKeyText["moveForward"].GetComponentInChildren<Text>().text = "W";
-		KeyLevels.legendKeyText["moveBackward"].GetComponentInChildren<Text>().text = "S";
-		KeyLevels.legendKeyText["moveRight"].GetComponentInChildren<Text>().text = "D";
-		KeyLevels.legendKeyText["moveLeft"].GetComponentInChildren<Text>().text = "A";
-		KeyLevels.legendKeyText["jump"].GetComponentInChildren<Text>().text = "Space";
-		
-		KeyLevels.legendKeyText["leanLeft"].GetComponentInChildren<Text>().text = "E";
-		KeyLevels.legendKeyText["leanRight"].GetComponentInChildren<Text>().text = "Q";
-		KeyLevels.legendKeyText["crouch"].GetComponentInChildren<Text>().text = "L Control";
-		KeyLevels.legendKeyText["run"].GetComponentInChildren<Text>().text = "L Shift";
-		KeyLevels.legendKeyText["pause"].GetComponentInChildren<Text>().text = "Escape";
-		KeyLevels.legendKeyText["pauseSecondary"].GetComponentInChildren<Text>().text = "P";
-		
-		KeyLevels.legendKeyText["lookBehind"].GetComponentInChildren<Text>().text = "V";
-		KeyLevels.legendKeyText["action"].GetComponentInChildren<Text>().text = "R";
-		KeyLevels.legendKeyText["lightMatch"].GetComponentInChildren<Text>().text = "F";
-		KeyLevels.legendKeyText["notes"].GetComponentInChildren<Text>().text = "C";
-		KeyLevels.legendKeyText["inventory"].GetComponentInChildren<Text>().text = "Tab";
-		KeyLevels.legendKeyText["inventorySecondary"].GetComponentInChildren<Text>().text = "I";
-		
-	}*/
 
 	//For Hover Classes
 	public static void DEFAULT_HOVER_KEYS()

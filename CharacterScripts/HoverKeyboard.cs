@@ -19,13 +19,6 @@ public class HoverKeyboard : MonoBehaviour {
 	public GameObject initModi;
 	public GameObject initAction;
 
-	void Start()
-	{
-
-		//HoverHelperText.DEFAULT_HOVER_KEYS();
-
-	}
-
 	public void keyboardHoverEnter(Button aButton)
 	{
 		if(KeyboardUI.buttonList.ContainsKey(aButton.tag))

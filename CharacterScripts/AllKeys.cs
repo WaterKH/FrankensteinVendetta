@@ -6,9 +6,9 @@ using UnityEngine.UI;
 //Stores all of the Keys on the virtual keyboard
 public class AllKeys : MonoBehaviour {
 
-	public static List<Button> allKeys;
+	public List<Button> allKeys;
 
-	public static List<Button> getButtons()
+	public List<Button> getButtons()
 	{
 
 		return allKeys;

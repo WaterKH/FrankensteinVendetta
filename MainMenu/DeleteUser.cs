@@ -15,7 +15,6 @@ public class DeleteUser : MonoBehaviour {
 	public CancelDeletion cancelDeletion;
 
 	public Button deleteButton;
-	public GameObject deleteButtonGO;
 	public CanvasGroup deleteCanvas;
 
 	//Called by DeleteUser on MainMenu

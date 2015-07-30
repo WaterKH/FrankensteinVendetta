@@ -6,9 +6,23 @@ using UnityEngine.UI;
 //Stores all of the Keys on the virtual keyboard
 public class AllKeys : MonoBehaviour {
 
-	public List<Button> allKeys;
+	public static List<Button> allKeys;
+	public GameObject KeyboardLayout;
 
-	public List<Button> getButtons()
+	void Awake()
+	{
+
+		allKeys = new List<Button>();
+		Transform[] children = KeyboardLayout.GetComponentsInChildren<Transform>();
+		foreach(Transform key in children)
+			if(key.gameObject.GetComponent<Button>() != null)
+				allKeys.Add(key.gameObject.GetComponent<Button>());
+
+		Debug.Log(allKeys.Count);
+
+	}
+
+	public static List<Button> getButtons()
 	{
 
 		return allKeys;

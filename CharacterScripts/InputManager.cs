@@ -8,7 +8,6 @@ public class InputManager : MonoBehaviour {
 	Inputs inputs = new Inputs();
 	KeyboardUI keyboardUI = new KeyboardUI();
 	public HoverKeyboard hoverKeyboard;
-	public AllKeys allKeys;
 
 	bool isOn;
 	Button buttonInput;
@@ -16,7 +15,7 @@ public class InputManager : MonoBehaviour {
 	void Awake()
 	{
 	
-		DEFAULT_LAYOUT(allKeys.getButtons());
+		DEFAULT_LAYOUT(AllKeys.getButtons());
 
 	}
 
@@ -46,7 +45,7 @@ public class InputManager : MonoBehaviour {
 	public void DEFAULT_LAYOUT()
 	{
 
-		DEFAULT_LAYOUT(allKeys.getButtons());
+		DEFAULT_LAYOUT(AllKeys.getButtons());
 
 	}
 
@@ -89,7 +88,7 @@ public class InputManager : MonoBehaviour {
 			if(!setInput.Equals(""))
 			{
 			
-				foreach(Button aButton in allKeys.getButtons())
+				foreach(Button aButton in AllKeys.getButtons())
 				{
 					
 					//If any button equals the key pressed by user..
@@ -127,7 +126,7 @@ public class InputManager : MonoBehaviour {
 		{
 
 			keyboardUI.removeKeyboardKey(buttonInput);
-			inputs.setInput(buttonInput, allKeys.allKeys[51], "Tab");
+			inputs.setInput(buttonInput, AllKeys.allKeys[51], "Tab");
 			keyboardUI.setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag);
 			HoverHelperText.setHoverKeys(buttonInput.tag);
 			hoverKeyboard.keyboardKeyboardExit();
@@ -141,7 +140,7 @@ public class InputManager : MonoBehaviour {
 		{
 
 			keyboardUI.removeKeyboardKey(buttonInput);
-			inputs.setInput(buttonInput, allKeys.allKeys[54], "LeftAlt");
+			inputs.setInput(buttonInput, AllKeys.allKeys[54], "LeftAlt");
 			keyboardUI.setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag);
 			KeyLevels.setLegendKey(buttonInput.tag, "L Alt");
 			HoverHelperText.setHoverKeys(buttonInput.tag);
@@ -155,7 +154,7 @@ public class InputManager : MonoBehaviour {
 		{
 
 			keyboardUI.removeKeyboardKey(buttonInput);
-			inputs.setInput(buttonInput, allKeys.allKeys[49], "LeftShift");
+			inputs.setInput(buttonInput, AllKeys.allKeys[49], "LeftShift");
 			keyboardUI.setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag);
 			KeyLevels.setLegendKey(buttonInput.tag, "L Shift");
 			HoverHelperText.setHoverKeys(buttonInput.tag);
@@ -169,7 +168,7 @@ public class InputManager : MonoBehaviour {
 		{
 
 			keyboardUI.removeKeyboardKey(buttonInput);
-			inputs.setInput(buttonInput, allKeys.allKeys[57], "RightAlt");
+			inputs.setInput(buttonInput, AllKeys.allKeys[57], "RightAlt");
 			keyboardUI.setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag);
 			KeyLevels.setLegendKey(buttonInput.tag, "R Alt");
 			HoverHelperText.setHoverKeys(buttonInput.tag);
@@ -183,7 +182,7 @@ public class InputManager : MonoBehaviour {
 		{
 
 			keyboardUI.removeKeyboardKey(buttonInput);
-			inputs.setInput(buttonInput, allKeys.allKeys[48], "RightShift");
+			inputs.setInput(buttonInput, AllKeys.allKeys[48], "RightShift");
 			keyboardUI.setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag);
 			KeyLevels.setLegendKey(buttonInput.tag, "R Shift");
 			HoverHelperText.setHoverKeys(buttonInput.tag);
@@ -197,7 +196,7 @@ public class InputManager : MonoBehaviour {
 		{
 
 			keyboardUI.removeKeyboardKey(buttonInput);
-			inputs.setInput(buttonInput, allKeys.allKeys[55], "LeftControl");
+			inputs.setInput(buttonInput, AllKeys.allKeys[55], "LeftControl");
 			keyboardUI.setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag);
 			KeyLevels.setLegendKey(buttonInput.tag, "L Control");
 			HoverHelperText.setHoverKeys(buttonInput.tag);
@@ -211,7 +210,7 @@ public class InputManager : MonoBehaviour {
 		{
 
 			keyboardUI.removeKeyboardKey(buttonInput);
-			inputs.setInput(buttonInput, allKeys.allKeys[43], "Backspace");
+			inputs.setInput(buttonInput, AllKeys.allKeys[43], "Backspace");
 			keyboardUI.setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag);
 			KeyLevels.setLegendKey(buttonInput.tag, "Backspace");
 			HoverHelperText.setHoverKeys(buttonInput.tag);
@@ -225,7 +224,7 @@ public class InputManager : MonoBehaviour {
 		{
 
 			keyboardUI.removeKeyboardKey(buttonInput);
-			inputs.setInput(buttonInput, allKeys.allKeys[56], "Space");
+			inputs.setInput(buttonInput, AllKeys.allKeys[56], "Space");
 			keyboardUI.setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag);
 			KeyLevels.setLegendKey(buttonInput.tag, "Space");
 			HoverHelperText.setHoverKeys(buttonInput.tag);
@@ -239,7 +238,7 @@ public class InputManager : MonoBehaviour {
 		{
 
 			keyboardUI.removeKeyboardKey(buttonInput);
-			inputs.setInput(buttonInput, allKeys.allKeys[53], "Escape");
+			inputs.setInput(buttonInput, AllKeys.allKeys[53], "Escape");
 			keyboardUI.setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag);
 			KeyLevels.setLegendKey(buttonInput.tag, "Escape");
 			HoverHelperText.setHoverKeys(buttonInput.tag);
@@ -253,7 +252,7 @@ public class InputManager : MonoBehaviour {
 		{
 
 			keyboardUI.removeKeyboardKey(buttonInput);
-			inputs.setInput(buttonInput, allKeys.allKeys[50], "CapsLock");
+			inputs.setInput(buttonInput, AllKeys.allKeys[50], "CapsLock");
 			keyboardUI.setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag);
 			KeyLevels.setLegendKey(buttonInput.tag, "C Lock");
 			HoverHelperText.setHoverKeys(buttonInput.tag);
@@ -267,7 +266,7 @@ public class InputManager : MonoBehaviour {
 		{
 
 			keyboardUI.removeKeyboardKey(buttonInput);
-			inputs.setInput(buttonInput, allKeys.allKeys[26], "Semicolon");
+			inputs.setInput(buttonInput, AllKeys.allKeys[26], "Semicolon");
 			keyboardUI.setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag);
 			KeyLevels.setLegendKey(buttonInput.tag, "Semicolon");
 			HoverHelperText.setHoverKeys(buttonInput.tag);
@@ -281,7 +280,7 @@ public class InputManager : MonoBehaviour {
 		{
 
 			keyboardUI.removeKeyboardKey(buttonInput);
-			inputs.setInput(buttonInput, allKeys.allKeys[27], "Quote");
+			inputs.setInput(buttonInput, AllKeys.allKeys[27], "Quote");
 			keyboardUI.setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag);
 			KeyLevels.setLegendKey(buttonInput.tag, "Quote");
 			HoverHelperText.setHoverKeys(buttonInput.tag);
@@ -295,7 +294,7 @@ public class InputManager : MonoBehaviour {
 		{
 
 			keyboardUI.removeKeyboardKey(buttonInput);
-			inputs.setInput(buttonInput, allKeys.allKeys[28], "LeftBracket");
+			inputs.setInput(buttonInput, AllKeys.allKeys[28], "LeftBracket");
 			keyboardUI.setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag);
 			KeyLevels.setLegendKey(buttonInput.tag, "L Bracket");
 			HoverHelperText.setHoverKeys(buttonInput.tag);
@@ -309,7 +308,7 @@ public class InputManager : MonoBehaviour {
 		{
 
 			keyboardUI.removeKeyboardKey(buttonInput);
-			inputs.setInput(buttonInput, allKeys.allKeys[29], "RightBracket");
+			inputs.setInput(buttonInput, AllKeys.allKeys[29], "RightBracket");
 			keyboardUI.setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag);
 			KeyLevels.setLegendKey(buttonInput.tag, "R Bracket");
 			HoverHelperText.setHoverKeys(buttonInput.tag);
@@ -323,7 +322,7 @@ public class InputManager : MonoBehaviour {
 		{
 
 			keyboardUI.removeKeyboardKey(buttonInput);
-			inputs.setInput(buttonInput, allKeys.allKeys[42], "Backslash");
+			inputs.setInput(buttonInput, AllKeys.allKeys[42], "Backslash");
 			keyboardUI.setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag);
 			KeyLevels.setLegendKey(buttonInput.tag, "Backslash");
 			HoverHelperText.setHoverKeys(buttonInput.tag);
@@ -337,7 +336,7 @@ public class InputManager : MonoBehaviour {
 		{
 
 			keyboardUI.removeKeyboardKey(buttonInput);
-			inputs.setInput(buttonInput, allKeys.allKeys[47], "Slash");
+			inputs.setInput(buttonInput, AllKeys.allKeys[47], "Slash");
 			keyboardUI.setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag);
 			KeyLevels.setLegendKey(buttonInput.tag, "Slash");
 			HoverHelperText.setHoverKeys(buttonInput.tag);
@@ -351,7 +350,7 @@ public class InputManager : MonoBehaviour {
 		{
 		
 			keyboardUI.removeKeyboardKey(buttonInput);
-			inputs.setInput(buttonInput, allKeys.allKeys[46], "Period");
+			inputs.setInput(buttonInput, AllKeys.allKeys[46], "Period");
 			keyboardUI.setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag);
 			KeyLevels.setLegendKey(buttonInput.tag, "Period");
 			HoverHelperText.setHoverKeys(buttonInput.tag);
@@ -365,7 +364,7 @@ public class InputManager : MonoBehaviour {
 		{
 
 			keyboardUI.removeKeyboardKey(buttonInput);
-			inputs.setInput(buttonInput, allKeys.allKeys[41], "Equals");
+			inputs.setInput(buttonInput, AllKeys.allKeys[41], "Equals");
 			keyboardUI.setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag);
 			KeyLevels.setLegendKey(buttonInput.tag, "Equals");
 			HoverHelperText.setHoverKeys(buttonInput.tag);
@@ -379,7 +378,7 @@ public class InputManager : MonoBehaviour {
 		{
 
 			keyboardUI.removeKeyboardKey(buttonInput);
-			inputs.setInput(buttonInput, allKeys.allKeys[52], "BackQuote");
+			inputs.setInput(buttonInput, AllKeys.allKeys[52], "BackQuote");
 			keyboardUI.setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag);
 			KeyLevels.setLegendKey(buttonInput.tag, "BackQuote");
 			HoverHelperText.setHoverKeys(buttonInput.tag);
@@ -393,7 +392,7 @@ public class InputManager : MonoBehaviour {
 		{
 
 			keyboardUI.removeKeyboardKey(buttonInput);
-			inputs.setInput(buttonInput, allKeys.allKeys[44], "Return");
+			inputs.setInput(buttonInput, AllKeys.allKeys[44], "Return");
 			keyboardUI.setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag);
 			KeyLevels.setLegendKey(buttonInput.tag, "Return");
 			HoverHelperText.setHoverKeys(buttonInput.tag);
@@ -407,7 +406,7 @@ public class InputManager : MonoBehaviour {
 		{
 		
 			keyboardUI.removeKeyboardKey(buttonInput);
-			inputs.setInput(buttonInput, allKeys.allKeys[40], "Minus");
+			inputs.setInput(buttonInput, AllKeys.allKeys[40], "Minus");
 			keyboardUI.setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag);
 			KeyLevels.setLegendKey(buttonInput.tag, "Dash");
 			HoverHelperText.setHoverKeys(buttonInput.tag);
@@ -421,7 +420,7 @@ public class InputManager : MonoBehaviour {
 		{
 
 			keyboardUI.removeKeyboardKey(buttonInput);
-			inputs.setInput(buttonInput, allKeys.allKeys[60], "RightArrow");
+			inputs.setInput(buttonInput, AllKeys.allKeys[60], "RightArrow");
 			keyboardUI.setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag);
 			KeyLevels.setLegendKey(buttonInput.tag, "R Arrow");
 			HoverHelperText.setHoverKeys(buttonInput.tag);
@@ -435,7 +434,7 @@ public class InputManager : MonoBehaviour {
 		{
 
 			keyboardUI.removeKeyboardKey(buttonInput);
-			inputs.setInput(buttonInput, allKeys.allKeys[61], "LeftArrow");
+			inputs.setInput(buttonInput, AllKeys.allKeys[61], "LeftArrow");
 			keyboardUI.setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag);
 			KeyLevels.setLegendKey(buttonInput.tag, "L Arrow");
 			HoverHelperText.setHoverKeys(buttonInput.tag);
@@ -449,7 +448,7 @@ public class InputManager : MonoBehaviour {
 		{
 
 			keyboardUI.removeKeyboardKey(buttonInput);
-			inputs.setInput(buttonInput, allKeys.allKeys[59], "DownArrow");
+			inputs.setInput(buttonInput, AllKeys.allKeys[59], "DownArrow");
 			keyboardUI.setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag);
 			KeyLevels.setLegendKey(buttonInput.tag, "D Arrow");
 			HoverHelperText.setHoverKeys(buttonInput.tag);
@@ -463,7 +462,7 @@ public class InputManager : MonoBehaviour {
 		{
 
 			keyboardUI.removeKeyboardKey(buttonInput);
-			inputs.setInput(buttonInput, allKeys.allKeys[58], "UpArrow");
+			inputs.setInput(buttonInput, AllKeys.allKeys[58], "UpArrow");
 			keyboardUI.setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag);
 			KeyLevels.setLegendKey(buttonInput.tag, "U Arrow");
 			HoverHelperText.setHoverKeys(buttonInput.tag);

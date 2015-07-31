@@ -25,7 +25,6 @@ public class InputManager : MonoBehaviour {
 	{
 
 		KeyboardUI.resetKeyboard();
-		KeyboardUI.buttonList.Clear();
 		Inputs.inputDict.Clear();
 		HoverKeyboard.hoverHelperText.Clear();
 		KeyLevels.legendList.Clear();
@@ -40,7 +39,6 @@ public class InputManager : MonoBehaviour {
 
 		KeyboardTags.keyboardTags();
 		DefaultKeyBindings.DEFAULT_KEYS(buttonList);
-		DefaultKeyBindings.DEFAULT_KEYBOARD(buttonList);
 		DefaultKeyBindings.DEFAULT_HOVER_KEYS();
 		allKeys.objectsForDefaultClass();
 		
@@ -52,7 +50,7 @@ public class InputManager : MonoBehaviour {
 
 		//Button grabbed here for use in the Update method
 		buttonInput = Inputs.inputDict[aButton.tag].getInputButton();
-		foreach(KeyValuePair<string, KeyboardUI> input in KeyboardUI.buttonList)
+		foreach(KeyValuePair<string, Inputs> input in Inputs.inputDict)
 		{
 
 			//If the button clicked is in my button list I can continue
@@ -100,21 +98,24 @@ public class InputManager : MonoBehaviour {
 			
 				foreach(Button aButton in AllKeys.getButtons())
 				{
-					
-					//If any button equals the key pressed by user..
-					if(aButton.name.ToLower().Equals(setInput))
+					if(!Inputs.inputDict.ContainsKey(aButton.tag))
 					{
-						//Removes the current button (Got from when the player clicks the button above)
-						KeyboardUI.removeKeyboardKey(buttonInput);
-						//Gets the tag from buttonInput, button to add, String value of what was pressed
-						Inputs.setInput(buttonInput, aButton, setInput.ToUpper());
-						//Gets the button that was added above, and the tag from above
-						KeyboardUI.setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag);
-						//Sets the value of the hover input
-						HoverHelperText.setHoverKeys(buttonInput.tag);
-						//Causes the tool tip to disappear
-						KeyLevels.setLegendKey(buttonInput.tag, Inputs.inputDict[buttonInput.tag].getInputKeyCode().ToString());
-						HoverHelperText.setLegendKeys(buttonInput.tag);
+						//If any button equals the key pressed by user..
+						if(aButton.name.ToLower().Equals(setInput))
+						{
+							//Removes the current button (Got from when the player clicks the button above)
+							KeyboardUI.removeKeyboardKey(buttonInput);
+							//Gets the tag from buttonInput, button to add, String value of what was pressed
+							Inputs.setInput(buttonInput, aButton, setInput.ToUpper());
+							//Gets the button that was added above, and the tag from above
+							KeyboardUI.setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag, setInput.ToUpper());
+							//Sets the value of the hover input
+							HoverHelperText.setHoverKeys(buttonInput.tag);
+							//Causes the tool tip to disappear
+							KeyLevels.setLegendKey(buttonInput.tag, Inputs.inputDict[buttonInput.tag].getInputKeyCode().ToString());
+							HoverHelperText.setLegendKeys(buttonInput.tag);
+
+						}
 
 					}
 					

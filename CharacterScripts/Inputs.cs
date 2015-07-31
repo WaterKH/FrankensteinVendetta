@@ -11,6 +11,7 @@ public class Inputs {
 	//Mouse click1 will be to use what is set in inventory to your main click
 	//Mouse click2 stifle breath
 	private KeyCode inputName;
+	private int inputButtonName;
 	private string inputTag;
 	private Button inputButton;
 

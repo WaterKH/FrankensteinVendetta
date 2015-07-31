@@ -79,4 +79,22 @@ public class HoverHelperText {
 		
 	}
 
+	public static string hoverHelperText(GameObject mouse, Button aButton)
+	{
+
+		switch(mouse.tag)
+		{
+
+		case "stifleBreathORCoverLight":
+			return "Action: To stifle breath or cover light, press the Right Mouse button.";
+		case "actionSecondary":
+			return "Action: To interact with objects, press the Left Mouse button";
+		default:
+			return "This should never run...";
+
+		}
+
+
+	}
+
 }

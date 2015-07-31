@@ -14,6 +14,7 @@ public class KeyboardTags {
 	public static string leanLeft = "leanLeft";
 	public static string leanRight = "leanRight";
 	public static string action = "action";
+	public static string actionSecondary = "actionSecondary";
 	public static string lightMatch = "lightMatch";
 	public static string notes = "notes";
 	public static string lookBehind = "lookBehind";
@@ -24,6 +25,7 @@ public class KeyboardTags {
 	public static string run = "run";
 	public static string crouch = "crouch";
 	public static string jump = "jump";
+	public static string stifleBreathORCoverLight = "stifleBreathORCoverLight";
 
 	//Sorting type
 	public static string Movement = "Movement";

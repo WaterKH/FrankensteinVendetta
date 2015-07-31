@@ -4,81 +4,27 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class KeyboardUI {
-	
-	private Button keyOnBoard;
-	private string keyTag;
-	
-	public static Dictionary<string, KeyboardUI> buttonList;
-	
+
 	public static Color whiteCol = Color.white;
 	public static Color inUseCol = new Color(0,45,178,255);
-	
-	//Default Constructor
-	public KeyboardUI()
-	{
-		
-		keyOnBoard = null;
-		keyTag = "";
-		
-	}
-	
-	//Paramaterized Constructor
-	public KeyboardUI(string aTag, Button aButton)
-	{
-		
-		setKeyboardButton(aButton);
-		setKeyTag(aTag);
-		
-	}
-	
-	
-	//Mutators
-	public void setKeyboardButton(Button aButton)
-	{
-		
-		keyOnBoard = aButton;
-		
-	}
-	
-	public void setKeyTag(string aTag)
-	{
-		
-		keyTag = aTag;
-		
-	}
-	
-	//Accessors
-	public Button getKeyboardButton()
-	{
-		
-		return keyOnBoard;
-		
-	}
-	
-	public string getTag()
-	{
-		
-		return keyTag;
-		
-	}
 	
 	//Removes the button within buttonList based on the tag
 	public static void removeKeyboardKey(Button input)
 	{
 		
 		input.GetComponent<Image>().color = whiteCol;
-		buttonList.Remove(input.tag);
+		Inputs.inputDict.Remove(input.tag);
 		
 	}
 	
 	//Initial call to make another one below
-	public static void setKeyBoardBasedOnTags(Button input, string tagString)
+	public static void setKeyBoardBasedOnTags(Button input, string tagString, string keyCode)
 	{
 		
 		//Calls the remove option above
 		removeKeyboardKey(input);
 		//Adds the previous button's tag, and the new button
-		buttonList.Add(tagString, new KeyboardUI(tagString, input));
+		Inputs.inputDict.Add(tagString, new Inputs(keyCode, tagString, input));
 		setKeyboardBasedOnTags(input.GetComponent<Image>(), tagString);
 		
 	}
@@ -180,14 +126,12 @@ public class KeyboardUI {
 	{
 		bool foundKey = false;
 		string key = "";
-		string shortenedKey = "";
 		int index = 0;
 		if(Input.GetKeyDown(KeyCode.Tab))
 		{
 			
 			foundKey = true;
 			key = "Tab";
-			shortenedKey = "Tab";
 			index = 51;
 			
 		}
@@ -196,7 +140,6 @@ public class KeyboardUI {
 			
 			foundKey = true;
 			key = "LeftAlt";
-			shortenedKey = "L Alt";
 			index = 54;
 			
 		}
@@ -205,7 +148,6 @@ public class KeyboardUI {
 			
 			foundKey = true;
 			key = "LeftShift";
-			shortenedKey = "L Shift";
 			index = 49;
 			
 		}
@@ -214,7 +156,6 @@ public class KeyboardUI {
 			
 			foundKey = true;
 			key = "RightAlt";
-			shortenedKey = "R Alt";
 			index = 57;
 			
 		}
@@ -223,7 +164,6 @@ public class KeyboardUI {
 			
 			foundKey = true;
 			key = "RightShift";
-			shortenedKey = "R Shift";
 			index = 48;
 			
 		}
@@ -232,7 +172,6 @@ public class KeyboardUI {
 			
 			foundKey = true;
 			key = "LeftControl";
-			shortenedKey = "L Control";
 			index = 55;
 			
 		}
@@ -241,7 +180,6 @@ public class KeyboardUI {
 			
 			foundKey = true;
 			key = "Backspace";
-			shortenedKey = "Backspace";
 			index = 43;
 			
 		}
@@ -250,7 +188,6 @@ public class KeyboardUI {
 			
 			foundKey = true;
 			key = "Space";
-			shortenedKey = "Space";
 			index = 56;
 			
 		}
@@ -259,7 +196,6 @@ public class KeyboardUI {
 			
 			foundKey = true;
 			key = "Escape";
-			shortenedKey = "Escape";
 			index = 53;
 			
 		}
@@ -268,7 +204,6 @@ public class KeyboardUI {
 			
 			foundKey = true;
 			key = "CapsLock";
-			shortenedKey = "C Lock";
 			index = 50;
 			
 		}
@@ -277,7 +212,6 @@ public class KeyboardUI {
 			
 			foundKey = true;
 			key = "Semicolon";
-			shortenedKey = "Semicolon";
 			index = 26;
 			
 		}
@@ -286,7 +220,6 @@ public class KeyboardUI {
 			
 			foundKey = true;
 			key = "Quote";
-			shortenedKey = "Quote";
 			index = 27;
 			
 		}
@@ -295,7 +228,6 @@ public class KeyboardUI {
 			
 			foundKey = true;
 			key = "LeftBracket";
-			shortenedKey = "L Bracket";
 			index = 28;
 			
 		}
@@ -304,7 +236,6 @@ public class KeyboardUI {
 			
 			foundKey = true;
 			key = "RightBracket";
-			shortenedKey = "R Bracket";
 			index = 29;
 			
 		}
@@ -313,7 +244,6 @@ public class KeyboardUI {
 			
 			foundKey = true;
 			key = "Backslash";
-			shortenedKey = "Backslash";
 			index = 42;
 			
 		}
@@ -322,7 +252,6 @@ public class KeyboardUI {
 			
 			foundKey = true;
 			key = "Slash";
-			shortenedKey = "Slash";
 			index = 47;
 			
 		}
@@ -331,7 +260,6 @@ public class KeyboardUI {
 			
 			foundKey = true;
 			key = "Period";
-			shortenedKey = "Period";
 			index = 46;
 			
 		}
@@ -340,7 +268,6 @@ public class KeyboardUI {
 			
 			foundKey = true;
 			key = "Equals";
-			shortenedKey = "Equals";
 			index = 41;
 			
 		}
@@ -349,7 +276,6 @@ public class KeyboardUI {
 			
 			foundKey = true;
 			key = "BackQuote";
-			shortenedKey = "BackQuote";
 			index = 52;
 			
 		}
@@ -358,7 +284,6 @@ public class KeyboardUI {
 			
 			foundKey = true;
 			key = "Return";
-			shortenedKey = "Return";
 			index = 44;
 			
 		}
@@ -367,7 +292,6 @@ public class KeyboardUI {
 			
 			foundKey = true;
 			key = "Minus";
-			shortenedKey = "Minus";
 			index = 40;
 			
 		}
@@ -376,7 +300,6 @@ public class KeyboardUI {
 			
 			foundKey = true;
 			key = "RightArrow";
-			shortenedKey = "R Arrow";
 			index = 60;
 			
 		}
@@ -385,7 +308,6 @@ public class KeyboardUI {
 			
 			foundKey = true;
 			key = "LeftArrow";
-			shortenedKey = "L Arrow";
 			index = 61;
 			
 		}
@@ -394,7 +316,6 @@ public class KeyboardUI {
 			
 			foundKey = true;
 			key = "DownArrow";
-			shortenedKey = "D Arrow";
 			index = 59;
 			
 		}
@@ -403,7 +324,6 @@ public class KeyboardUI {
 			
 			foundKey = true;
 			key = "UpArrow";
-			shortenedKey = "U Arrow";
 			index = 58;
 			
 		}
@@ -413,7 +333,6 @@ public class KeyboardUI {
 			
 			foundKey = true;
 			key = "Comma";
-			shortenedKey = "Comma";
 			index = 45;
 			
 		}
@@ -423,9 +342,9 @@ public class KeyboardUI {
 
 			removeKeyboardKey(buttonInput);
 			Inputs.setInput(buttonInput, AllKeys.allKeys[index], key);
-			setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag);
+			setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag, key);
 			HoverHelperText.setHoverKeys(buttonInput.tag);
-			KeyLevels.setLegendKey(buttonInput.tag, shortenedKey);
+			KeyLevels.setLegendKey(buttonInput.tag, key);
 			HoverHelperText.setLegendKeys(buttonInput.tag);
 			isOn = false;
 			return true;

@@ -32,37 +32,10 @@ public class DefaultKeyBindings {
 		Inputs.inputDict.Add(KeyboardTags.crouch, new Inputs("LeftControl", KeyboardTags.crouch, buttonList[55]));
 		Inputs.inputDict.Add(KeyboardTags.jump, new Inputs("Space", KeyboardTags.jump, buttonList[56]));
 
-	}
 
-	//TODO Do we need both an inputDict and a buttonList, seems like they are acting the same way
-	//For KeyboardUI class
-	public static void DEFAULT_KEYBOARD(List<Button> listOfButtons)//allKeys.getButtons(); <-- Gets all keys
-	{
-	
-		//String = Tag; Button = Able to change; But set through a list
-		KeyboardUI.buttonList = new Dictionary<string, KeyboardUI>();
-		
-		KeyboardUI.buttonList.Add(KeyboardTags.moveForward, new KeyboardUI(KeyboardTags.moveForward, listOfButtons[2]));
-		KeyboardUI.buttonList.Add(KeyboardTags.moveBackward, new KeyboardUI(KeyboardTags.moveBackward, listOfButtons[11]));
-		KeyboardUI.buttonList.Add(KeyboardTags.moveLeft, new KeyboardUI(KeyboardTags.moveLeft, listOfButtons[10]));
-		KeyboardUI.buttonList.Add(KeyboardTags.moveRight, new KeyboardUI(KeyboardTags.moveRight, listOfButtons[12]));
-		KeyboardUI.buttonList.Add(KeyboardTags.leanLeft, new KeyboardUI(KeyboardTags.leanLeft, listOfButtons[1]));
-		KeyboardUI.buttonList.Add(KeyboardTags.leanRight, new KeyboardUI(KeyboardTags.leanRight, listOfButtons[3]));
-		KeyboardUI.buttonList.Add(KeyboardTags.action, new KeyboardUI(KeyboardTags.action, listOfButtons[4]));
-		KeyboardUI.buttonList.Add(KeyboardTags.lightMatch, new KeyboardUI(KeyboardTags.lightMatch, listOfButtons[13]));
-		KeyboardUI.buttonList.Add(KeyboardTags.notes, new KeyboardUI(KeyboardTags.notes, listOfButtons[21]));
-		KeyboardUI.buttonList.Add(KeyboardTags.lookBehind, new KeyboardUI(KeyboardTags.lookBehind, listOfButtons[22]));
-		KeyboardUI.buttonList.Add(KeyboardTags.inventory, new KeyboardUI(KeyboardTags.inventory, listOfButtons[51]));
-		KeyboardUI.buttonList.Add(KeyboardTags.inventorySecondary, new KeyboardUI(KeyboardTags.inventorySecondary, listOfButtons[8]));
-		KeyboardUI.buttonList.Add(KeyboardTags.pause, new KeyboardUI(KeyboardTags.pause, listOfButtons[53]));
-		KeyboardUI.buttonList.Add(KeyboardTags.pauseSecondary, new KeyboardUI(KeyboardTags.pauseSecondary, listOfButtons[6]));
-		KeyboardUI.buttonList.Add(KeyboardTags.run, new KeyboardUI(KeyboardTags.run, listOfButtons[49]));
-		KeyboardUI.buttonList.Add(KeyboardTags.crouch, new KeyboardUI(KeyboardTags.crouch, listOfButtons[55]));
-		KeyboardUI.buttonList.Add(KeyboardTags.jump, new KeyboardUI(KeyboardTags.jump, listOfButtons[56]));
-		
-		foreach(KeyValuePair<string, KeyboardUI> aButton in KeyboardUI.buttonList)
-			aButton.Value.getKeyboardButton().GetComponent<Image>().color = KeyboardUI.inUseCol;
-		
+		foreach(KeyValuePair<string, Inputs> aButton in Inputs.inputDict)
+			aButton.Value.getInputButton().GetComponent<Image>().color = KeyboardUI.inUseCol;
+
 	}
 
 	//For Hover Classes
@@ -141,10 +114,8 @@ public class DefaultKeyBindings {
 				KeyLevels.legendList.Add(key.gameObject.GetComponent<Button>());
 
 		for(int i = 0; i < KeyLevels.legendList.Count; i++)
-		{
 				KeyLevels.legendList[i].GetComponentInChildren<Text>().text = 
 					Inputs.inputDict[KeyboardTags.keyboardTagsList[i]].getInputKeyCode().ToString();
-		}
 
 	}
 

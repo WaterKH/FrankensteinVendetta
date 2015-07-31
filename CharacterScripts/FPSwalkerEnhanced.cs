@@ -53,7 +53,14 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 	private GameObject mainCamera;
 	private float height;
 
-	public Inputs inputs;
+	public SaveLoad saveLoad;
+
+	void Awake()
+	{
+
+		saveLoad.LoadKeyboard();
+
+	}
 
 	void Start() {
 
@@ -84,30 +91,27 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 		// If both horizontal and vertical are used simultaneously, limit speed (if allowed), so the total doesn't exceed normal move speed
 		float inputModifyFactor = (inputX != 0.0f && inputY != 0.0f && limitDiagonalSpeed)? .7071f : 1.0f;
 
-		if (grounded) {
+		if (grounded) 
+		{
 						
 			// If we were falling, and we fell a vertical distance greater than the threshold, run a falling damage routine
-			if (falling) {
-	
+			if (falling)
 				falling = false;
 						
-			}
-						
 			// Jump! But only if the jump button has been released and player has been grounded for a given number of frames
-			//TODO
-			/*
-			if (!Input.inputString.Equals(inputs.jump))
-					jumpTimer++;
+			if(!Input.inputString.Equals(InputManager.GetKey(KeyboardTags.jump)))
+				jumpTimer++;
 			else if (jumpTimer >= antiBunnyHopFactor) 
 			{
 
 				moveDirection.y = jumpSpeed;
 				jumpTimer = 0;
 
-			}*/
+			}
 
 		}
-		else {
+		else 
+		{
 
 				// If we stepped over a cliff or something, set the height at which we started falling
 				if (!falling) {
@@ -115,48 +119,43 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 					falling = true;
 					fallStartLevel = myTransform.position.y;
 										
-				}
-
-										
+				}							
 				// If air control is allowed, check movement but don't touch the y component
 				if (airControl && playerControl) {
 
 					moveDirection.x = inputX * speed * inputModifyFactor;
 					moveDirection.z = inputY * speed * inputModifyFactor;
 					moveDirection = myTransform.TransformDirection (moveDirection);
-				
 			
 				}
-
-			}
-
-
+			
+		}
 
 		// Apply gravity
 		moveDirection.y -= gravity * Time.deltaTime;
 
 
 		// Move the controller, and set grounded true or false depending on whether we're standing on something
-		if(contactPoint.Equals("ground"))
-			grounded = true;
+		if(contactPoint != null)
+			if(contactPoint.Equals("ground"))
+				grounded = true;
 						
 	}
 	void Update () {
 
 		// If the run button is set to toggle, then switch between walk/run speed. (We use Update for this...
 		// FixedUpdate is a poor place to use GetButtonDown, since it doesn't necessarily run every frame and can miss the event)
-		//TODO
-		/*if (grounded && Input.anyKeyDown.Equals(inputs.run) && !crouching)
+		if (grounded && Input.inputString.Equals(InputManager.GetKey(KeyboardTags.run)) && !crouching)
 			speed = (speed == walkSpeed? runSpeed : walkSpeed);
 		if(Input.anyKey)
 		{
-			Debug.Log(Input.inputString + " " + inputs.run);
-			if (Input.inputString.Equals(inputs.run) && !crouching) {
+			
+			if (Input.inputString.Equals(InputManager.GetKey(KeyboardTags.run)) && !crouching) {
 				running = true;
 				walking = false;
 
 				//Debug.Log ("Is running.");
-			} else if (Input.inputString.Equals(inputs.crouch)) {
+			} else if (Input.inputString.Equals(InputManager.GetKey(KeyboardTags.crouch))) {
 
 				crouching = !crouching;
 				running = false;
@@ -164,7 +163,6 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 				
 			}
 		}
-	*/
 
 		if(crouching)
 		{

@@ -9,6 +9,7 @@ public class InputManager : MonoBehaviour {
 	KeyboardUI keyboardUI = new KeyboardUI();
 	public HoverKeyboard hoverKeyboard;
 	public AllKeys allKeys;
+	public SaveLoad saveLoad;
 
 	bool isOn;
 	Button buttonInput;
@@ -41,6 +42,8 @@ public class InputManager : MonoBehaviour {
 		DefaultKeyBindings.DEFAULT_KEYS(buttonList);
 		DefaultKeyBindings.DEFAULT_HOVER_KEYS();
 		allKeys.objectsForDefaultClass();
+
+		saveLoad.SaveKeyboard();
 		
 	}
 
@@ -128,6 +131,13 @@ public class InputManager : MonoBehaviour {
 			
 		}
 		
+	}
+
+	public static string GetKey(string aKey)
+	{
+
+		return Inputs.inputDict[aKey].getInputKeyCode().ToString();
+
 	}
 
 }

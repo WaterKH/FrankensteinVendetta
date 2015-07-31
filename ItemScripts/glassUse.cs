@@ -12,15 +12,14 @@ public class glassUse : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		//TODO FIX GLITCH
-		/*
-		if (Input.inputString.Equals(inputs.lookBehind)) {
+
+		if (Input.inputString.Equals(InputManager.GetKey(KeyboardTags.lookBehind))) {
 			secCamera.GetComponent<Camera>().enabled = !secCamera.GetComponent<Camera>().enabled;
 			glassCol.enabled = !glassCol.enabled;
 			glassRen.enabled = !glassRen.enabled;
 
 		} 
-*/
+
 	}
 
 }

@@ -10,12 +10,11 @@ public class Match : MonoBehaviour {
 	public Light matchLight;
 	bool canRun;
 	int runningNumb;
-	//TODO FIX THIS
 	// Update is called once per frame
 	void Update ()
 	{
-		/*
-		if (Input.inputString.Equals(inputs.lightMatch) && !walkerEn.running) {
+
+		if (Input.inputString.Equals(InputManager.GetKey(KeyboardTags.lightMatch)) && !walkerEn.running) {
 			if (matchScript.match >= 1)
 			{
 				matchScript.counting = !matchScript.counting;
@@ -41,7 +40,7 @@ public class Match : MonoBehaviour {
 			}
 
 		}
-		*/
+
 
 		if (matchScript.timeLeft <= 0 && matchLight && matchLight.enabled) {
 			matchLight.enabled = false;
@@ -56,15 +55,14 @@ public class Match : MonoBehaviour {
 		else
 			matchScript.matchStickGO.GetComponent<MeshRenderer> ().enabled = false;
 
-		/*
-		if (Input.inputString.Equals(inputs.run)) {    	
+		if (Input.inputString.Equals(InputManager.GetKey(KeyboardTags.run))) {    	
 			matchLight.enabled = false;
 
 			if (matchScript.counting)
 				matchScript.counting = false;
 			matchScript.timeLeft = 30;
 		}
-	*/
+
 	}
 
 	IEnumerator CountDown()
@@ -91,15 +89,14 @@ public class Match : MonoBehaviour {
 
 
 	}
-	//TODO
-	/*
+
 	IEnumerator MatchCounter()
 	{        
 
 
 	    if(matchScript.match >= 1)
 	    {
-	       if(Input.inputString.Equals(inputs.lightMatch))
+	       if(Input.inputString.Equals(InputManager.GetKey(KeyboardTags.lightMatch)))
 	       {
 	         if(!matchLight.enabled)
 	         {
@@ -112,6 +109,6 @@ public class Match : MonoBehaviour {
 	       }
 	       yield return new WaitForSeconds(1);
 	    }
-	}*/
+	}
 
 }

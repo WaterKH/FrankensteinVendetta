@@ -4,53 +4,42 @@ using System.Collections;
 
 public class StifleBreath : MonoBehaviour {
 
-		bool stifleBreath;
-		bool running;
-		bool breathingHard;
-		bool breathingSoft;
+	bool stifleBreath;
+	bool running;
+	bool breathingHard;
+	bool breathingSoft;
 
-		void Start () {
-				stifleBreath = false;
-				running = false;
-				breathingHard = false;
-				breathingSoft = true;
-		}
+	void Start () {
 
-		void Update () {
+		stifleBreath = false;
+		running = false;
+		breathingHard = false;
+		breathingSoft = true;
 
-				if((Input.GetKey("left shift"))){
-						running = true; 
+	}
 
-				}
+	void Update () {
 
-				if((Input.GetKeyUp("left shift"))){
-						running = false;
+		if(Input.inputString.Equals(InputManager.GetKey(KeyboardTags.run)))
+			running = true; 
 
-				}
+		if(!Input.inputString.Equals(InputManager.GetKey(KeyboardTags.run)))
+			running = false;
 
-				if(running == true){
-						stifleBreath = true;
-						//Debug.Log("Stifle your breath or the monsters will kill you.");
-				}
+		if(running == true)
+			stifleBreath = true;
 
-				if(stifleBreath == true){
-						breathingHard = true;
-				}
+		if(stifleBreath == true)
+			breathingHard = true;
 
-				if(breathingHard == true){
-						breathingSoft = false;
-						//Debug.Log("Breathing hard.");
+		if(breathingHard == true)
+			breathingSoft = false;
+		
+		if(breathingSoft == true)
+			breathingHard = false;
 
-				}
-
-				if(breathingSoft == true){
-						breathingHard = false;
-				}
-
-				if(running == false){
-						breathingSoft = true;
-						//Debug.Log("Breathing softly.");
-
-				}
-		}
+		if(running == false)
+			breathingSoft = true;
+				
+	}
 }

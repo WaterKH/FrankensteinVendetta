@@ -156,6 +156,44 @@ public class SaveLoad : MonoBehaviour {
 
 	}
 
+	//TODO Make a button serializable
+	public void SaveKeyboard()
+	{
+
+		BinaryFormatter bf = new BinaryFormatter();
+		FileStream file = File.Create(Application.persistentDataPath + "/" + userName + "KeyboardInfo.dat");
+		KeyboardData keyData = new KeyboardData();
+
+		keyData.inputDict = Inputs.inputDict;
+		keyData.hoverHelperDict = HoverKeyboard.hoverHelperText;
+		keyData.legendDict = HoverKeyboard.legendText;
+		keyData.legendList = KeyLevels.legendList;
+
+		bf.Serialize(file, keyData);
+		file.Close();
+
+	}
+
+	public void LoadKeyboard()
+	{
+
+		if(File.Exists(Application.persistentDataPath + "/" + userName + "Info.dat"))
+		{
+
+			BinaryFormatter bf = new BinaryFormatter ();
+			FileStream file = File.Open (Application.persistentDataPath + "/" + userName + "Info.dat", FileMode.Open);
+			KeyboardData keyData = (KeyboardData)bf.Deserialize(file);
+			file.Close();
+
+			Inputs.inputDict = keyData.inputDict;
+			HoverKeyboard.hoverHelperText = keyData.hoverHelperDict;
+			HoverKeyboard.legendText = keyData.legendDict;
+			KeyLevels.legendList = keyData.legendList;
+
+		}
+
+	}
+
 }
 
 [Serializable]
@@ -183,5 +221,16 @@ class MenuData
 	public int layer;
 	public int usernameTracker;
 	public bool tempLayer;
+
+}
+
+[Serializable]
+class KeyboardData
+{
+
+	public Dictionary<string, Inputs> inputDict;
+	public Dictionary<string, string> hoverHelperDict;
+	public Dictionary<string, string> legendDict;
+	public List<Button> legendList;
 
 }

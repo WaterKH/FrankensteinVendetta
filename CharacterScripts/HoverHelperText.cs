@@ -15,9 +15,21 @@ public class HoverHelperText {
 
 	public static void setLegendKeys(string buttonTag)
 	{
+		string legendKey = "";
+	
+		if(buttonTag.Equals("moveForward")||buttonTag.Equals("moveBackward")||buttonTag.Equals("moveLeft")
+		        ||buttonTag.Equals("moveRight")||buttonTag.Equals("jump"))
+			legendKey = "Movement";
+		else if(buttonTag.Equals("leanLeft")||buttonTag.Equals("leanRight")||buttonTag.Equals("crouch")||
+		        buttonTag.Equals("run")||buttonTag.Equals("pause")||buttonTag.Equals("pauseSecondary"))
+			legendKey = "Modification";
+		else if(buttonTag.Equals("action")||buttonTag.Equals("lightMatch")||buttonTag.Equals("lookBehind")||
+		        buttonTag.Equals("notes")||buttonTag.Equals("inventory")||buttonTag.Equals("inventorySecondary"))
+			legendKey = "Action";
 
-		string legendKey = HoverKeyboard.legendText[buttonTag];
-		HoverKeyboard.legendText.Remove(buttonTag);
+		if(HoverKeyboard.legendText.ContainsKey(buttonTag))
+			HoverKeyboard.legendText.Remove(buttonTag);
+
 		HoverKeyboard.legendText.Add(buttonTag, legendKey);
 
 	}

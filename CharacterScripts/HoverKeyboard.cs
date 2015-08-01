@@ -24,9 +24,10 @@ public class HoverKeyboard : MonoBehaviour {
 
 	public void keyboardHoverEnter(Button aButton)
 	{
+
 		if(Inputs.inputDict.ContainsKey(aButton.tag))
 		{
-		
+
 			Transform parent = aButton.transform.parent;
 			hovering = true;
 			hoverHelper = Instantiate(Resources.Load("HoverHelper") as GameObject);

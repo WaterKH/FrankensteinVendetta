@@ -27,7 +27,7 @@ public class KeyLevels : MonoBehaviour {
 
 		foreach(Button aLegendButton in legendList)
 		{
-			
+			Debug.Log(aLegendButton.tag);
 			if(aLegendButton.tag.Equals(buttonTag))
 				aLegendButton.GetComponentInChildren<Text>().text = keyCode;
 			

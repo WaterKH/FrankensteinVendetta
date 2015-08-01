@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.IO;
 
 public class InputManager : MonoBehaviour {
 
@@ -10,25 +11,19 @@ public class InputManager : MonoBehaviour {
 	public HoverKeyboard hoverKeyboard;
 	public AllKeys allKeys;
 	public SaveLoad saveLoad;
+	public ButtonSerializable buttonSer = new ButtonSerializable();
 
 	bool isOn;
 	Button buttonInput;
 
-	void Start()
-	{
-	
-		DEFAULT_LAYOUT(AllKeys.getButtons());
-
-	}
-	
 	//Called by Default Button
 	public void DEFAULT_LAYOUT()
 	{
 
 		KeyboardUI.resetKeyboard();
-		Inputs.inputDict.Clear();
-		HoverKeyboard.hoverHelperText.Clear();
-		KeyLevels.legendList.Clear();
+		Inputs.inputDict = new Dictionary<string, Inputs>();
+		HoverKeyboard.hoverHelperText = new Dictionary<string, string>();
+		KeyLevels.legendList = new List<Button>();
 
 		DEFAULT_LAYOUT(AllKeys.getButtons());
 		
@@ -42,8 +37,6 @@ public class InputManager : MonoBehaviour {
 		DefaultKeyBindings.DEFAULT_KEYS(buttonList);
 		DefaultKeyBindings.DEFAULT_HOVER_KEYS();
 		allKeys.objectsForDefaultClass();
-
-		saveLoad.SaveKeyboard();
 		
 	}
 
@@ -59,6 +52,7 @@ public class InputManager : MonoBehaviour {
 			//If the button clicked is in my button list I can continue
 			if(buttonInput.tag.Equals(input.Key))
 			{
+
 				isOn = true;
 				break;
 			}
@@ -74,7 +68,7 @@ public class InputManager : MonoBehaviour {
 
 		if(isOn)
 		{
-			
+
 			setKey ();
 
 		}
@@ -101,11 +95,14 @@ public class InputManager : MonoBehaviour {
 			
 				foreach(Button aButton in AllKeys.getButtons())
 				{
+	
 					if(!Inputs.inputDict.ContainsKey(aButton.tag))
 					{
+
 						//If any button equals the key pressed by user..
 						if(aButton.name.ToLower().Equals(setInput))
 						{
+
 							//Removes the current button (Got from when the player clicks the button above)
 							KeyboardUI.removeKeyboardKey(buttonInput);
 							//Gets the tag from buttonInput, button to add, String value of what was pressed
@@ -117,12 +114,13 @@ public class InputManager : MonoBehaviour {
 							//Causes the tool tip to disappear
 							KeyLevels.setLegendKey(buttonInput.tag, Inputs.inputDict[buttonInput.tag].getInputKeyCode().ToString());
 							HoverHelperText.setLegendKeys(buttonInput.tag);
-
+				
 						}
 
 					}
 					
 				}
+				buttonInput.tag = "Untagged";
 				hoverKeyboard.keyboardKeyboardExit();
 				setInput = "";
 				isOn = false;
@@ -131,6 +129,25 @@ public class InputManager : MonoBehaviour {
 			
 		}
 		
+	}
+
+	public void setKey(Button aButtonInput, string anInput)
+	{
+
+		Debug.Log(aButtonInput.name);
+		Debug.Log(anInput);
+
+		//Gets the tag from buttonInput, button to add, String value of what was pressed
+		Inputs.setInput(aButtonInput, aButtonInput, anInput);
+		//Gets the button that was added above, and the tag from above
+		KeyboardUI.setKeyBoardBasedOnTags(Inputs.inputDict[aButtonInput.tag].getInputButton(), aButtonInput.tag,
+		                                  Inputs.inputDict[aButtonInput.tag].getInputKeyCode().ToString());
+		//Sets the value of the hover input
+		HoverHelperText.setHoverKeys(aButtonInput.tag);
+		//Causes the tool tip to disappear
+		KeyLevels.setLegendKey(aButtonInput.tag, Inputs.inputDict[aButtonInput.tag].getInputKeyCode().ToString());
+		HoverHelperText.setLegendKeys(aButtonInput.tag);
+
 	}
 
 	public static string GetKey(string aKey)

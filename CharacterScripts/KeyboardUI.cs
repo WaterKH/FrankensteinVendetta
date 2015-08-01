@@ -14,7 +14,7 @@ public class KeyboardUI {
 		
 		input.GetComponent<Image>().color = whiteCol;
 		Inputs.inputDict.Remove(input.tag);
-		
+
 	}
 	
 	//Initial call to make another one below

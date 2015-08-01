@@ -55,13 +55,6 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 
 	public SaveLoad saveLoad;
 
-	void Awake()
-	{
-
-		saveLoad.LoadKeyboard();
-
-	}
-
 	void Start() {
 
 		myTransform = transform;

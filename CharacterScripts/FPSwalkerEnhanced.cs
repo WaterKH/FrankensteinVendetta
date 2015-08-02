@@ -71,6 +71,8 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 		walking = true;
 		running = false;
 		crouching = false;
+
+		saveLoad.LoadKeyboard();
 		
 	}
 
@@ -92,11 +94,11 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 				falling = false;
 						
 			// Jump! But only if the jump button has been released and player has been grounded for a given number of frames
-			if(!Input.inputString.Equals(InputManager.GetKey(KeyboardTags.jump)))
+			if(!Input.GetKeyDown(InputManager.GetKey(KeyboardTags.jump)))
 				jumpTimer++;
 			else if (jumpTimer >= antiBunnyHopFactor) 
 			{
-
+			
 				moveDirection.y = jumpSpeed;
 				jumpTimer = 0;
 
@@ -138,23 +140,20 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 
 		// If the run button is set to toggle, then switch between walk/run speed. (We use Update for this...
 		// FixedUpdate is a poor place to use GetButtonDown, since it doesn't necessarily run every frame and can miss the event)
-		if (grounded && Input.inputString.Equals(InputManager.GetKey(KeyboardTags.run)) && !crouching)
+		if (grounded && Input.GetKey(InputManager.GetKey(KeyboardTags.run)) && !crouching)
 			speed = (speed == walkSpeed? runSpeed : walkSpeed);
-		if(Input.anyKey)
-		{
+
+		if (Input.GetKey(InputManager.GetKey(KeyboardTags.run)) && !crouching) {
+			running = true;
+			walking = false;
+
+			//Debug.Log ("Is running.");
+		} else if (Input.GetKeyDown(InputManager.GetKey(KeyboardTags.crouch))) {
+
+			crouching = !crouching;
+			running = false;
+			walking = false;
 			
-			if (Input.inputString.Equals(InputManager.GetKey(KeyboardTags.run)) && !crouching) {
-				running = true;
-				walking = false;
-
-				//Debug.Log ("Is running.");
-			} else if (Input.inputString.Equals(InputManager.GetKey(KeyboardTags.crouch))) {
-
-				crouching = !crouching;
-				running = false;
-				walking = false;
-				
-			}
 		}
 
 		if(crouching)

@@ -45,20 +45,27 @@ public class InputManager : MonoBehaviour {
 	{
 
 		//Button grabbed here for use in the Update method
-		buttonInput = Inputs.inputDict[aButton.tag].getInputButton();
-		foreach(KeyValuePair<string, Inputs> input in Inputs.inputDict)
+		if(!aButton.tag.Equals("Untagged"))
 		{
 
-			//If the button clicked is in my button list I can continue
-			if(buttonInput.tag.Equals(input.Key))
+			buttonInput = Inputs.inputDict[aButton.tag].getInputButton();
+			foreach(KeyValuePair<string, Inputs> input in Inputs.inputDict)
 			{
 
-				isOn = true;
-				break;
+				//If the button clicked is in my button list I can continue
+				if(buttonInput.tag.Equals(input.Key))
+				{
+
+					isOn = true;
+					break;
+				}
+				
 			}
-			
+			if(!isOn)
+				Debug.Log("Please choose a key already binded.");
+
 		}
-		if(!isOn)
+		else
 			Debug.Log("Please choose a key already binded.");
 	
 	}
@@ -150,10 +157,10 @@ public class InputManager : MonoBehaviour {
 
 	}
 
-	public static string GetKey(string aKey)
+	public static KeyCode GetKey(string aKey)
 	{
 
-		return Inputs.inputDict[aKey].getInputKeyCode().ToString();
+		return Inputs.inputDict[aKey].getInputKeyCode();
 
 	}
 

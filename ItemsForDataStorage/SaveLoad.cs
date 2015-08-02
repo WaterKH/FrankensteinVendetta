@@ -62,6 +62,7 @@ public class SaveLoad : MonoBehaviour {
 		data.listInventory = playerData.getListInventory ();
 		data.listInventoryObjects = playerData.getListInventoryObjects();
 		data.inventoryCamera = rendTexture.rendTextCameras;
+		data.userName = userName;
 
 		bf.Serialize (file, data);
 		file.Close ();
@@ -88,6 +89,7 @@ public class SaveLoad : MonoBehaviour {
 			playerData.setListInventory(data.listInventory);
 			playerData.setListInventoryObjects(data.listInventoryObjects);
 			rendTexture.rendTextCameras = data.inventoryCamera;
+			userName = data.userName;
 
 			loaded = true;
 			LoadKeyboard();
@@ -205,11 +207,14 @@ public class SaveLoad : MonoBehaviour {
 		foreach(Button input in KeyLevels.legendList)
 			keyData.legendList.Add(buttonSer.returnButtonText(input));
 
+		keyData.userName = userName;
+
 		bf.Serialize(file, keyData);
 		file.Close();
 
 	}
 
+	//TODO Fix the userName 
 	public void LoadKeyboard()
 	{
 
@@ -227,29 +232,11 @@ public class SaveLoad : MonoBehaviour {
 
 			for(int i = 0; i < keyData.keyCodes.Count; i++)
 			{
-				Debug.Log(buttonSer.getButtonSer(keyData.buttonTexts[i], keyData.buttonTags[i]));
+
 				inputManager.setKey(buttonSer.getButtonSer(keyData.buttonTexts[i], keyData.buttonTags[i]), keyData.keyCodes[i].ToString());
 
 			}
 
-			/*
-			for(int i = 0; i < keyData.keyCodes.Count; i++)
-			{
-
-				Inputs.inputDict.Add(keyData.buttonTags[i], new Inputs(keyData.keyCodes[i], 
-				                                                       keyData.buttonTags[i], keyData.buttonTexts[i]));
-
-				HoverKeyboard.hoverHelperText.Add(keyData.hoverHelperDictKey[i], keyData.hoverHelperValue[i]);
-				HoverKeyboard.legendText.Add(keyData.legendDictKey[i], keyData.legendDictValue[i]);
-
-			}
-
-			foreach(string input in keyData.legendList)
-				KeyLevels.legendList.Add(buttonSer.getButtonSer(input));
-
-			foreach(KeyValuePair<string, Inputs> aButton in Inputs.inputDict)
-				aButton.Value.getInputButton().GetComponent<Image>().color = KeyboardUI.inUseCol;
-*/
 		}
 		else
 			inputManager.DEFAULT_LAYOUT();
@@ -270,6 +257,7 @@ class PlayerData
 	public List<GameObject> listInventory;
 	public List<GameObject> listInventoryObjects;
 	public List<Camera> inventoryCamera;
+	public string userName;
 
 }
 
@@ -302,5 +290,7 @@ class KeyboardData
 	public List<string> legendDictValue;
 
 	public List<string> legendList;
+
+	public string userName;
 
 }

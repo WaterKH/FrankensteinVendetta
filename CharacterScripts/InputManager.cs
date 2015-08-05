@@ -157,10 +157,55 @@ public class InputManager : MonoBehaviour {
 
 	}
 
-	public static KeyCode GetKey(string aKey)
+	public static bool GetKey(string aKey)
 	{
 
-		return Inputs.inputDict[aKey].getInputKeyCode();
+		return Input.GetKey(Inputs.inputDict[aKey].getInputKeyCode());
+
+	}
+
+	public static bool GetKeyDown(string aKey)
+	{
+
+		return Input.GetKeyDown(Inputs.inputDict[aKey].getInputKeyCode());
+	
+	}
+
+	public static bool GetKeyUp(string aKey)
+	{
+
+		return Input.GetKeyUp(Inputs.inputDict[aKey].getInputKeyCode());
+
+	}
+
+	public static float GetAxis(string aKey)
+	{
+	
+		if(Input.GetKey(Inputs.inputDict[aKey].getInputKeyCode()))
+		{
+
+			if(Inputs.inputDict[aKey].getInputKeyCode().ToString().Equals(
+				Inputs.inputDict[KeyboardTags.moveForward].getInputKeyCode().ToString())
+			   		||Inputs.inputDict[aKey].getInputKeyCode().ToString().Equals(
+				Inputs.inputDict[KeyboardTags.moveRight].getInputKeyCode().ToString()))
+			{
+
+				return 1.0f;
+
+			}
+			else if(Inputs.inputDict[aKey].getInputKeyCode().ToString().Equals(
+				Inputs.inputDict[KeyboardTags.moveBackward].getInputKeyCode().ToString())
+			        || Inputs.inputDict[aKey].getInputKeyCode().ToString().Equals(
+				Inputs.inputDict[KeyboardTags.moveLeft].getInputKeyCode().ToString()))
+			{
+
+				return -1.0f;
+
+			}
+
+		}
+
+		return 0.0f;
 
 	}
 

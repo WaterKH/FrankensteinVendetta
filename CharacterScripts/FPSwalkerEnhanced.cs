@@ -4,16 +4,15 @@ using UnityEngine.UI;
 
 public class FPSwalkerEnhanced: MonoBehaviour {
 
-	public float walkSpeed = 4.0f;
-	public float runSpeed = 6.0f;
-	public float crouchSpeed = 1.5f;
+	public float walkSpeed = 10.0f;
+	public float runSpeed = 12.0f;
+	public float crouchSpeed = 6.5f;
 
-	float initWalkSpeed = 4.0f;
-	float initRunSpeed = 6.0f;
+	float initWalkSpeed = 10.0f;
+	float initRunSpeed = 12.0f;
 	float initialHeight = 0f;
 	float elapsedTime = 0f;
 
-	public bool walking = true;
 	public bool running = false;
 	public bool crouching = false;
 
@@ -21,19 +20,21 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 	public bool limitDiagonalSpeed = true;
 
 	public float jumpSpeed = 8.0f;
-	public float gravity = 20.0f;
+	public float gravity = 10.0f;
+	public float maxChangeVel = 10.0f;
 
 	// Units that player can fall before a falling damage function is run. To disable, type "infinity" in the inspector
 	public float fallingDamageThreshold = 10.0f;
 
 	// If checked, then the player can change direction while in the air
-	public bool airControl = false;
+	public bool airControl = true;
 
 	// Small amounts of this results in bumping when walking down slopes, but large amounts results in falling too fast
 	public float antiBumpFactor = .75f;
 
 	// Player must be grounded for at least this many physics frames before being able to jump again; set to 0 to allow bunny hopping
 	public int antiBunnyHopFactor = 1;
+	public Rigidbody rigidBod;
 
 	private Vector3 moveDirection = Vector3.zero;
 	private bool grounded = false;
@@ -43,13 +44,12 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 	private float fallStartLevel;
 	private bool falling;
 	private string contactPoint;
-	private bool playerControl = false;
+	private bool playerControl = true;
 	private int jumpTimer;
 	private float cameraYOffset;
 
 	private bool crouchKeyWasDown;
 	private float crouchHeight;
-	private float standardHeight;
 	private GameObject mainCamera;
 	private float height;
 
@@ -68,7 +68,6 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 		crouchHeight = height/2;
 		initialHeight = height;
 
-		walking = true;
 		running = false;
 		crouching = false;
 
@@ -80,8 +79,8 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 	void FixedUpdate() {
 
 		//TODO Change this!
-		float inputX = Input.GetAxis("Horizontal");
-		float inputY = Input.GetAxis("Vertical");
+		float inputX = InputManager.GetAxis(KeyboardTags.moveLeft) + InputManager.GetAxis(KeyboardTags.moveRight);
+		float inputY = InputManager.GetAxis(KeyboardTags.moveBackward) + InputManager.GetAxis(KeyboardTags.moveForward);
 
 		// If both horizontal and vertical are used simultaneously, limit speed (if allowed), so the total doesn't exceed normal move speed
 		float inputModifyFactor = (inputX != 0.0f && inputY != 0.0f && limitDiagonalSpeed)? .7071f : 1.0f;
@@ -92,14 +91,30 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 			// If we were falling, and we fell a vertical distance greater than the threshold, run a falling damage routine
 			if (falling)
 				falling = false;
+
+			speed = InputManager.GetKey (KeyboardTags.run) ? runSpeed : walkSpeed;
 						
-			// Jump! But only if the jump button has been released and player has been grounded for a given number of frames
-			if(!Input.GetKeyDown(InputManager.GetKey(KeyboardTags.jump)))
-				jumpTimer++;
-			else if (jumpTimer >= antiBunnyHopFactor) 
-			{
+			cameraYOffset = mainCamera.transform.localPosition.y;
+			moveDirection = new Vector3 (inputX * inputModifyFactor, -antiBumpFactor, inputY * inputModifyFactor);
+			moveDirection = myTransform.TransformDirection (moveDirection) * speed;
 			
+			Vector3 velocity = rigidBod.velocity;
+			Vector3 velocityChange = moveDirection - velocity;
+			velocityChange.x = Mathf.Clamp(velocityChange.x, -maxChangeVel, maxChangeVel);
+			velocityChange.z = Mathf.Clamp(velocityChange.z, -maxChangeVel, maxChangeVel);
+			velocityChange.y = 0;
+
+			rigidBod.AddForce(velocityChange, ForceMode.VelocityChange);
+
+			// Jump! But only if the jump button has been released and player has been grounded for a given number of frames
+			if(!InputManager.GetKey(KeyboardTags.jump))
+				jumpTimer++;
+			else if (jumpTimer >= antiBunnyHopFactor && InputManager.GetKeyDown(KeyboardTags.jump)) 
+			{
+
+				Debug.Log("Jump!");
 				moveDirection.y = jumpSpeed;
+				rigidBod.velocity = new Vector3(velocity.x, CalculateJumpVerticalSpeed(), velocity.z);
 				jumpTimer = 0;
 
 			}
@@ -127,8 +142,7 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 		}
 
 		// Apply gravity
-		moveDirection.y -= gravity * Time.deltaTime;
-
+		rigidBod.AddForce(new Vector3 (0, -gravity * rigidBod.mass, 0));
 
 		// Move the controller, and set grounded true or false depending on whether we're standing on something
 		if(contactPoint != null)
@@ -140,20 +154,18 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 
 		// If the run button is set to toggle, then switch between walk/run speed. (We use Update for this...
 		// FixedUpdate is a poor place to use GetButtonDown, since it doesn't necessarily run every frame and can miss the event)
-		if (grounded && Input.GetKey(InputManager.GetKey(KeyboardTags.run)) && !crouching)
+		if (grounded && InputManager.GetKey(KeyboardTags.run) && !crouching)
 			speed = (speed == walkSpeed? runSpeed : walkSpeed);
 
-		if (Input.GetKey(InputManager.GetKey(KeyboardTags.run)) && !crouching) {
+		if (InputManager.GetKey(KeyboardTags.run) && !crouching) {
 			running = true;
-			walking = false;
 
 			//Debug.Log ("Is running.");
-		} else if (Input.GetKeyDown(InputManager.GetKey(KeyboardTags.crouch))) {
+		} else if (InputManager.GetKeyDown(KeyboardTags.crouch)) {
 
 			crouching = !crouching;
 			running = false;
-			walking = false;
-			
+
 		}
 
 		if(crouching)
@@ -172,17 +184,32 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 				height = initialHeight;
 			walkSpeed = initWalkSpeed;
 			runSpeed = initRunSpeed;
-			walking = true;
-			
 			
 		}
+
+		if(InputManager.GetKey(KeyboardTags.leanLeft))
+			LeanLeft();
 
 	}
 	
 
 	// Store point that we're in contact with for use in FixedUpdate if needed
-	void OnCollisionEnter (Collision collision) {
+	void OnCollisionStay (Collision collision) {
 		contactPoint = collision.gameObject.tag;
+		Debug.Log(contactPoint);
+	}
+
+	float CalculateJumpVerticalSpeed () {
+		// From the jump height and gravity we deduce the upwards speed 
+		// for the character to reach at the apex.
+		return Mathf.Sqrt(2 * jumpSpeed * gravity);
+	}
+
+	void LeanLeft()
+	{
+		Quaternion mainCamRot = mainCamera.transform.rotation;
+		mainCamera.transform.rotation = Quaternion.Euler(new Vector3(30,0,0));
+
 	}
 
 }

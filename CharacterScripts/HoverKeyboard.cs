@@ -11,14 +11,6 @@ public class HoverKeyboard : MonoBehaviour {
 	public static Dictionary<string, string> hoverHelperText;
 	public static Dictionary<string, string> legendText;
 
-	public GameObject movement;
-	public GameObject modification;
-	public GameObject action;
-
-	public GameObject initMove;
-	public GameObject initModi;
-	public GameObject initAction;
-
 	public GameObject mouseLeftClick;
 	public GameObject mouseRightClick;
 

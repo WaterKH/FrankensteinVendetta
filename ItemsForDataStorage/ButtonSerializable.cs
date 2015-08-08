@@ -45,7 +45,7 @@ public class ButtonSerializable {
 
 			if(AllKeys.allKeys[i].GetComponentInChildren<Text>().text.Equals(aText))
 			{
-
+				Debug.Log(buttonTag);
 				AllKeys.allKeys[i].tag = buttonTag;
 				return AllKeys.allKeys[i];
 

@@ -96,25 +96,25 @@ public class DefaultKeyBindings {
 	public static void DEFAULT_LIST_FOR_LEGEND(GameObject movement, GameObject modification, GameObject action)
 	{
 
-		KeyLevels.legendList = new List<Button>();
+		AllKeys.legendList = new List<Button>();
 		
 		Transform[] children = movement.GetComponentsInChildren<Transform>();
 		foreach(Transform key in children)
 			if(key.gameObject.GetComponent<Button>() != null)
-				KeyLevels.legendList.Add(key.gameObject.GetComponent<Button>());
+				AllKeys.legendList.Add(key.gameObject.GetComponent<Button>());
 		
 		children = modification.GetComponentsInChildren<Transform>();
 		foreach(Transform key in children)
 			if(key.gameObject.GetComponent<Button>() != null)
-				KeyLevels.legendList.Add(key.gameObject.GetComponent<Button>());
+				AllKeys.legendList.Add(key.gameObject.GetComponent<Button>());
 		
 		children = action.GetComponentsInChildren<Transform>();
 		foreach(Transform key in children)
 			if(key.gameObject.GetComponent<Button>() != null)
-				KeyLevels.legendList.Add(key.gameObject.GetComponent<Button>());
+				AllKeys.legendList.Add(key.gameObject.GetComponent<Button>());
 
-		for(int i = 0; i < KeyLevels.legendList.Count; i++)
-				KeyLevels.legendList[i].GetComponentInChildren<Text>().text = 
+		for(int i = 0; i < AllKeys.legendList.Count; i++)
+				AllKeys.legendList[i].GetComponentInChildren<Text>().text = 
 					Inputs.inputDict[KeyboardTags.keyboardTagsList[i]].getInputKeyCode().ToString();
 
 	}

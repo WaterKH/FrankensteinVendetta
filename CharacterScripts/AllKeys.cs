@@ -7,8 +7,9 @@ using UnityEngine.UI;
 public class AllKeys : MonoBehaviour {
 
 	public static List<Button> allKeys;
-	public GameObject KeyboardLayout;
+	public static List<Button> legendList;
 
+	public GameObject KeyboardLayout;
 	public GameObject movementKeys;
 	public GameObject modificationKeys;
 	public GameObject actionKeys;
@@ -39,6 +40,20 @@ public class AllKeys : MonoBehaviour {
 
 		DefaultKeyBindings.DEFAULT_LIST_FOR_LEGEND(movementKeys, modificationKeys, actionKeys);
 
+	}
+
+	public static void setLegendKey(string buttonTag, string keyCode)
+	{
+		
+		foreach(Button aLegendButton in legendList)
+		{
+
+			Debug.Log(aLegendButton.name);
+			if(aLegendButton.tag.Equals(buttonTag))
+				aLegendButton.GetComponentInChildren<Text>().text = keyCode;
+			
+		}
+		
 	}
 
 }

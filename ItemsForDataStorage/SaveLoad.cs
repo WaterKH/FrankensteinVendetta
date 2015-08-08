@@ -23,6 +23,7 @@ public class SaveLoad : MonoBehaviour {
 	public ButtonSerializable buttonSer = new ButtonSerializable();
 	public InputManager inputManager;
 	public Inputs anInput = new Inputs();
+	public AllKeys allKeys;
 
 	//Used for making the save/ load paths
 	public string userName;
@@ -204,7 +205,7 @@ public class SaveLoad : MonoBehaviour {
 
 		}
 
-		foreach(Button input in KeyLevels.legendList)
+		foreach(Button input in AllKeys.legendList)
 			keyData.legendList.Add(buttonSer.returnButtonText(input));
 
 		keyData.userName = userName;
@@ -228,18 +229,30 @@ public class SaveLoad : MonoBehaviour {
 			Inputs.inputDict = new Dictionary<string, Inputs>();
 			HoverKeyboard.hoverHelperText = new Dictionary<string, string>();
 			HoverKeyboard.legendText = new Dictionary<string, string>();
-			KeyLevels.legendList = new List<Button>();
+			AllKeys.legendList = new List<Button>();
+			KeyboardTags.keyboardTagsList = new List<string>();
 
 			for(int i = 0; i < keyData.keyCodes.Count; i++)
 			{
 
-				inputManager.setKey(buttonSer.getButtonSer(keyData.buttonTexts[i], keyData.buttonTags[i]), keyData.keyCodes[i].ToString());
+				inputManager.setKey(buttonSer.getButtonSer(keyData.buttonTexts[i], keyData.buttonTags[i]), keyData.keyCodes[i]);
+				AllKeys.legendList.Add(buttonSer.getButtonSer(keyData.buttonTexts[i], keyData.buttonTags[i]));
+				KeyboardTags.keyboardTags(keyData.buttonTags[i]);
+				AllKeys.legendList[i].GetComponentInChildren<Text>().text = Inputs.inputDict[KeyboardTags.keyboardTagsList[i]].getInputKeyCode().ToString();
+				AllKeys.setLegendKey(keyData.buttonTags[i], keyData.keyCodes[i]);
 
 			}
 
+			allKeys.objectsForDefaultClass();
+			
 		}
 		else
+		{
+
+			Debug.Log("No Keyboard data found");
 			inputManager.DEFAULT_LAYOUT();
+
+		}
 
 	}
 

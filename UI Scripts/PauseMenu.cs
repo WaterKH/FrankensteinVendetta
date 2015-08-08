@@ -30,10 +30,10 @@ public class PauseMenu : MonoBehaviour {
 			elapsedTime = 1;
 		if(canvasTime > 1)
 			canvasTime = 1;
-		//TODO
-		/*
+		//TODO Still fix the "Hover over resume"
+
 		//If the esc button is pressed..
-		if (Input.inputString.Equals(inputs.pause) || Input.inputString.Equals(inputs.pauseSecondary)) 
+		if (InputManager.GetKeyDown(KeyboardTags.pause) || InputManager.GetKeyDown(KeyboardTags.pauseSecondary)) 
 		{
 
 			//.. set to false if true, true if false
@@ -46,7 +46,7 @@ public class PauseMenu : MonoBehaviour {
 
 		}
 		//If the notes button is pressed..
-		if (Input.inputString.Equals(inputs.notes)) 
+		if (InputManager.GetKeyDown(KeyboardTags.notes)) 
 		{
 
 			//.. Calls the method clickedJournal() which is below
@@ -54,7 +54,7 @@ public class PauseMenu : MonoBehaviour {
 			elapsedTime = 0;
 			canvasTime = 0;
 		}
-*/
+
 		//if the escKey is true..
 		if (escKey) {
 

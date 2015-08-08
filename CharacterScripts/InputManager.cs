@@ -16,6 +16,14 @@ public class InputManager : MonoBehaviour {
 	bool isOn;
 	Button buttonInput;
 
+	//TODO For testing purposes only!: Remove when done
+	void Awake()
+	{
+
+		saveLoad.LoadKeyboard();
+
+	}
+
 	//Called by Default Button
 	public void DEFAULT_LAYOUT()
 	{
@@ -23,7 +31,7 @@ public class InputManager : MonoBehaviour {
 		KeyboardUI.resetKeyboard();
 		Inputs.inputDict = new Dictionary<string, Inputs>();
 		HoverKeyboard.hoverHelperText = new Dictionary<string, string>();
-		KeyLevels.legendList = new List<Button>();
+		AllKeys.legendList = new List<Button>();
 
 		DEFAULT_LAYOUT(AllKeys.getButtons());
 		
@@ -119,7 +127,7 @@ public class InputManager : MonoBehaviour {
 							//Sets the value of the hover input
 							HoverHelperText.setHoverKeys(buttonInput.tag);
 							//Causes the tool tip to disappear
-							KeyLevels.setLegendKey(buttonInput.tag, Inputs.inputDict[buttonInput.tag].getInputKeyCode().ToString());
+							AllKeys.setLegendKey(buttonInput.tag, Inputs.inputDict[buttonInput.tag].getInputKeyCode().ToString());
 							HoverHelperText.setLegendKeys(buttonInput.tag);
 				
 						}
@@ -141,9 +149,6 @@ public class InputManager : MonoBehaviour {
 	public void setKey(Button aButtonInput, string anInput)
 	{
 
-		Debug.Log(aButtonInput.name);
-		Debug.Log(anInput);
-
 		//Gets the tag from buttonInput, button to add, String value of what was pressed
 		Inputs.setInput(aButtonInput, aButtonInput, anInput);
 		//Gets the button that was added above, and the tag from above
@@ -151,8 +156,7 @@ public class InputManager : MonoBehaviour {
 		                                  Inputs.inputDict[aButtonInput.tag].getInputKeyCode().ToString());
 		//Sets the value of the hover input
 		HoverHelperText.setHoverKeys(aButtonInput.tag);
-		//Causes the tool tip to disappear
-		KeyLevels.setLegendKey(aButtonInput.tag, Inputs.inputDict[aButtonInput.tag].getInputKeyCode().ToString());
+		AllKeys.setLegendKey(aButtonInput.tag, Inputs.inputDict[aButtonInput.tag].getInputKeyCode().ToString());
 		HoverHelperText.setLegendKeys(aButtonInput.tag);
 
 	}

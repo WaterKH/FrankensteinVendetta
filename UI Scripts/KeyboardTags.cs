@@ -57,4 +57,11 @@ public class KeyboardTags {
 
 	}
 
+	public static void keyboardTags(string buttonTag)
+	{
+
+		keyboardTagsList.Add(buttonTag);
+
+	}
+
 }

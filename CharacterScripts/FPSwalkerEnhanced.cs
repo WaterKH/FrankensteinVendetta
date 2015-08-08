@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class FPSwalkerEnhanced: MonoBehaviour {
 
-	public float walkSpeed = 10.0f;
+	public float walkSpeed = 6.0f;
 	public float runSpeed = 12.0f;
 	public float crouchSpeed = 6.5f;
 
@@ -19,7 +19,7 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 	// If true, diagonal speed (when strafing + moving forward or back) can't exceed normal move speed; otherwise it's about 1.4 times faster
 	public bool limitDiagonalSpeed = true;
 
-	public float jumpSpeed = 8.0f;
+	public float jumpSpeed = 4.0f;
 	public float gravity = 10.0f;
 	public float maxChangeVel = 10.0f;
 
@@ -37,15 +37,14 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 	public Rigidbody rigidBod;
 
 	private Vector3 moveDirection = Vector3.zero;
-	private bool grounded = false;
+	public bool grounded = true;
 	private Transform myTransform;
 	private float speed;
 	private RaycastHit hit;
 	private float fallStartLevel;
 	private bool falling;
-	private string contactPoint;
 	private bool playerControl = true;
-	private int jumpTimer;
+	public int jumpTimer;
 	private float cameraYOffset;
 
 	private bool crouchKeyWasDown;
@@ -111,8 +110,7 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 				jumpTimer++;
 			else if (jumpTimer >= antiBunnyHopFactor && InputManager.GetKeyDown(KeyboardTags.jump)) 
 			{
-
-				Debug.Log("Jump!");
+	
 				moveDirection.y = jumpSpeed;
 				rigidBod.velocity = new Vector3(velocity.x, CalculateJumpVerticalSpeed(), velocity.z);
 				jumpTimer = 0;
@@ -123,31 +121,27 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 		else 
 		{
 
-				// If we stepped over a cliff or something, set the height at which we started falling
-				if (!falling) {
+			// If we stepped over a cliff or something, set the height at which we started falling
+			if (!falling) {
 
-					falling = true;
-					fallStartLevel = myTransform.position.y;
-										
-				}							
-				// If air control is allowed, check movement but don't touch the y component
-				if (airControl && playerControl) {
+				falling = true;
+				fallStartLevel = myTransform.position.y;
+									
+			}							
+			// If air control is allowed, check movement but don't touch the y component
+			if (airControl && playerControl) {
 
-					moveDirection.x = inputX * speed * inputModifyFactor;
-					moveDirection.z = inputY * speed * inputModifyFactor;
-					moveDirection = myTransform.TransformDirection (moveDirection);
-			
-				}
+				moveDirection.x = inputX * speed * inputModifyFactor;
+				moveDirection.z = inputY * speed * inputModifyFactor;
+				moveDirection = myTransform.TransformDirection (moveDirection);
+		
+			}
 			
 		}
 
 		// Apply gravity
 		rigidBod.AddForce(new Vector3 (0, -gravity * rigidBod.mass, 0));
-
-		// Move the controller, and set grounded true or false depending on whether we're standing on something
-		if(contactPoint != null)
-			if(contactPoint.Equals("ground"))
-				grounded = true;
+		grounded = isGrounded();
 						
 	}
 	void Update () {
@@ -164,6 +158,12 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 		} else if (InputManager.GetKeyDown(KeyboardTags.crouch)) {
 
 			crouching = !crouching;
+			running = false;
+
+		}
+		else
+		{
+
 			running = false;
 
 		}
@@ -191,18 +191,18 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 			LeanLeft();
 
 	}
-	
-
-	// Store point that we're in contact with for use in FixedUpdate if needed
-	void OnCollisionStay (Collision collision) {
-		contactPoint = collision.gameObject.tag;
-		Debug.Log(contactPoint);
-	}
 
 	float CalculateJumpVerticalSpeed () {
 		// From the jump height and gravity we deduce the upwards speed 
 		// for the character to reach at the apex.
 		return Mathf.Sqrt(2 * jumpSpeed * gravity);
+	}
+
+	bool isGrounded()
+	{
+
+		return (Physics.Raycast(transform.position, new Vector3(0,-1.15f,0), out hit, 1.15f));
+
 	}
 
 	void LeanLeft()

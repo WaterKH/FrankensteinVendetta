@@ -89,7 +89,6 @@ public class KeyboardUI {
 			break;
 		case "jump":
 			input.color = inUseCol;
-			Debug.Log(input.name);
 			Debug.Log(tagString+" was recolored");
 			break;
 		case "pause":
@@ -344,7 +343,7 @@ public class KeyboardUI {
 			Inputs.setInput(buttonInput, AllKeys.allKeys[index], key);
 			setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag, key);
 			HoverHelperText.setHoverKeys(buttonInput.tag);
-			KeyLevels.setLegendKey(buttonInput.tag, key);
+			AllKeys.setLegendKey(buttonInput.tag, key);
 			HoverHelperText.setLegendKeys(buttonInput.tag);
 			isOn = false;
 			return true;

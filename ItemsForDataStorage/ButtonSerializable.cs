@@ -37,22 +37,22 @@ public class ButtonSerializable {
 
 	}
 
-	public Button getButtonSer(string aText, string buttonTag)
+	public Button getButtonSer(string aName, string buttonTag)
 	{
 	
 		for(int i = 0; i < AllKeys.allKeys.Count; i++)
 		{
 
-			if(AllKeys.allKeys[i].GetComponentInChildren<Text>().text.Equals(aText))
+			if(AllKeys.allKeys[i].name.ToLower().Equals(aName.ToLower()))
 			{
-				Debug.Log(buttonTag);
+				Debug.Log(AllKeys.allKeys[i].GetComponentInChildren<Text>().text);
 				AllKeys.allKeys[i].tag = buttonTag;
 				return AllKeys.allKeys[i];
 
 			}
 
 		}
-
+		Debug.Log(aName + " " + buttonTag);
 		return null;
 
 	}

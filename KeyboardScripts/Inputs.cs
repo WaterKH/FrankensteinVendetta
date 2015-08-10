@@ -139,7 +139,7 @@ public class Inputs {
 		else
 		{
 			inputDict.Add(inputForDict.getInputTag(), inputForDict);
-			Debug.Log("For some reason the key was not contained");
+			Debug.Log("Loading from save file..");
 			Debug.Log (inputDict[inputForDict.getInputTag()].getInputKeyCode().ToString());
 
 		}

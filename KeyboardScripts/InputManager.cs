@@ -10,14 +10,14 @@ public class InputManager : MonoBehaviour {
 	KeyboardUI keyboardUI = new KeyboardUI();
 	public HoverKeyboard hoverKeyboard;
 	public AllKeys allKeys;
-	public SaveLoad saveLoad;
+	public SaveLoadKeyboard saveLoad;
 	public ButtonSerializable buttonSer = new ButtonSerializable();
 
 	bool isOn;
 	Button buttonInput;
 
 	//TODO For testing purposes only!: Remove when done
-	void Awake()
+	void Start()
 	{
 
 		saveLoad.LoadKeyboard();
@@ -60,7 +60,6 @@ public class InputManager : MonoBehaviour {
 			foreach(KeyValuePair<string, Inputs> input in Inputs.inputDict)
 			{
 
-				//If the button clicked is in my button list I can continue
 				if(buttonInput.tag.Equals(input.Key))
 				{
 
@@ -102,38 +101,49 @@ public class InputManager : MonoBehaviour {
 		//Checks the above method for special cases
 		if(!KeyboardUI.checkSpecialInput(buttonInput, isOn))
 		{
-			
+	
 			//sets the string to what's pressed on the keyboard
 			string setInput = Input.inputString;
-			if(!setInput.Equals(""))
+			bool contained = false;
+			foreach(KeyValuePair<string, Inputs> anInput in Inputs.inputDict)
 			{
-			
+				
+				if(anInput.Value.getInputButton().GetComponentInChildren<Text>().text.ToLower().Equals(setInput.ToLower()))
+				{
+
+					contained = true;
+					isOn = false;
+					Debug.Log("This key has already been binded, choose another one.");
+					break;
+					
+				}
+				
+			}
+
+			if(!setInput.Equals("") && !contained)
+			{
+
 				foreach(Button aButton in AllKeys.getButtons())
 				{
 	
-					if(!Inputs.inputDict.ContainsKey(aButton.tag))
+					//If any button equals the key pressed by user..
+					if(aButton.name.ToLower().Equals(setInput))
 					{
 
-						//If any button equals the key pressed by user..
-						if(aButton.name.ToLower().Equals(setInput))
-						{
-
-							//Removes the current button (Got from when the player clicks the button above)
-							KeyboardUI.removeKeyboardKey(buttonInput);
-							//Gets the tag from buttonInput, button to add, String value of what was pressed
-							Inputs.setInput(buttonInput, aButton, setInput.ToUpper());
-							//Gets the button that was added above, and the tag from above
-							KeyboardUI.setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag, setInput.ToUpper());
-							//Sets the value of the hover input
-							HoverHelperText.setHoverKeys(buttonInput.tag);
-							//Causes the tool tip to disappear
-							AllKeys.setLegendKey(buttonInput.tag, Inputs.inputDict[buttonInput.tag].getInputKeyCode().ToString());
-							HoverHelperText.setLegendKeys(buttonInput.tag);
-				
-						}
-
+						//Removes the current button (Got from when the player clicks the button above)
+						KeyboardUI.removeKeyboardKey(buttonInput);
+						//Gets the tag from buttonInput, button to add, String value of what was pressed
+						Inputs.setInput(buttonInput, aButton, setInput.ToUpper());
+						//Gets the button that was added above, and the tag from above
+						KeyboardUI.setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag, setInput.ToUpper());
+						//Sets the value of the hover input
+						HoverHelperText.setHoverKeys(buttonInput.tag);
+						//Causes the tool tip to disappear
+						AllKeys.setLegendKey(buttonInput.tag, Inputs.inputDict[buttonInput.tag].getInputKeyCode().ToString());
+						HoverHelperText.setLegendKeys(buttonInput.tag);
+			
 					}
-					
+
 				}
 				buttonInput.tag = "Untagged";
 				hoverKeyboard.keyboardKeyboardExit();

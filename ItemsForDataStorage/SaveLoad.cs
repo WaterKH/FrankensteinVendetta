@@ -22,7 +22,6 @@ public class SaveLoad : MonoBehaviour {
 	public RenderTextureScript rendTexture;
 	public ButtonSerializable buttonSer = new ButtonSerializable();
 	public InputManager inputManager;
-	public Inputs anInput = new Inputs();
 	public AllKeys allKeys;
 
 	//Used for making the save/ load paths
@@ -172,7 +171,7 @@ public class SaveLoad : MonoBehaviour {
 
 		keyData.keyCodes = new List<string>();
 		keyData.buttonTags = new List<string>();
-		keyData.buttonTexts = new List<string>();
+		keyData.buttonNames = new List<string>();
 		keyData.hoverHelperDictKey = new List<string>();
 		keyData.hoverHelperValue = new List<string>();
 		keyData.legendDictKey = new List<string>();
@@ -184,7 +183,7 @@ public class SaveLoad : MonoBehaviour {
 
 			keyData.keyCodes.Add(input.Value.getInputKeyCode().ToString());
 			keyData.buttonTags.Add(input.Key);
-			keyData.buttonTexts.Add(input.Value.getInputButton().GetComponentInChildren<Text>().text);
+			keyData.buttonNames.Add(input.Value.getInputButton().name);
 
 		}
 
@@ -235,16 +234,14 @@ public class SaveLoad : MonoBehaviour {
 			for(int i = 0; i < keyData.keyCodes.Count; i++)
 			{
 
-				inputManager.setKey(buttonSer.getButtonSer(keyData.buttonTexts[i], keyData.buttonTags[i]), keyData.keyCodes[i]);
-				AllKeys.legendList.Add(buttonSer.getButtonSer(keyData.buttonTexts[i], keyData.buttonTags[i]));
+
+				inputManager.setKey(buttonSer.getButtonSer(keyData.buttonNames[i], keyData.buttonTags[i]), keyData.keyCodes[i]);
 				KeyboardTags.keyboardTags(keyData.buttonTags[i]);
-				AllKeys.legendList[i].GetComponentInChildren<Text>().text = Inputs.inputDict[KeyboardTags.keyboardTagsList[i]].getInputKeyCode().ToString();
-				AllKeys.setLegendKey(keyData.buttonTags[i], keyData.keyCodes[i]);
 
 			}
 
 			allKeys.objectsForDefaultClass();
-			
+
 		}
 		else
 		{
@@ -294,7 +291,7 @@ class KeyboardData
 	//Tags on buttons, Keycode, Button String
 	public List<string> keyCodes;
 	public List<string> buttonTags;
-	public List<string> buttonTexts;
+	public List<string> buttonNames;
 
 	public List<string> hoverHelperDictKey;
 	public List<string> hoverHelperValue;

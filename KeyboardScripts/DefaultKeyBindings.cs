@@ -114,8 +114,17 @@ public class DefaultKeyBindings {
 				AllKeys.legendList.Add(key.gameObject.GetComponent<Button>());
 
 		for(int i = 0; i < AllKeys.legendList.Count; i++)
-				AllKeys.legendList[i].GetComponentInChildren<Text>().text = 
-					Inputs.inputDict[KeyboardTags.keyboardTagsList[i]].getInputKeyCode().ToString();
+		{
+			for(int j = 0; j < AllKeys.legendList.Count; j++)
+			{
+
+				if(AllKeys.legendList[i].name.Equals(Inputs.inputDict[KeyboardTags.keyboardTagsList[j]].getInputButtonTag()))
+					AllKeys.legendList[i].GetComponentInChildren<Text>().text = 
+						Inputs.inputDict[KeyboardTags.keyboardTagsList[j]].getInputKeyCode().ToString();
+
+			}
+
+		}
 
 	}
 

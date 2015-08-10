@@ -48,9 +48,11 @@ public class AllKeys : MonoBehaviour {
 		foreach(Button aLegendButton in legendList)
 		{
 
-			Debug.Log(aLegendButton.name);
 			if(aLegendButton.tag.Equals(buttonTag))
+			{
 				aLegendButton.GetComponentInChildren<Text>().text = keyCode;
+				Debug.Log(buttonTag);
+			}
 			
 		}
 		

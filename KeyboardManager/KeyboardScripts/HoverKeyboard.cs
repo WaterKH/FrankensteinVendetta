@@ -11,9 +11,6 @@ public class HoverKeyboard : MonoBehaviour {
 	public static Dictionary<string, string> hoverHelperText;
 	public static Dictionary<string, string> legendText;
 
-	public GameObject mouseLeftClick;
-	public GameObject mouseRightClick;
-
 	public void keyboardHoverEnter(Button aButton)
 	{
 
@@ -27,30 +24,6 @@ public class HoverKeyboard : MonoBehaviour {
 			hoverHelper.transform.position = new Vector3(Input.mousePosition.x+60f, Input.mousePosition.y+25f, Input.mousePosition.z+5f);
 			mousePos = hoverHelper.transform.position;
 			hoverHelper.GetComponentInChildren<Text>().text = HoverHelperText.hoverHelperText(hoverHelperText, aButton);
-
-		}
-		else if(mouseLeftClick.tag.Equals(aButton.tag))
-		{
-
-			Transform parent = aButton.transform.parent;
-			hovering = true;
-			hoverHelper = Instantiate(Resources.Load("HoverHelper") as GameObject);
-			hoverHelper.transform.SetParent(parent);
-			hoverHelper.transform.position = new Vector3(Input.mousePosition.x+60f, Input.mousePosition.y+25f, Input.mousePosition.z+5f);
-			mousePos = hoverHelper.transform.position;
-			hoverHelper.GetComponentInChildren<Text>().text = HoverHelperText.hoverHelperText(mouseLeftClick, aButton);
-
-		}
-		else if(mouseRightClick.tag.Equals(aButton.tag))
-		{
-			
-			Transform parent = aButton.transform.parent;
-			hovering = true;
-			hoverHelper = Instantiate(Resources.Load("HoverHelper") as GameObject);
-			hoverHelper.transform.SetParent(parent);
-			hoverHelper.transform.position = new Vector3(Input.mousePosition.x+60f, Input.mousePosition.y+25f, Input.mousePosition.z+5f);
-			mousePos = hoverHelper.transform.position;
-			hoverHelper.GetComponentInChildren<Text>().text = HoverHelperText.hoverHelperText(mouseRightClick, aButton);
 
 		}
 

@@ -42,6 +42,7 @@ public class Inputs {
 
 	}
 
+	//Overloaded
 	public Inputs(string anInput, string aTag, string buttonText)
 	{
 
@@ -125,7 +126,7 @@ public class Inputs {
 	//aKey will be which key button on keyboard to replace with
 	public static void setInput(Button buttonForTag, Button buttonForInput, string aKey)
 	{
-
+	
 		Inputs inputForDict = new Inputs(aKey, buttonForTag.tag, buttonForInput);
 		if(inputDict.ContainsKey(buttonForTag.tag))
 		{
@@ -139,7 +140,6 @@ public class Inputs {
 		else
 		{
 			inputDict.Add(inputForDict.getInputTag(), inputForDict);
-			Debug.Log("Loading from save file..");
 			Debug.Log (inputDict[inputForDict.getInputTag()].getInputKeyCode().ToString());
 
 		}

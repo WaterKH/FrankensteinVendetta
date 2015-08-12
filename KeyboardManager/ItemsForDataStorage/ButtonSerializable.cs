@@ -39,7 +39,7 @@ public class ButtonSerializable {
 
 	public Button getButtonSer(string aName, string buttonTag)
 	{
-	
+
 		for(int i = 0; i < AllKeys.allKeys.Count; i++)
 		{
 
@@ -52,6 +52,7 @@ public class ButtonSerializable {
 			}
 
 		}
+
 		Debug.Log(aName + " " + buttonTag);
 		return null;
 

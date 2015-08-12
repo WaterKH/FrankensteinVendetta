@@ -3,9 +3,32 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class DefaultKeyBindings {
+public class KeyBindings {
 
 	public AllKeys allKeys;
+
+	public static void KEYS(string anInput, Button aButton)
+	{
+
+		aButton.tag = anInput;
+		Inputs.inputDict.Add(anInput, new Inputs(aButton.name, anInput, aButton));
+		colorKeyboard(aButton);
+
+	}
+
+	public static void HOVER_KEYS(string anInput, Button aButton)
+	{
+
+		HoverKeyboard.hoverHelperText.Add(anInput, aButton.name);
+
+	}
+
+	public static void LEGEND(string anInput, string aType)
+	{
+
+		HoverKeyboard.legendText.Add(anInput, aType);
+
+	}
 
 	//For Inputs class
 	public static void DEFAULT_KEYS(List<Button> buttonList)//allKeys.getButtons(); <-- Gets all keys
@@ -32,9 +55,7 @@ public class DefaultKeyBindings {
 		Inputs.inputDict.Add(KeyboardTags.crouch, new Inputs("LeftControl", KeyboardTags.crouch, buttonList[55]));
 		Inputs.inputDict.Add(KeyboardTags.jump, new Inputs("Space", KeyboardTags.jump, buttonList[56]));
 
-
-		foreach(KeyValuePair<string, Inputs> aButton in Inputs.inputDict)
-			aButton.Value.getInputButton().GetComponent<Image>().color = KeyboardUI.inUseCol;
+		colorKeyboard();
 
 	}
 
@@ -87,14 +108,17 @@ public class DefaultKeyBindings {
 		HoverKeyboard.legendText.Add(KeyboardTags.inventorySecondary, KeyboardTags.Action);
 		HoverKeyboard.legendText.Add(KeyboardTags.pause, KeyboardTags.Modification);
 		HoverKeyboard.legendText.Add(KeyboardTags.pauseSecondary, KeyboardTags.Modification);
-		HoverKeyboard.legendText.Add(KeyboardTags.run, KeyboardTags.Modification);
-		HoverKeyboard.legendText.Add(KeyboardTags.crouch, KeyboardTags.Modification);
+		HoverKeyboard.legendText.Add(KeyboardTags.run, KeyboardTags.Action);
+		HoverKeyboard.legendText.Add(KeyboardTags.crouch, KeyboardTags.Action);
 		HoverKeyboard.legendText.Add(KeyboardTags.jump, KeyboardTags.Movement);
 		
 	}
 
-	public static void DEFAULT_LIST_FOR_LEGEND(GameObject movement, GameObject modification, GameObject action)
+	/*
+	public static void LIST_FOR_LEGEND(GameObject movement, GameObject modification, GameObject action)
 	{
+
+
 
 		AllKeys.legendList = new List<Button>();
 		
@@ -126,6 +150,21 @@ public class DefaultKeyBindings {
 
 		}
 
+	}*/
+
+	private static void colorKeyboard()
+	{
+		
+		foreach(KeyValuePair<string, Inputs> aButton in Inputs.inputDict)
+			aButton.Value.getInputButton().GetComponent<Image>().color = KeyboardUI.inUseCol;
+		
+	}
+	
+	private static void colorKeyboard(Button aButton)
+	{
+		
+		aButton.GetComponent<Image>().color = KeyboardUI.inUseCol;
+		
 	}
 
 }

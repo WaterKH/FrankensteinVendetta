@@ -69,9 +69,7 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 
 		running = false;
 		crouching = false;
-
-		saveLoad.LoadKeyboard();
-		
+	
 	}
 
 

@@ -6,45 +6,74 @@ using System.IO;
 
 public class InputManager : MonoBehaviour {
 
-	Inputs inputs = new Inputs();
-	KeyboardUI keyboardUI = new KeyboardUI();
 	public HoverKeyboard hoverKeyboard;
 	public AllKeys allKeys;
 	public SaveLoadKeyboard saveLoad;
 	public ButtonSerializable buttonSer = new ButtonSerializable();
+	
+	//!! Make sure that they correspond !!
+	//This will be where you input in the inspector what names you want for your keys
+	public List<string> INPUTS;
+	//This will be where you add the buttons from the scene
+	public List<Button> BUTTONS;
+	public static List<Button> BUTTONS_STATIC;
+	//This will be where you add your types/ classifications for each key (ie - moveForward = Movement, pause = Modification)
+	public List<string> TYPES;
 
-	bool isOn;
+	public List<string> NAMES;
+	//!! Make sure that they correspond !!
+	
+	public static bool isOn;
 	Button buttonInput;
 
-	//TODO For testing purposes only!: Remove when done
-	void Start()
+	void Awake()
 	{
 
-		saveLoad.LoadKeyboard();
+		BUTTONS_STATIC = BUTTONS;
 
 	}
 
 	//Called by Default Button
-	public void DEFAULT_LAYOUT()
+	public void CONFIGURE_LAYOUT()
 	{
-
 		KeyboardUI.resetKeyboard();
 		Inputs.inputDict = new Dictionary<string, Inputs>();
 		HoverKeyboard.hoverHelperText = new Dictionary<string, string>();
+		HoverKeyboard.legendText = new Dictionary<string, string>();
 		AllKeys.legendList = new List<Button>();
 
-		DEFAULT_LAYOUT(AllKeys.getButtons());
+		if(INPUTS.Count == BUTTONS.Count && INPUTS.Count > 0)
+		{
+
+			KeyboardTags.keyboardTagsList = new List<string>();
+
+			for(int i = 0; i < INPUTS.Count; i++)
+			{
+
+				KeyboardTags.keyboardTagsList.Add(INPUTS[i]);
+				KeyBindings.KEYS(INPUTS[i], BUTTONS[i]);
+				KeyBindings.HOVER_KEYS(INPUTS[i], BUTTONS[i]);
+				KeyBindings.LEGEND(INPUTS[i], TYPES[i]);
+				AllKeys.LIST_LEGEND(INPUTS[i], TYPES[i]);
+
+			}
+
+			//allKeys.objectsForKeys();
+
+		}
+		else
+			DEFAULT_LAYOUT(AllKeys.getButtons());
 		
 	}
 	
 	//Sets the keys to default
-	public void DEFAULT_LAYOUT(List<Button> buttonList)
+	private void DEFAULT_LAYOUT(List<Button> buttonList)
 	{
 
 		KeyboardTags.keyboardTags();
-		DefaultKeyBindings.DEFAULT_KEYS(buttonList);
-		DefaultKeyBindings.DEFAULT_HOVER_KEYS();
-		allKeys.objectsForDefaultClass();
+		KeyBindings.DEFAULT_KEYS(buttonList);
+		KeyBindings.DEFAULT_HOVER_KEYS();
+		//allKeys.objectsForKeys();
 		
 	}
 
@@ -97,9 +126,8 @@ public class InputManager : MonoBehaviour {
 
 	private void setKey()
 	{
-
 		//Checks the above method for special cases
-		if(!KeyboardUI.checkSpecialInput(buttonInput, isOn))
+		if(!KeyboardUI.checkSpecialInput(buttonInput, isOn, hoverKeyboard))
 		{
 	
 			//sets the string to what's pressed on the keyboard
@@ -135,7 +163,7 @@ public class InputManager : MonoBehaviour {
 						//Gets the tag from buttonInput, button to add, String value of what was pressed
 						Inputs.setInput(buttonInput, aButton, setInput.ToUpper());
 						//Gets the button that was added above, and the tag from above
-						KeyboardUI.setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag, setInput.ToUpper());
+						KeyboardUI.setKeyboardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag, setInput.ToUpper());
 						//Sets the value of the hover input
 						HoverHelperText.setHoverKeys(buttonInput.tag);
 						//Causes the tool tip to disappear
@@ -156,13 +184,13 @@ public class InputManager : MonoBehaviour {
 		
 	}
 
-	public void setKey(Button aButtonInput, string anInput)
+	public void setKey(string anInput, Button aButtonInput)
 	{
 
 		//Gets the tag from buttonInput, button to add, String value of what was pressed
-		Inputs.setInput(aButtonInput, aButtonInput, anInput);
+		Inputs.setInputFromData(anInput, aButtonInput);
 		//Gets the button that was added above, and the tag from above
-		KeyboardUI.setKeyBoardBasedOnTags(Inputs.inputDict[aButtonInput.tag].getInputButton(), aButtonInput.tag,
+		KeyboardUI.setKeyboardBasedOnTags(Inputs.inputDict[aButtonInput.tag].getInputButton(), aButtonInput.tag,
 		                                  Inputs.inputDict[aButtonInput.tag].getInputKeyCode().ToString());
 		//Sets the value of the hover input
 		HoverHelperText.setHoverKeys(aButtonInput.tag);

@@ -80,6 +80,10 @@ public class HoverHelperText {
 					return HoverKeyboard.legendText[KeyboardTags.crouch]+": To crouch, press the "+hoverText.Value+" key.";	
 				case "jump":
 					return HoverKeyboard.legendText[KeyboardTags.jump]+": To jump, press the "+hoverText.Value+" key.";
+				case "stifleBreathORCoverLight":
+					return "Action: To stifle breath or cover light, press the Right Mouse button.";
+				case "actionSecondary":
+					return "Action: To interact with objects, press the Left Mouse button";
 				default:
 					return "No function is binded to this key.";
 					
@@ -89,24 +93,6 @@ public class HoverHelperText {
 		}
 		return "This should never run because the default case should run first";
 		
-	}
-
-	public static string hoverHelperText(GameObject mouse, Button aButton)
-	{
-
-		switch(mouse.tag)
-		{
-
-		case "stifleBreathORCoverLight":
-			return "Action: To stifle breath or cover light, press the Right Mouse button.";
-		case "actionSecondary":
-			return "Action: To interact with objects, press the Left Mouse button";
-		default:
-			return "This should never run...";
-
-		}
-
-
 	}
 
 }

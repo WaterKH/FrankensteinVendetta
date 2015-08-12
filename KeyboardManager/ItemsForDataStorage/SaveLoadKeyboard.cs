@@ -11,12 +11,13 @@ public class SaveLoadKeyboard : MonoBehaviour {
 	public ButtonSerializable buttonSer = new ButtonSerializable();
 	public InputManager inputManager;
 	public AllKeys allKeys;
+	public SaveLoad saveLoad;
 
 	public void SaveKeyboard()
 	{
 		
 		BinaryFormatter bf = new BinaryFormatter();
-		FileStream file = File.Create(Application.persistentDataPath + "/KeyboardInfo.dat");
+		FileStream file = File.Create(Application.persistentDataPath + "/" + saveLoad.userName + "KeyboardInfo.dat");
 		KeyboardDataSer keyData = new KeyboardDataSer();
 		
 		keyData.keyCodes = new List<string>();
@@ -66,10 +67,10 @@ public class SaveLoadKeyboard : MonoBehaviour {
 	public void LoadKeyboard()
 	{
 		
-		if (File.Exists (Application.persistentDataPath + "/KeyboardInfo.dat")) {
+		if (File.Exists (Application.persistentDataPath + "/" + saveLoad.userName + "KeyboardInfo.dat")) {
 			
 			BinaryFormatter bf = new BinaryFormatter ();
-			FileStream file = File.Open (Application.persistentDataPath + "/KeyboardInfo.dat", FileMode.Open);
+			FileStream file = File.Open (Application.persistentDataPath + "/" + saveLoad.userName + "KeyboardInfo.dat", FileMode.Open);
 			KeyboardDataSer keyData = (KeyboardDataSer)bf.Deserialize(file);
 			file.Close();
 			
@@ -83,19 +84,19 @@ public class SaveLoadKeyboard : MonoBehaviour {
 			{
 				
 				
-				inputManager.setKey(buttonSer.getButtonSer(keyData.buttonNames[i], keyData.buttonTags[i]), keyData.keyCodes[i]);
+				inputManager.setKey(keyData.keyCodes[i], buttonSer.getButtonSer(keyData.buttonNames[i], keyData.buttonTags[i]));
 				KeyboardTags.keyboardTags(keyData.buttonTags[i]);
 				
 			}
 			
-			allKeys.objectsForDefaultClass();
+			//allKeys.objectsForKeys();
 			
 		}
 		else
 		{
 			
 			Debug.Log("No Keyboard data found");
-			inputManager.DEFAULT_LAYOUT();
+			inputManager.CONFIGURE_LAYOUT();
 			
 		}
 		

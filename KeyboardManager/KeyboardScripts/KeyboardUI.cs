@@ -18,7 +18,7 @@ public class KeyboardUI {
 	}
 	
 	//Initial call to make another one below
-	public static void setKeyBoardBasedOnTags(Button input, string tagString, string keyCode)
+	public static void setKeyboardBasedOnTags(Button input, string tagString, string keyCode)
 	{
 		
 		//Calls the remove option above
@@ -79,6 +79,10 @@ public class KeyboardUI {
 			input.color = inUseCol;
 			Debug.Log(tagString+" was recolored");
 			break;
+		case "actionSecondary":
+			input.color = inUseCol;
+			Debug.Log(tagString+" was recolored");
+			break;
 		case "crouch":
 			input.color = inUseCol;
 			Debug.Log(tagString+" was recolored");
@@ -103,6 +107,10 @@ public class KeyboardUI {
 			input.color = inUseCol;
 			Debug.Log(tagString+" was recolored");
 			break;
+		case "stifleBreathORCoverLight":
+			input.color = inUseCol;
+			Debug.Log(tagString+" was recolored");
+			break;
 		default:
 			Debug.Log("No tag could be found");
 			input.color = whiteCol;
@@ -121,7 +129,7 @@ public class KeyboardUI {
 	}
 
 	//This method takes care of all of the odd keys that don't return the KeyCode string
-	public static bool checkSpecialInput(Button buttonInput, bool isOn)
+	public static bool checkSpecialInput(Button buttonInput, bool isOn, HoverKeyboard hoverKeyboard)
 	{
 		bool foundKey = false;
 		string key = "";
@@ -335,17 +343,115 @@ public class KeyboardUI {
 			index = 45;
 			
 		}
+		else if(Input.GetKeyDown(KeyCode.Alpha1))
+		{
+
+			foundKey = true;
+			key = "Alpha1";
+			index = 30;
+
+		}
+		else if(Input.GetKeyDown(KeyCode.Alpha2))
+		{
+			
+			foundKey = true;
+			key = "Alpha2";
+			index = 31;
+			
+		}
+		else if(Input.GetKeyDown(KeyCode.Alpha3))
+		{
+			
+			foundKey = true;
+			key = "Alpha3";
+			index = 32;
+			
+		}
+		else if(Input.GetKeyDown(KeyCode.Alpha4))
+		{
+			
+			foundKey = true;
+			key = "Alpha4";
+			index = 33;
+			
+		}
+		else if(Input.GetKeyDown(KeyCode.Alpha5))
+		{
+			
+			foundKey = true;
+			key = "Alpha5";
+			index = 34;
+			
+		}
+		else if(Input.GetKeyDown(KeyCode.Alpha6))
+		{
+			
+			foundKey = true;
+			key = "Alpha6";
+			index = 35;
+			
+		}
+		else if(Input.GetKeyDown(KeyCode.Alpha7))
+		{
+			
+			foundKey = true;
+			key = "Alpha7";
+			index = 36;
+			
+		}
+		else if(Input.GetKeyDown(KeyCode.Alpha8))
+		{
+			
+			foundKey = true;
+			key = "Alpha8";
+			index = 37;
+			
+		}
+		else if(Input.GetKeyDown(KeyCode.Alpha9))
+		{
+			
+			foundKey = true;
+			key = "Alpha9";
+			index = 38;
+			
+		}
+		else if(Input.GetKeyDown(KeyCode.Alpha0))
+		{
+			
+			foundKey = true;
+			key = "Alpha0";
+			index = 39;
+			
+		}
+		else if(Input.GetKeyDown(KeyCode.Mouse0))
+		{
+
+			foundKey = true;
+			key = "Mouse0";
+			index = 62;
+
+		}
+		else if(Input.GetKeyDown(KeyCode.Mouse1))
+		{
+
+			foundKey = true;
+			key = "Mouse1";
+			index = 63;
+
+		}
 		
 		if(foundKey)
 		{
 
 			removeKeyboardKey(buttonInput);
 			Inputs.setInput(buttonInput, AllKeys.allKeys[index], key);
-			setKeyBoardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag, key);
+			setKeyboardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag, key);
 			HoverHelperText.setHoverKeys(buttonInput.tag);
 			AllKeys.setLegendKey(buttonInput.tag, key);
 			HoverHelperText.setLegendKeys(buttonInput.tag);
-			isOn = false;
+			InputManager.isOn = false;
+			buttonInput.tag = "Untagged";
+			hoverKeyboard.keyboardKeyboardExit();
 			return true;
 			
 		}

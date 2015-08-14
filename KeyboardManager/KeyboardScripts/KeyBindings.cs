@@ -11,22 +11,23 @@ public class KeyBindings {
 	{
 
 		aButton.tag = anInput;
-		Inputs.inputDict.Add(anInput, new Inputs(aButton.name, anInput, aButton));
+		if(!Inputs.inputDict.ContainsKey(anInput))
+			Inputs.inputDict.Add(anInput, new Inputs(aButton.name, anInput, aButton));
 		colorKeyboard(aButton);
 
 	}
 
 	public static void HOVER_KEYS(string anInput, Button aButton)
 	{
-
-		HoverKeyboard.hoverHelperText.Add(anInput, aButton.name);
+		if(!HoverKeyboard.hoverHelperText.ContainsKey(anInput))
+			HoverKeyboard.hoverHelperText.Add(anInput, aButton.name);
 
 	}
 
 	public static void LEGEND(string anInput, string aType)
 	{
-
-		HoverKeyboard.legendText.Add(anInput, aType);
+		if(!HoverKeyboard.legendText.ContainsKey(anInput))
+			HoverKeyboard.legendText.Add(anInput, aType);
 
 	}
 
@@ -54,6 +55,10 @@ public class KeyBindings {
 		Inputs.inputDict.Add(KeyboardTags.run, new Inputs("LeftShift", KeyboardTags.run, buttonList[49]));
 		Inputs.inputDict.Add(KeyboardTags.crouch, new Inputs("LeftControl", KeyboardTags.crouch, buttonList[55]));
 		Inputs.inputDict.Add(KeyboardTags.jump, new Inputs("Space", KeyboardTags.jump, buttonList[56]));
+		Inputs.inputDict.Add(KeyboardTags.actionSecondary, new Inputs("Mouse1", KeyboardTags.actionSecondary, buttonList[63]));
+		Inputs.inputDict.Add (KeyboardTags.stifleBreathORCoverLight, new Inputs("Mouse0", 
+		                                                                        KeyboardTags.stifleBreathORCoverLight,
+		                                                                        buttonList[62]));
 
 		colorKeyboard();
 
@@ -73,6 +78,7 @@ public class KeyBindings {
 		HoverKeyboard.hoverHelperText.Add(KeyboardTags.leanLeft, Inputs.inputDict[KeyboardTags.leanLeft].getInputKeyCode().ToString());
 		HoverKeyboard.hoverHelperText.Add(KeyboardTags.leanRight, Inputs.inputDict[KeyboardTags.leanRight].getInputKeyCode().ToString());
 		HoverKeyboard.hoverHelperText.Add(KeyboardTags.action, Inputs.inputDict[KeyboardTags.action].getInputKeyCode().ToString());
+		HoverKeyboard.hoverHelperText.Add(KeyboardTags.actionSecondary, Inputs.inputDict[KeyboardTags.actionSecondary].getInputKeyCode().ToString());
 		HoverKeyboard.hoverHelperText.Add(KeyboardTags.lightMatch, Inputs.inputDict[KeyboardTags.lightMatch].getInputKeyCode().ToString());
 		HoverKeyboard.hoverHelperText.Add(KeyboardTags.notes, Inputs.inputDict[KeyboardTags.notes].getInputKeyCode().ToString());
 		HoverKeyboard.hoverHelperText.Add(KeyboardTags.lookBehind, Inputs.inputDict[KeyboardTags.lookBehind].getInputKeyCode().ToString());
@@ -83,6 +89,8 @@ public class KeyBindings {
 		HoverKeyboard.hoverHelperText.Add(KeyboardTags.run, Inputs.inputDict[KeyboardTags.run].getInputKeyCode().ToString());
 		HoverKeyboard.hoverHelperText.Add(KeyboardTags.crouch, Inputs.inputDict[KeyboardTags.crouch].getInputKeyCode().ToString());
 		HoverKeyboard.hoverHelperText.Add(KeyboardTags.jump, Inputs.inputDict[KeyboardTags.jump].getInputKeyCode().ToString());
+		HoverKeyboard.hoverHelperText.Add(KeyboardTags.stifleBreathORCoverLight,
+		                                  Inputs.inputDict[KeyboardTags.stifleBreathORCoverLight].getInputKeyCode().ToString());
 		
 		DEFAULT_LEGEND();
 		
@@ -101,6 +109,7 @@ public class KeyBindings {
 		HoverKeyboard.legendText.Add(KeyboardTags.leanLeft, KeyboardTags.Modification);
 		HoverKeyboard.legendText.Add(KeyboardTags.leanRight, KeyboardTags.Modification);
 		HoverKeyboard.legendText.Add(KeyboardTags.action, KeyboardTags.Action);
+		HoverKeyboard.legendText.Add(KeyboardTags.actionSecondary, KeyboardTags.Action);
 		HoverKeyboard.legendText.Add(KeyboardTags.lightMatch, KeyboardTags.Action);
 		HoverKeyboard.legendText.Add(KeyboardTags.notes, KeyboardTags.Action);
 		HoverKeyboard.legendText.Add(KeyboardTags.lookBehind, KeyboardTags.Action);
@@ -111,46 +120,9 @@ public class KeyBindings {
 		HoverKeyboard.legendText.Add(KeyboardTags.run, KeyboardTags.Action);
 		HoverKeyboard.legendText.Add(KeyboardTags.crouch, KeyboardTags.Action);
 		HoverKeyboard.legendText.Add(KeyboardTags.jump, KeyboardTags.Movement);
+		HoverKeyboard.legendText.Add(KeyboardTags.stifleBreathORCoverLight, KeyboardTags.Action);
 		
 	}
-
-	/*
-	public static void LIST_FOR_LEGEND(GameObject movement, GameObject modification, GameObject action)
-	{
-
-
-
-		AllKeys.legendList = new List<Button>();
-		
-		Transform[] children = movement.GetComponentsInChildren<Transform>();
-		foreach(Transform key in children)
-			if(key.gameObject.GetComponent<Button>() != null)
-				AllKeys.legendList.Add(key.gameObject.GetComponent<Button>());
-		
-		children = modification.GetComponentsInChildren<Transform>();
-		foreach(Transform key in children)
-			if(key.gameObject.GetComponent<Button>() != null)
-				AllKeys.legendList.Add(key.gameObject.GetComponent<Button>());
-		
-		children = action.GetComponentsInChildren<Transform>();
-		foreach(Transform key in children)
-			if(key.gameObject.GetComponent<Button>() != null)
-				AllKeys.legendList.Add(key.gameObject.GetComponent<Button>());
-
-		for(int i = 0; i < AllKeys.legendList.Count; i++)
-		{
-			for(int j = 0; j < AllKeys.legendList.Count; j++)
-			{
-
-				if(AllKeys.legendList[i].name.Equals(Inputs.inputDict[KeyboardTags.keyboardTagsList[j]].getInputButtonTag()))
-					AllKeys.legendList[i].GetComponentInChildren<Text>().text = 
-						Inputs.inputDict[KeyboardTags.keyboardTagsList[j]].getInputKeyCode().ToString();
-
-			}
-
-		}
-
-	}*/
 
 	private static void colorKeyboard()
 	{

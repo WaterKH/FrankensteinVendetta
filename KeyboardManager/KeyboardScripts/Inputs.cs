@@ -128,21 +128,8 @@ public class Inputs {
 	{
 	
 		Inputs inputForDict = new Inputs(aKey, buttonForTag.tag, buttonForInput);
-		if(inputDict.ContainsKey(buttonForTag.tag))
-		{
-
-			Debug.Log(buttonForTag.tag+" is being replaced");
-			removeInput(buttonForInput);
-			inputDict.Add (inputForDict.getInputTag(), inputForDict);
-			Debug.Log (inputDict[inputForDict.getInputTag()].getInputKeyCode().ToString());
-
-		}
-		else
-		{
-			inputDict.Add(inputForDict.getInputTag(), inputForDict);
-			Debug.Log (inputDict[inputForDict.getInputTag()].getInputKeyCode().ToString());
-
-		}
+		inputDict.Add(inputForDict.getInputTag(), inputForDict);
+		Debug.Log ("Key to change to: "+inputDict[inputForDict.getInputTag()].getInputKeyCode().ToString());
 
 	}
 

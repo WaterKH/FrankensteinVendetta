@@ -9,9 +9,11 @@ public class InputManager : MonoBehaviour {
 	public HoverKeyboard hoverKeyboard;
 	public AllKeys allKeys;
 	public SaveLoadKeyboard saveLoad;
-	public ButtonSerializable buttonSer = new ButtonSerializable();
+	public ChangeHelpMenuText changeText;
+	ButtonSerializable buttonSer = new ButtonSerializable();
 	
 	//!! Make sure that they correspond !!
+	//!! THIS WILL BE EDITED IN THE INSPECTOR
 	//This will be where you input in the inspector what names you want for your keys
 	public List<string> INPUTS;
 	//This will be where you add the buttons from the scene
@@ -19,8 +21,9 @@ public class InputManager : MonoBehaviour {
 	public static List<Button> BUTTONS_STATIC;
 	//This will be where you add your types/ classifications for each key (ie - moveForward = Movement, pause = Modification)
 	public List<string> TYPES;
-
+	//This will be where you add the button names for each key
 	public List<string> NAMES;
+	//!! THIS WILL BE EDITED IN THE INSPECTOR
 	//!! Make sure that they correspond !!
 	
 	public static bool isOn;
@@ -54,15 +57,17 @@ public class InputManager : MonoBehaviour {
 				KeyBindings.KEYS(INPUTS[i], BUTTONS[i]);
 				KeyBindings.HOVER_KEYS(INPUTS[i], BUTTONS[i]);
 				KeyBindings.LEGEND(INPUTS[i], TYPES[i]);
-				AllKeys.LIST_LEGEND(INPUTS[i], TYPES[i]);
+				AllKeys.INITIAL_LIST_LEGEND(NAMES[i], INPUTS[i]);
 
 			}
 
-			//allKeys.objectsForKeys();
-
 		}
 		else
+		{
+			Debug.Log("Inputs didn't match buttons or there was no user input..");
 			DEFAULT_LAYOUT(AllKeys.getButtons());
+
+		}
 		
 	}
 	
@@ -73,7 +78,7 @@ public class InputManager : MonoBehaviour {
 		KeyboardTags.keyboardTags();
 		KeyBindings.DEFAULT_KEYS(buttonList);
 		KeyBindings.DEFAULT_HOVER_KEYS();
-		//allKeys.objectsForKeys();
+		AllKeys.INITIAL_LIST_LEGEND(buttonList);
 		
 	}
 
@@ -86,12 +91,13 @@ public class InputManager : MonoBehaviour {
 		{
 
 			buttonInput = Inputs.inputDict[aButton.tag].getInputButton();
+			Debug.Log("Key to be changed: "+buttonInput.name);
 			foreach(KeyValuePair<string, Inputs> input in Inputs.inputDict)
 			{
 
 				if(buttonInput.tag.Equals(input.Key))
 				{
-
+					changeText.selectedText(buttonInput.name);
 					isOn = true;
 					break;
 				}
@@ -127,7 +133,7 @@ public class InputManager : MonoBehaviour {
 	private void setKey()
 	{
 		//Checks the above method for special cases
-		if(!KeyboardUI.checkSpecialInput(buttonInput, isOn, hoverKeyboard))
+		if(!KeyboardUI.checkSpecialInput(buttonInput, changeText, hoverKeyboard))
 		{
 	
 			//sets the string to what's pressed on the keyboard
@@ -141,11 +147,12 @@ public class InputManager : MonoBehaviour {
 
 					contained = true;
 					isOn = false;
+					changeText.changedText("This key has already been binded, choose another one");
 					Debug.Log("This key has already been binded, choose another one.");
 					break;
 					
 				}
-				
+
 			}
 
 			if(!setInput.Equals("") && !contained)
@@ -157,7 +164,7 @@ public class InputManager : MonoBehaviour {
 					//If any button equals the key pressed by user..
 					if(aButton.name.ToLower().Equals(setInput))
 					{
-
+						changeText.changedText(aButton.name);
 						//Removes the current button (Got from when the player clicks the button above)
 						KeyboardUI.removeKeyboardKey(buttonInput);
 						//Gets the tag from buttonInput, button to add, String value of what was pressed

@@ -12,6 +12,9 @@ public class SaveLoadKeyboard : MonoBehaviour {
 	public InputManager inputManager;
 	public AllKeys allKeys;
 	public SaveLoad saveLoad;
+	public KeyboardVisible keyboardVisible;
+	public CanvasGroup askToSaveGroup;
+	bool hasSaved;
 
 	public void SaveKeyboard()
 	{
@@ -57,16 +60,23 @@ public class SaveLoadKeyboard : MonoBehaviour {
 		
 		foreach(Button input in AllKeys.legendList)
 			keyData.legendList.Add(buttonSer.returnButtonText(input));
-		
+
+		keyData.NAMES = inputManager.NAMES;
+
 		bf.Serialize(file, keyData);
 		file.Close();
+
+		hasSaved = true;
 		
 	}
 	
-	//TODO Fix the userName 
+	//TODO Fix the userName for use in game
 	public void LoadKeyboard()
 	{
-		
+
+		KeyboardUI.resetKeyboard();
+		AllKeys.removeLegend();
+
 		if (File.Exists (Application.persistentDataPath + "/" + saveLoad.userName + "KeyboardInfo.dat")) {
 			
 			BinaryFormatter bf = new BinaryFormatter ();
@@ -86,10 +96,9 @@ public class SaveLoadKeyboard : MonoBehaviour {
 				
 				inputManager.setKey(keyData.keyCodes[i], buttonSer.getButtonSer(keyData.buttonNames[i], keyData.buttonTags[i]));
 				KeyboardTags.keyboardTags(keyData.buttonTags[i]);
-				
+				AllKeys.INITIAL_LIST_LEGEND(keyData.NAMES[i], keyData.buttonTags[i]);
+
 			}
-			
-			//allKeys.objectsForKeys();
 			
 		}
 		else
@@ -100,6 +109,26 @@ public class SaveLoadKeyboard : MonoBehaviour {
 			
 		}
 		
+	}
+	//TODO Make hasSaved change depending on if any input has been changed
+	public void askToSave()
+	{
+
+		if(!hasSaved)
+		{
+
+			askToSaveGroup.alpha = 1;
+			askToSaveGroup.interactable = true;
+			askToSaveGroup.blocksRaycasts = true;
+
+		}
+		else
+		{
+
+			keyboardVisible.invisibleKeyboard();
+
+		}
+
 	}
 
 }
@@ -121,6 +150,8 @@ class KeyboardDataSer
 	public List<string> legendDictValue;
 	
 	public List<string> legendList;
+
+	public List<string> NAMES;
 	
 }
 

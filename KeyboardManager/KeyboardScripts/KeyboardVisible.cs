@@ -4,6 +4,7 @@ using System.Collections;
 public class KeyboardVisible : MonoBehaviour {
 
 	public CanvasGroup keyboard;
+	public CanvasGroup askToSave;
 	bool isOn;
 
 	public void visibleKeyboard()
@@ -16,6 +17,9 @@ public class KeyboardVisible : MonoBehaviour {
 	public void invisibleKeyboard()
 	{
 
+		askToSave.alpha = 0;
+		askToSave.blocksRaycasts = false;
+		askToSave.interactable = false;
 		isOn = false;
 
 	}

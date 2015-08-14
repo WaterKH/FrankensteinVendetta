@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
@@ -15,6 +15,14 @@ public class KeyboardUI {
 		input.GetComponent<Image>().color = whiteCol;
 		Inputs.inputDict.Remove(input.tag);
 
+	}
+
+	public static void resetKeyboard()
+	{
+		
+		foreach(Button key in AllKeys.allKeys)
+			key.GetComponent<Image>().color = whiteCol;
+		
 	}
 	
 	//Initial call to make another one below
@@ -120,17 +128,10 @@ public class KeyboardUI {
 		
 	}
 
-	public static void resetKeyboard()
-	{
-
-		foreach(Button key in AllKeys.allKeys)
-			key.GetComponent<Image>().color = whiteCol;
-
-	}
-
 	//This method takes care of all of the odd keys that don't return the KeyCode string
-	public static bool checkSpecialInput(Button buttonInput, bool isOn, HoverKeyboard hoverKeyboard)
+	public static bool checkSpecialInput(Button buttonInput, ChangeHelpMenuText changeText, HoverKeyboard hoverKeyboard)
 	{
+
 		bool foundKey = false;
 		string key = "";
 		int index = 0;
@@ -423,17 +424,17 @@ public class KeyboardUI {
 			index = 39;
 			
 		}
-		else if(Input.GetKeyDown(KeyCode.Mouse0))
+		else if(Input.GetKeyDown(KeyCode.Mouse0) || Input.GetMouseButton(0))
 		{
-
+			Debug.Log("Mouse0");
 			foundKey = true;
 			key = "Mouse0";
 			index = 62;
 
 		}
-		else if(Input.GetKeyDown(KeyCode.Mouse1))
+		else if(Input.GetKeyDown(KeyCode.Mouse1) || Input.GetMouseButton(1))
 		{
-
+			Debug.Log("Mouse1");
 			foundKey = true;
 			key = "Mouse1";
 			index = 63;
@@ -442,17 +443,39 @@ public class KeyboardUI {
 		
 		if(foundKey)
 		{
+			bool contained = false;
+			foreach(KeyValuePair<string, Inputs> anInput in Inputs.inputDict)
+			{
 
-			removeKeyboardKey(buttonInput);
-			Inputs.setInput(buttonInput, AllKeys.allKeys[index], key);
-			setKeyboardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag, key);
-			HoverHelperText.setHoverKeys(buttonInput.tag);
-			AllKeys.setLegendKey(buttonInput.tag, key);
-			HoverHelperText.setLegendKeys(buttonInput.tag);
-			InputManager.isOn = false;
-			buttonInput.tag = "Untagged";
-			hoverKeyboard.keyboardKeyboardExit();
-			return true;
+				if(anInput.Value.getInputButton().name.ToLower().Equals(key.ToLower()))
+				{
+
+					contained = true;
+					InputManager.isOn = false;
+					changeText.changedText("This key has already been binded, choose another one");
+					Debug.Log("This key has already been binded, choose another one.");
+					break;
+					
+				}
+				
+			}
+			if(!contained)
+			{
+				changeText.selectedText(buttonInput.name);
+				removeKeyboardKey(buttonInput);
+				Inputs.setInput(buttonInput, AllKeys.allKeys[index], key);
+				setKeyboardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag, key);
+				HoverHelperText.setHoverKeys(buttonInput.tag);
+				AllKeys.setLegendKey(buttonInput.tag, key);
+				HoverHelperText.setLegendKeys(buttonInput.tag);
+				InputManager.isOn = false;
+				buttonInput.tag = "Untagged";
+				hoverKeyboard.keyboardKeyboardExit();
+				return true;
+
+			}
+			else
+				return true;
 			
 		}
 		

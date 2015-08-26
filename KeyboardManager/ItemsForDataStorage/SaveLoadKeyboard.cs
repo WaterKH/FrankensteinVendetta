@@ -14,7 +14,7 @@ public class SaveLoadKeyboard : MonoBehaviour {
 	public SaveLoad saveLoad;
 	public KeyboardVisible keyboardVisible;
 	public CanvasGroup askToSaveGroup;
-	bool hasSaved;
+	public bool hasSaved = true;
 
 	public void SaveKeyboard()
 	{
@@ -110,6 +110,7 @@ public class SaveLoadKeyboard : MonoBehaviour {
 		}
 		
 	}
+
 	//TODO Make hasSaved change depending on if any input has been changed
 	public void askToSave()
 	{

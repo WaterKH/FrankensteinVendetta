@@ -164,6 +164,8 @@ public class InputManager : MonoBehaviour {
 					//If any button equals the key pressed by user..
 					if(aButton.name.ToLower().Equals(setInput))
 					{
+
+						saveLoad.hasSaved = false;
 						changeText.changedText(aButton.name);
 						//Removes the current button (Got from when the player clicks the button above)
 						KeyboardUI.removeKeyboardKey(buttonInput);

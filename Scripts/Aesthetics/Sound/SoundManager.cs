@@ -9,7 +9,7 @@ public static class SoundManager {
 		if(loop)
 			audioSource.GetComponent<AudioSource>().Play();
 		else
-			audioSource.GetComponent<AudioSource>().PlayOneShot();
+			audioSource.GetComponent<AudioSource>().PlayOneShot(audioSource.GetComponent<AudioClip>());
 
 	}
 

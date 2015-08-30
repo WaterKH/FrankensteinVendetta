@@ -11,7 +11,7 @@ using UnityEngine.UI;
 public class SaveLoad : MonoBehaviour {
 
 	//Script instances
-	public PlayerStats playerData;
+	public Player playerData = new Player();
 	public CameraStats cameraData;
 	public Vector3Serial playerVector3Ser = new Vector3Serial();
 	public QuaternionSerial playerQuatSer = new QuaternionSerial();
@@ -33,15 +33,17 @@ public class SaveLoad : MonoBehaviour {
 	void Awake ()
 	{
 
-		playerVector3Ser.setVector3Ser (transform.position.x, transform.position.y, transform.position.z);
-		playerQuatSer.setQuaternionSer (transform.rotation.x, transform.rotation.y, transform.rotation.z, transform.rotation.w);
+		playerVector3Ser.setVector3Ser (transform.position.x, transform.position.y, 
+		                                transform.position.z);
+		playerQuatSer.setQuaternionSer (transform.rotation.x, transform.rotation.y, 
+		                                transform.rotation.z, transform.rotation.w);
 
 	}
 	
 	public void Save()
 	{
 		//When saved, the playerData and CameraData set the location
-		playerData.setLocation ();
+		playerData.setLocation (gameObject.transform.parent.gameObject);
 		cameraData.setLocation ();
 		BinaryFormatter bf = new BinaryFormatter ();
 		//Creates a file with the userName with the Info.dat -- This makes different save files
@@ -51,14 +53,15 @@ public class SaveLoad : MonoBehaviour {
 		PlayerData data = new PlayerData ();
 		data.health = playerData.getHealth();
 		//Uses a Vector3Serial to serialize the data(Vector3 can't be serialized)
-		data.playerPosition = new Vector3Serial(playerData.getPosition ().x, playerData.getPosition ().y, playerData.getPosition ().z);
-		data.cameraPosition = new Vector3Serial (cameraData.getPosition ().x, cameraData.getPosition ().y, cameraData.getPosition ().z);
+		data.playerPosition = new Vector3Serial(playerData.getPosition ().x, playerData.getPosition ().y, 
+		                                        playerData.getPosition ().z);
+		data.cameraPosition = new Vector3Serial (cameraData.getPosition ().x, cameraData.getPosition ().y, 
+		                                         cameraData.getPosition ().z);
 		//Uses a QuaternionSerial to serialize the data(Quaternion can't be serialized)
-		data.playerRotation = new QuaternionSerial(playerData.getRotation ().x, playerData.getRotation ().y, playerData.getRotation ().z, playerData.getRotation ().w);
-		data.cameraRotation = new QuaternionSerial (cameraData.getRotation ().x, cameraData.getRotation ().y, cameraData.getRotation ().z, cameraData.getRotation ().w);
-		data.listPages = playerData.getListPages ();
-		data.listInventory = playerData.getListInventory ();
-		data.listInventoryObjects = playerData.getListInventoryObjects();
+		data.playerRotation = new QuaternionSerial(playerData.getRotation ().x, playerData.getRotation ().y, 
+		                                           playerData.getRotation ().z, playerData.getRotation ().w);
+		data.cameraRotation = new QuaternionSerial (cameraData.getRotation ().x, cameraData.getRotation ().y, 
+		                                            cameraData.getRotation ().z, cameraData.getRotation ().w);
 		data.inventoryCamera = rendTexture.rendTextCameras;
 		data.userName = userName;
 
@@ -83,9 +86,6 @@ public class SaveLoad : MonoBehaviour {
 			//Returns a Quaternion from the serialized class in order to load the position that was serialized
 			transform.rotation = data.playerRotation.returnQuaternion();
 			camObject.transform.rotation = data.cameraRotation.returnQuaternion ();
-			playerData.setListPages(data.listPages);
-			playerData.setListInventory(data.listInventory);
-			playerData.setListInventoryObjects(data.listInventoryObjects);
 			rendTexture.rendTextCameras = data.inventoryCamera;
 			userName = data.userName;
 

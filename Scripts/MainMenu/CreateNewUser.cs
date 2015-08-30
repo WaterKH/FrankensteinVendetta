@@ -13,7 +13,6 @@ public class CreateNewUser : MonoBehaviour {
 	//Script Instances
 	public List<User> userNamesMenu;
 	public SaveLoad saveLoadData;
-	public PlayerStats playerStats;
 	public NewPlayerClick playerClick;
 	public DeleteUser delete;
 	public PageFlipping flipPage;

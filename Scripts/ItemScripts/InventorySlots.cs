@@ -7,7 +7,7 @@ public class InventorySlots : MonoBehaviour {
 
 	public InventoryScript inventory;
 	public PauseMenu pauseMenu;
-	public PlayerStats playerStats;
+	//TODO Add lists of inventory
 	public RenderTextureScript rendTexture;
 
 	//TODO add inventory to SaveLoad
@@ -21,25 +21,10 @@ public class InventorySlots : MonoBehaviour {
 	{
 
 		inventoryList.Clear();
-		foreach(GameObject item in playerStats.listInventory)
-			inventoryList.Add(item.GetComponent<RawImage>());
-
-		listCount = playerStats.listInventory.Count;
 
 	}
 
 	void Update () {
-
-		if(playerStats.listInventory.Count > listCount)
-		{
-
-			inventoryList.Clear();
-			foreach(GameObject item in playerStats.listInventory)
-				inventoryList.Add(item.GetComponent<RawImage>());
-
-			listCount = playerStats.listInventory.Count;
-
-		}
 
 		numObjects = inventoryList.Count; 
 

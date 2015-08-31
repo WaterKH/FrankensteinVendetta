@@ -11,7 +11,7 @@ using UnityEngine.UI;
 public class SaveLoad : MonoBehaviour {
 
 	//Script instances
-	public Player playerData = new Player();
+	public Player_MAIN playerData;
 	public CameraStats cameraData;
 	public Vector3Serial playerVector3Ser = new Vector3Serial();
 	public QuaternionSerial playerQuatSer = new QuaternionSerial();
@@ -38,12 +38,13 @@ public class SaveLoad : MonoBehaviour {
 		playerQuatSer.setQuaternionSer (transform.rotation.x, transform.rotation.y, 
 		                                transform.rotation.z, transform.rotation.w);
 
+
 	}
 	
 	public void Save()
 	{
 		//When saved, the playerData and CameraData set the location
-		playerData.setLocation (gameObject.transform.parent.gameObject);
+		Player_MAIN.player.setLocation(gameObject);
 		cameraData.setLocation ();
 		BinaryFormatter bf = new BinaryFormatter ();
 		//Creates a file with the userName with the Info.dat -- This makes different save files
@@ -51,35 +52,34 @@ public class SaveLoad : MonoBehaviour {
 
 		//Creates a class instance from the private class below
 		PlayerData data = new PlayerData ();
-		data.health = playerData.getHealth();
+		data.player = Player_MAIN.player;
 		//Uses a Vector3Serial to serialize the data(Vector3 can't be serialized)
-		data.playerPosition = new Vector3Serial(playerData.getPosition ().x, playerData.getPosition ().y, 
-		                                        playerData.getPosition ().z);
+		data.playerPosition = new Vector3Serial(Player_MAIN.player.getPosition ().x, Player_MAIN.player.getPosition ().y, 
+		                                        Player_MAIN.player.getPosition ().z);
 		data.cameraPosition = new Vector3Serial (cameraData.getPosition ().x, cameraData.getPosition ().y, 
 		                                         cameraData.getPosition ().z);
 		//Uses a QuaternionSerial to serialize the data(Quaternion can't be serialized)
-		data.playerRotation = new QuaternionSerial(playerData.getRotation ().x, playerData.getRotation ().y, 
-		                                           playerData.getRotation ().z, playerData.getRotation ().w);
+		data.playerRotation = new QuaternionSerial(Player_MAIN.player.getRotation ().x, Player_MAIN.player.getRotation ().y, 
+		                                           Player_MAIN.player.getRotation ().z, Player_MAIN.player.getRotation ().w);
 		data.cameraRotation = new QuaternionSerial (cameraData.getRotation ().x, cameraData.getRotation ().y, 
 		                                            cameraData.getRotation ().z, cameraData.getRotation ().w);
 		data.inventoryCamera = rendTexture.rendTextCameras;
-		data.userName = userName;
 
 		bf.Serialize (file, data);
 		file.Close ();
 
 	}
-	public void Load()
+	public void Load(string aUserName)
 	{
 		//If it does exist this will run
-		if (File.Exists (Application.persistentDataPath + "/" + userName + "Info.dat")) {
+		if (File.Exists (Application.persistentDataPath + "/" + aUserName + "Info.dat")) {
 
 			BinaryFormatter bf = new BinaryFormatter ();
-			FileStream file = File.Open (Application.persistentDataPath + "/" + userName + "Info.dat", FileMode.Open);
+			FileStream file = File.Open (Application.persistentDataPath + "/" + aUserName + "Info.dat", FileMode.Open);
 			PlayerData data = (PlayerData)bf.Deserialize (file);
 			file.Close ();
 
-			playerData.health = data.health;
+			Player_MAIN.player = data.player;
 			//Returns a Vector3 from the serialized class in order to load the position that was serialized
 			transform.position = data.playerPosition.returnVector3();
 			camObject.transform.position = data.cameraPosition.returnVector3 ();
@@ -87,10 +87,10 @@ public class SaveLoad : MonoBehaviour {
 			transform.rotation = data.playerRotation.returnQuaternion();
 			camObject.transform.rotation = data.cameraRotation.returnQuaternion ();
 			rendTexture.rendTextCameras = data.inventoryCamera;
-			userName = data.userName;
 
 			loaded = true;
 			saveLoadKey.LoadKeyboard();
+			SaveUsers();
 		}
 		else
 			loaded = false;
@@ -165,7 +165,7 @@ public class SaveLoad : MonoBehaviour {
 [Serializable]
 class PlayerData
 {
-	public float health;
+	public Player player;
 	public Vector3Serial playerPosition;
 	public QuaternionSerial playerRotation;
 	public Vector3Serial cameraPosition;
@@ -174,7 +174,6 @@ class PlayerData
 	public List<GameObject> listInventory;
 	public List<GameObject> listInventoryObjects;
 	public List<Camera> inventoryCamera;
-	public string userName;
 
 }
 

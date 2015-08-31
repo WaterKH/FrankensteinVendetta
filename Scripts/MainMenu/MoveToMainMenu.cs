@@ -5,14 +5,11 @@ using System.Collections;
 public class MoveToMainMenu : MonoBehaviour {
 
 	//Transforms to be used
-	public Transform camPos;
-	public Transform camRot;
-	public Transform transCamPos;
-	public Transform transCamRot;
-	public Transform finalCamPos;
-	public Transform finalCamRot;
-	public Transform initialCamPos;
-	public Transform initialCamRot;
+	public Transform mainCam;
+	public Transform transCam;
+	public Transform finalCam;
+	public Transform initialCam;
+
 	//Used in NewPlayerClick
 	public bool moveTo;
 	public bool atMain;
@@ -40,9 +37,10 @@ public class MoveToMainMenu : MonoBehaviour {
 				{
 					timeToMoveToMain += Time.deltaTime;
 					//Lerps for position and rotation towards the actual Menu
-					camPos.position = Vector3.Lerp(camPos.position, finalCamPos.position, timeToMoveToMain/7);
-					camRot.rotation = Quaternion.Lerp(camRot.rotation, finalCamRot.rotation, timeToMoveToMain/7);
-					if(camPos.position == finalCamPos.position)
+					FVAPI.lerpVectorAndQuaternion(mainCam, finalCam, timeToMoveToMain/7);
+					//camPos.position = Vector3.Lerp(camPos.position, finalCamPos.position, timeToMoveToMain/7);
+					//camRot.rotation = Quaternion.Lerp(camRot.rotation, finalCamRot.rotation, timeToMoveToMain/7);
+					if(mainCam.position == finalCam.position)
 						doNotMove = false;
 				}
 				//runs if atMain is false
@@ -51,10 +49,11 @@ public class MoveToMainMenu : MonoBehaviour {
 
 					elapsedTime += Time.deltaTime;
 					//Lerps for position and rotation towards the transition point
-					camPos.position = Vector3.Lerp(camPos.position, transCamPos.position, elapsedTime/7);
-					camRot.rotation = Quaternion.Lerp(camRot.rotation, transCamRot.rotation, elapsedTime/7);
+					FVAPI.lerpVectorAndQuaternion(mainCam, transCam, elapsedTime/7);
+					//camPos.position = Vector3.Lerp(camPos.position, transCamPos.position, elapsedTime/7);
+					//camRot.rotation = Quaternion.Lerp(camRot.rotation, transCamRot.rotation, elapsedTime/7);
 					//When the Camera position eqauls the transition point..
-					if(camPos.position == transCamPos.position)
+					if(mainCam.position == transCam.position)
 						//..atMain becomes true
 						atMain = true;
 
@@ -63,7 +62,8 @@ public class MoveToMainMenu : MonoBehaviour {
 			else
 			{
 
-				mainMenuText.alpha = Mathf.Lerp(mainMenuText.alpha, 1, Time.deltaTime*2);
+				FVAPI.lerpAlphaChannelTimeMultiplied(mainMenuText, 1, 2);
+				//mainMenuText.alpha = Mathf.Lerp(mainMenuText.alpha, 1, Time.deltaTime*2);
 				mainMenuText.blocksRaycasts = true;
 				mainMenuText.interactable = true;
 
@@ -81,13 +81,15 @@ public class MoveToMainMenu : MonoBehaviour {
 				moveOptions.moveTo = false;
 				doorOpen.Play("MainMenuDoorOpen");
 				timeToMoveToMain += Time.deltaTime;
-				mainMenuText.alpha = Mathf.Lerp(mainMenuText.alpha, 0, Time.deltaTime*2);
+				FVAPI.lerpAlphaChannelTimeMultiplied(mainMenuText, 0, 2);
+				//mainMenuText.alpha = Mathf.Lerp(mainMenuText.alpha, 0, Time.deltaTime*2);
 				mainMenuText.blocksRaycasts = false;
 				mainMenuText.interactable = false;
 
-				camPos.position = Vector3.Lerp(camPos.position, transCamPos.position, timeToMoveToMain/10);
-				camRot.rotation = Quaternion.Lerp(camRot.rotation, transCamRot.rotation, timeToMoveToMain/10);
-				if(camPos.position == transCamPos.position)
+				FVAPI.lerpVectorAndQuaternion(mainCam, transCam, timeToMoveToMain/10);
+				//mainCam.position = Vector3.Lerp(camPos.position, transCamPos.position, timeToMoveToMain/10);
+				//mainCam.rotation = Quaternion.Lerp(camRot.rotation, transCamRot.rotation, timeToMoveToMain/10);
+				if(mainCam.position == transCam.position)
 					atMain = false;
 
 			}
@@ -95,8 +97,9 @@ public class MoveToMainMenu : MonoBehaviour {
 			{
 
 				elapsedTime += Time.deltaTime;
-				camPos.position = Vector3.Lerp(transCamPos.position, initialCamPos.position, elapsedTime/3);
-				camRot.rotation = Quaternion.Lerp(transCamRot.rotation, initialCamRot.rotation, elapsedTime/3);
+
+				mainCam.position = Vector3.Lerp(transCam.position, initialCam.position, elapsedTime/3);
+				mainCam.rotation = Quaternion.Lerp(transCam.rotation, initialCam.rotation, elapsedTime/3);
 
 			}
 

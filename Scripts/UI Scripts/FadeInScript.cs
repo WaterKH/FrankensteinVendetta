@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
+//TODO Do we need this?
 public class FadeInScript : MonoBehaviour {
 
 	public CanvasGroup beforeLogo;

@@ -1,5 +1,6 @@
 ﻿//On StaminaBar
 //TODO I believe this is broken right now
+//TODO Delete?
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;

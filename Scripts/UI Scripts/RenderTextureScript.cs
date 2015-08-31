@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
+//TODO AHHHHH FIXXXXXXXXX
 public class RenderTextureScript : MonoBehaviour {
 
 	public GameObject position;

@@ -5,12 +5,9 @@ using System.Collections;
 public class moveToOptions : MonoBehaviour {
 
 	//Transforms to be used by Cameras
-	public Transform camPos;
-	public Transform camRot;
-	public Transform finalCamPos;
-	public Transform finalCamRot;
-	public Transform initCamPos;
-	public Transform initCamRot;
+	public Transform mainCam;
+	public Transform finalCam;
+	public Transform initCam;
 
 	public bool moveTo;
 	public bool moveBackToMenu;
@@ -54,11 +51,12 @@ public class moveToOptions : MonoBehaviour {
 
 			elapsedTime += Time.deltaTime;
 			//Lerps the position and rotation to options menu
-			camPos.position = Vector3.Lerp (camPos.position, finalCamPos.position, elapsedTime/2);
-			camPos.rotation = Quaternion.Slerp (camRot.rotation, finalCamRot.rotation, elapsedTime/2);
+			FVAPI.lerpVectorAndQuaternion(mainCam, finalCam, elapsedTime/2);
+			//camPos.position = Vector3.Lerp (camPos.position, finalCamPos.position, elapsedTime/2);
+			//camPos.rotation = Quaternion.Slerp (camRot.rotation, finalCamRot.rotation, elapsedTime/2);
 
 			//If current Camera position is equal to the target..
-			if (camPos.position == finalCamPos.position) 
+			if (mainCam.position == finalCam.position) 
 			{
 
 				//.. Options menu's alpha becomes visible and interactable
@@ -66,9 +64,12 @@ public class moveToOptions : MonoBehaviour {
 				optionsMenu.interactable = true;
 				backOption.interactable = true;
 				scrollOver.interactable = true;
-				optionsMenu.alpha = Mathf.Lerp (optionsMenu.alpha, 1, canvasTime);
-				backOption.alpha = Mathf.Lerp (backOption.alpha, 1, canvasTime);
-				scrollOver.alpha = Mathf.Lerp (scrollOver.alpha, 1, canvasTime);
+				FVAPI.lerpAlphaChannel(optionsMenu, 1, canvasTime);
+				FVAPI.lerpAlphaChannel(backOption, 1, canvasTime);
+				FVAPI.lerpAlphaChannel(scrollOver, 1, canvasTime);
+				//optionsMenu.alpha = Mathf.Lerp (optionsMenu.alpha, 1, canvasTime);
+				//backOption.alpha = Mathf.Lerp (backOption.alpha, 1, canvasTime);
+				//scrollOver.alpha = Mathf.Lerp (scrollOver.alpha, 1, canvasTime);
 				
 			}
 		} 
@@ -78,15 +79,22 @@ public class moveToOptions : MonoBehaviour {
 
 			elapsedTime += Time.deltaTime;
 			//Lerps the position and rotation to inital position
-			camPos.position = Vector3.Lerp (camPos.position, initCamPos.position, elapsedTime/2);
-			camRot.rotation = Quaternion.Slerp (camRot.rotation, initCamRot.rotation, elapsedTime/2);
+			FVAPI.lerpVectorAndQuaternion(mainCam, initCam, elapsedTime/2);
+			//mainCam.position = Vector3.Lerp (mainCam.position, initCam.position, elapsedTime/2);
+			//mainCam.rotation = Quaternion.Slerp (mainCam.rotation, initCam.rotation, elapsedTime/2);
 			//Alpha invisible and interactable
-			optionsMenu.alpha = Mathf.Lerp (optionsMenu.alpha, 0, elapsedTime*2);
-			backOption.alpha = Mathf.Lerp (backOption.alpha, 0, elapsedTime*2);
-			scrollOver.alpha = Mathf.Lerp (scrollOver.alpha, 0, elapsedTime*2);
-			graphics.alpha = Mathf.Lerp(graphics.alpha, 0, Time.deltaTime);
-			sound.alpha = Mathf.Lerp(sound.alpha, 0, Time.deltaTime);
-			controls.alpha = Mathf.Lerp(controls.alpha, 0, Time.deltaTime);
+			FVAPI.lerpAlphaChannel(optionsMenu, 0, elapsedTime*2);
+			FVAPI.lerpAlphaChannel(backOption, 0, elapsedTime*2);
+			FVAPI.lerpAlphaChannel(scrollOver, 0, elapsedTime*2);
+			FVAPI.lerpAlphaChannel(graphics, 0);
+			FVAPI.lerpAlphaChannel(sound, 0);
+			FVAPI.lerpAlphaChannel(controls, 0);
+			//optionsMenu.alpha = Mathf.Lerp (optionsMenu.alpha, 0, elapsedTime*2);
+			//backOption.alpha = Mathf.Lerp (backOption.alpha, 0, elapsedTime*2);
+			//scrollOver.alpha = Mathf.Lerp (scrollOver.alpha, 0, elapsedTime*2);
+			//graphics.alpha = Mathf.Lerp(graphics.alpha, 0, Time.deltaTime);
+			//sound.alpha = Mathf.Lerp(sound.alpha, 0, Time.deltaTime);
+			//controls.alpha = Mathf.Lerp(controls.alpha, 0, Time.deltaTime);
 			optionsMenu.interactable = false;
 			backOption.interactable = false;
 			scrollOver.interactable = false;

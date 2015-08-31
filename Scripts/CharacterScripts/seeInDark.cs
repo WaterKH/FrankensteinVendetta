@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//TODO IMPROVE
 public class seeInDark : MonoBehaviour {
 	
 	public Light directLight;

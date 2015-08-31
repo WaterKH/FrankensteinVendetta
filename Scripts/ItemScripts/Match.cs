@@ -51,9 +51,9 @@ public class Match : MonoBehaviour {
 		}
 
 		if (matchScript.counting)
-			matchScript.matchStickGO.GetComponent<MeshRenderer> ().enabled = true;
+			matchScript.matchStickGO.GetComponent<MeshRenderer>().enabled = true;
 		else
-			matchScript.matchStickGO.GetComponent<MeshRenderer> ().enabled = false;
+			matchScript.matchStickGO.GetComponent<MeshRenderer>().enabled = false;
 
 		if (InputManager.GetKey(KeyboardTags.run)) {    	
 			matchLight.enabled = false;

@@ -7,7 +7,8 @@ public class Lamp : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
-		IntensityChanging ();
+		if(GetComponent<Light>().intensity > 0.0f)
+			IntensityChanging ();
 
 	}
 
@@ -18,4 +19,5 @@ public class Lamp : MonoBehaviour {
 		GetComponent<Light>().intensity = Mathf.Lerp(GetComponent<Light>().intensity, lampIntensity, Time.deltaTime / 5);
 
 	}
+
 }

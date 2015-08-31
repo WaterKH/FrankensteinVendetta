@@ -48,12 +48,14 @@ public class PagePickup : MonoBehaviour {
 
 			elapsedTime += Time.deltaTime;
 			//Displays the "Added note to Journal" 
-			pageAlpha.alpha = Mathf.Lerp (0, 1, elapsedTime);
+			FVAPI.lerpAlphaChannel(pageAlpha, 1, elapsedTime);
+			//pageAlpha.alpha = Mathf.Lerp (pageAlpha.alpha, 1, elapsedTime);
 			if (elapsedTime >= 10) {
 
 				canvasTime += Time.deltaTime;
 				//Slowly lerps to invisible
-				pageAlpha.alpha = Mathf.Lerp(1, 0, canvasTime);
+				FVAPI.lerpAlphaChannel(pageAlpha, 0, canvasTime);
+				//pageAlpha.alpha = Mathf.Lerp(pageAlpha.alpha, 0, canvasTime);
 				if(pageAlpha.alpha <= 0)
 				{
 					//Breaks loop and sets the object to false to save on resources

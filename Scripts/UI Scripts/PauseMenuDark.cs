@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//TODO Is this still in use?
 public class PauseMenuDark : MonoBehaviour {
 
 	public float alphaFadeValue = 0.4f;

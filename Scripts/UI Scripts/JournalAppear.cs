@@ -61,7 +61,8 @@ public class JournalAppear : MonoBehaviour
 		if (hovering) {
 			elapsedTime += .1f;
 			//Lerps the journalCover to visible
-			journalCover.alpha = Mathf.Lerp (journalCover.alpha, 1, elapsedTime);
+			FVAPI.lerpAlphaChannel(journalCover, 1, elapsedTime);
+			//journalCover.alpha = Mathf.Lerp (journalCover.alpha, 1, elapsedTime);
 
 		} else if (!hovering) {
 
@@ -72,7 +73,8 @@ public class JournalAppear : MonoBehaviour
 
 				elapsedTime += .1f;
 				//Lerps the journalCover to invisible
-				journalCover.alpha = Mathf.Lerp (journalCover.alpha, 0, elapsedTime);
+				FVAPI.lerpAlphaChannel(journalCover, 0, elapsedTime);
+				//journalCover.alpha = Mathf.Lerp (journalCover.alpha, 0, elapsedTime);
 			}
 		}
 
@@ -83,21 +85,25 @@ public class JournalAppear : MonoBehaviour
 			hovering = false;
 			//This seems redundant...
 			journalTime += .05f;
-			journalCover.alpha = Mathf.Lerp(journalCover.alpha, 0, journalTime);
+			FVAPI.lerpAlphaChannel(journalCover, 0, journalTime);
+			//journalCover.alpha = Mathf.Lerp(journalCover.alpha, 0, journalTime);
 
 			//if the hovering variable from ResumeButton class is true, lerp the pages to invisible
 			if(resumeButton.hovering)
-				pagesBackground.alpha = Mathf.Lerp(pagesBackground.alpha, 0, resumeButton.elapsedTime);
+				FVAPI.lerpAlphaChannel(pagesBackground, 0, resumeButton.elapsedTime);
+				//pagesBackground.alpha = Mathf.Lerp(pagesBackground.alpha, 0, resumeButton.elapsedTime);
 			//Else lerp the pages to visible
 			else
-				pagesBackground.alpha = Mathf.Lerp(pagesBackground.alpha, 1, journalTime);
+				FVAPI.lerpAlphaChannel(pagesBackground, 1, journalTime);
+				//pagesBackground.alpha = Mathf.Lerp(pagesBackground.alpha, 1, journalTime);
 
 		}
 		//If the journalKey is false, and the pages is not invisible
 		else if(!pauseMenu.journalKey && pagesBackground.alpha > 0)
 		{
 
-			pagesBackground.alpha = Mathf.Lerp(pagesBackground.alpha, 0, journalTime);
+			FVAPI.lerpAlphaChannel(pagesBackground, 0, journalTime);
+			//pagesBackground.alpha = Mathf.Lerp(pagesBackground.alpha, 0, journalTime);
 			journalTime += .1f;
 		
 		}

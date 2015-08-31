@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//TODO Remove after testing
 public class SceneChanger : MonoBehaviour {
 
 	void Update()

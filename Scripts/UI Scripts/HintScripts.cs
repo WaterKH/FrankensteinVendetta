@@ -25,15 +25,19 @@ public class HintScripts : MonoBehaviour {
 				
 			elapsedTime += Time.deltaTime;
 			//The "Hint" text becomes visible
-			hintTextGroup.alpha = Mathf.Lerp(hintTextGroup.alpha,1,elapsedTime);
+			FVAPI.lerpAlphaChannel(hintTextGroup, 1, elapsedTime);
+			//hintTextGroup.alpha = Mathf.Lerp(hintTextGroup.alpha,1,elapsedTime);
 			//as well as the actual hint text
-			actualHintGroup.alpha = Mathf.Lerp (0, 1, elapsedTime);
+			FVAPI.lerpAlphaChannel(actualHintGroup, 1, elapsedTime);
+			//actualHintGroup.alpha = Mathf.Lerp (0, 1, elapsedTime);
 			//After three seconds
 			if (elapsedTime > 3) {
 				canvasTime += Time.deltaTime;
 				//The text disappears
-				hintTextGroup.alpha = Mathf.Lerp (hintTextGroup.alpha, 0, canvasTime/2);
-				actualHintGroup.alpha = Mathf.Lerp (1, 0, canvasTime / 2);
+				FVAPI.lerpAlphaChannel(hintTextGroup, 0, canvasTime/2);
+				FVAPI.lerpAlphaChannel(actualHintGroup, 0, canvasTime/2);
+				//hintTextGroup.alpha = Mathf.Lerp (hintTextGroup.alpha, 0, canvasTime/2);
+				//actualHintGroup.alpha = Mathf.Lerp (1, 0, canvasTime / 2);
 				//Once invisible, the triggerEntered bool becomes false
 				if (hintTextGroup.alpha <= 0)
 					triggerEntered = false;

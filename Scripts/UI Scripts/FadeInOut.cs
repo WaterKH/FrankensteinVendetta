@@ -21,7 +21,8 @@ public class FadeInOut : MonoBehaviour {
 		if(prelevel)
 		{
 
-			blackFader.alpha = Mathf.Lerp(blackFader.alpha, 0, Time.deltaTime);
+			FVAPI.lerpAlphaChannel(blackFader, 0);
+			//blackFader.alpha = Mathf.Lerp(blackFader.alpha, 0, Time.deltaTime);
 			if(blackFader.alpha <= 0.15f)
 			{
 
@@ -33,9 +34,9 @@ public class FadeInOut : MonoBehaviour {
 		}
 		else if(postlevel)
 		{
-
-			blackFader.alpha = Mathf.Lerp(blackFader.alpha, 1, Time.deltaTime);
-			if(blackFader.alpha >= 0.8f)
+			FVAPI.lerpAlphaChannel(blackFader, 1);
+			//blackFader.alpha = Mathf.Lerp(blackFader, 1, Time.deltaTime);
+			if(blackFader.alpha >= 0.9f)
 			{
 
 				postlevel = false;

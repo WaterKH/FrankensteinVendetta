@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 
+//TODO I believe there is a bug in this script..
 //Causes the menu to fade out and in depending on if the User is hovering over the ResumeButton
 public class ResumeButton : MonoBehaviour {
 
@@ -43,20 +44,23 @@ public class ResumeButton : MonoBehaviour {
 
 			elapsedTime += .05f;
 			//Lerps the alpha channel to invisible
-			resumeGroup.alpha = Mathf.Lerp(resumeGroup.alpha, 0, elapsedTime);
+			FVAPI.lerpAlphaChannel(resumeGroup, 0, elapsedTime);
+			//resumeGroup.alpha = Mathf.Lerp(resumeGroup.alpha, 0, elapsedTime);
 			//Made true in PauseMenu class under the clickedJournal() method
 			if(pauseMenu.journalKey)
 				//Lerps the Pages to invisible
-				pageNotes.alpha = Mathf.Lerp(pageNotes.alpha, 0, elapsedTime);
+				FVAPI.lerpAlphaChannel(pageNotes, 0, elapsedTime);
+				//pageNotes.alpha = Mathf.Lerp(pageNotes.alpha, 0, elapsedTime);
 
 		}
 		//Made false in ResumeExit()
-		else if(!hovering && resumeGroup.alpha > 0)
+		else if(!hovering)
 		{
 			
 			elapsedTime += .05f;
 			//Lerps the menu back to visible
-			resumeGroup.alpha = Mathf.Lerp(resumeGroup.alpha, 1, elapsedTime);
+			FVAPI.lerpAlphaChannel(resumeGroup, 1, elapsedTime);
+			//resumeGroup.alpha = Mathf.Lerp(resumeGroup.alpha, 1, elapsedTime);
 
 		}
 

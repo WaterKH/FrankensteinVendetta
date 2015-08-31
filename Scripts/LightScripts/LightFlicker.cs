@@ -24,7 +24,8 @@ public class LightFlicker : MonoBehaviour {
 	void Update () 
 	{
 		//Randomly pingpongs the light to random intensities
-		LightObj.GetComponent<Light>().intensity = (minLightIntensity + Mathf.PingPong(Time.time * speedFactor, maxLightIntensity)) * variationFactor;
+		LightObj.GetComponent<Light>().intensity = (minLightIntensity + Mathf.PingPong(Time.time * speedFactor, 
+		               								maxLightIntensity)) * variationFactor;
 	
 	}
 

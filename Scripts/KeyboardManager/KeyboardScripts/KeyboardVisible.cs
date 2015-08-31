@@ -32,7 +32,8 @@ public class KeyboardVisible : MonoBehaviour {
 
 			keyboard.interactable = true;
 			keyboard.blocksRaycasts = true;
-			keyboard.alpha = Mathf.Lerp(keyboard.alpha, 1, Time.deltaTime*2);
+			FVAPI.lerpAlphaChannelTimeMultiplied(keyboard, 1, 2);
+			//keyboard.alpha = Mathf.Lerp(keyboard.alpha, 1, Time.deltaTime*2);
 
 		}
 		else if(isOn && Input.GetKeyDown(KeyCode.Escape))
@@ -46,7 +47,8 @@ public class KeyboardVisible : MonoBehaviour {
 
 			keyboard.interactable = false;
 			keyboard.blocksRaycasts = false;
-			keyboard.alpha = Mathf.Lerp(keyboard.alpha, 0, Time.deltaTime*2);
+			FVAPI.lerpAlphaChannelTimeMultiplied(keyboard, 0, 2);
+			//keyboard.alpha = Mathf.Lerp(keyboard.alpha, 0, Time.deltaTime*2);
 
 		}
 	

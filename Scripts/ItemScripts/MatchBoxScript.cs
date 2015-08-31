@@ -35,18 +35,16 @@ public class MatchBoxScript : MonoBehaviour {
 			if (Physics.Raycast (ray, out hit, 100)) {
 				if (hit.collider.tag == "matchBox") {
 					matchBoxGO = hit.collider.gameObject;
-					matchBoxGO.GetComponent<MeshRenderer> ().enabled = false;
-					matchBoxGO.GetComponent<Collider> ().enabled = false;
+					matchBoxGO.GetComponent<MeshRenderer>().enabled = false;
+					matchBoxGO.GetComponent<Collider>().enabled = false;
 					match += 10;
 					timeLeft = 30;
 					isActivated = true;
 					if(!hasRan)
 					{
 
-						matchBoxGO.transform.rotation = new Quaternion(matchBoxGO.transform.rotation.x+90,
-						                                               matchBoxGO.transform.rotation.y,
-						                                               matchBoxGO.transform.rotation.z,
-						                                               matchBoxGO.transform.rotation.w);
+						matchBoxGO.transform.rotation = FVAPI.createQuaternionAdditive(matchBoxGO, 90, 0, 0, 0);
+
 						rendTexture.CreateRendTexture(matchBoxGO);
 						hasRan = true;
 
@@ -59,10 +57,12 @@ public class MatchBoxScript : MonoBehaviour {
 		if (isActivated) 
 		{
 
-			matchTextAlpha.alpha = Mathf.Lerp (matchTextAlpha.alpha, 1, Time.deltaTime);
+			//matchTextAlpha.alpha = Mathf.Lerp (matchTextAlpha.alpha, 1, Time.deltaTime);
+			FVAPI.lerpAlphaChannel(matchTextAlpha, 1);
 			if (matchTextAlpha.alpha >= 1) {
 			
-				matchTextAlpha.alpha = Mathf.Lerp(matchTextAlpha.alpha, 0, Time.deltaTime);
+				//matchTextAlpha.alpha = Mathf.Lerp(matchTextAlpha.alpha, 0, Time.deltaTime);
+				FVAPI.lerpAlphaChannel(matchTextAlpha, 0);
 				if(matchTextAlpha.alpha <= 0)
 					isActivated = false;
 

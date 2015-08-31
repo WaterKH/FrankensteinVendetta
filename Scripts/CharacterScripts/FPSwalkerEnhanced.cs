@@ -52,8 +52,6 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 	private GameObject mainCamera;
 	private float height;
 
-	public SaveLoad saveLoad;
-
 	void Start() {
 
 		myTransform = transform;
@@ -75,7 +73,6 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 
 	void FixedUpdate() {
 
-		//TODO Change this!
 		float inputX = InputManager.GetAxis(KeyboardTags.moveLeft) + InputManager.GetAxis(KeyboardTags.moveRight);
 		float inputY = InputManager.GetAxis(KeyboardTags.moveBackward) + InputManager.GetAxis(KeyboardTags.moveForward);
 

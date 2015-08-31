@@ -47,9 +47,12 @@ public class movePanel : MonoBehaviour {
 		if(scrollOver.alpha <= 0)
 		{
 
-			soundGroup.alpha = Mathf.Lerp(soundGroup.alpha, 0, Time.deltaTime*5);
-			graphicsGroup.alpha = Mathf.Lerp(graphicsGroup.alpha, 0, Time.deltaTime*5);
-			controlsGroup.alpha = Mathf.Lerp(controlsGroup.alpha, 0, Time.deltaTime*5);
+			FVAPI.lerpAlphaChannelTimeMultiplied(soundGroup, 0, 5);
+			FVAPI.lerpAlphaChannelTimeMultiplied(graphicsGroup, 0, 5);
+			FVAPI.lerpAlphaChannelTimeMultiplied(controlsGroup, 0, 5);
+			//soundGroup.alpha = Mathf.Lerp(soundGroup.alpha, 0, Time.deltaTime*5);
+			//graphicsGroup.alpha = Mathf.Lerp(graphicsGroup.alpha, 0, Time.deltaTime*5);
+			//controlsGroup.alpha = Mathf.Lerp(controlsGroup.alpha, 0, Time.deltaTime*5);
 
 			soundGroup.interactable = false;
 			graphicsGroup.interactable = false;
@@ -63,9 +66,12 @@ public class movePanel : MonoBehaviour {
 		else if(toVect == graphics.anchoredPosition)
 		{
 
-			soundGroup.alpha = Mathf.Lerp(soundGroup.alpha, 0, Time.deltaTime*3);
-			graphicsGroup.alpha = Mathf.Lerp(graphicsGroup.alpha, 1, Time.deltaTime*3);
-			controlsGroup.alpha = Mathf.Lerp(controlsGroup.alpha, 0, Time.deltaTime*3);
+			FVAPI.lerpAlphaChannelTimeMultiplied(soundGroup, 0, 3);
+			FVAPI.lerpAlphaChannelTimeMultiplied(graphicsGroup, 1, 3);
+			FVAPI.lerpAlphaChannelTimeMultiplied(controlsGroup, 0, 3);
+			//soundGroup.alpha = Mathf.Lerp(soundGroup.alpha, 0, Time.deltaTime*3);
+			//graphicsGroup.alpha = Mathf.Lerp(graphicsGroup.alpha, 1, Time.deltaTime*3);
+			//controlsGroup.alpha = Mathf.Lerp(controlsGroup.alpha, 0, Time.deltaTime*3);
 
 			soundGroup.interactable = false;
 			graphicsGroup.interactable = true;
@@ -78,10 +84,13 @@ public class movePanel : MonoBehaviour {
 		}
 		else if(toVect == sound.anchoredPosition)
 		{
-			
-			soundGroup.alpha = Mathf.Lerp(soundGroup.alpha, 1, Time.deltaTime);
-			graphicsGroup.alpha = Mathf.Lerp(graphicsGroup.alpha, 0, Time.deltaTime*3);
-			controlsGroup.alpha = Mathf.Lerp(controlsGroup.alpha, 0, Time.deltaTime*3);
+
+			FVAPI.lerpAlphaChannelTimeMultiplied(soundGroup, 1, 3);
+			FVAPI.lerpAlphaChannelTimeMultiplied(graphicsGroup, 0, 3);
+			FVAPI.lerpAlphaChannelTimeMultiplied(controlsGroup, 0, 3);
+			//soundGroup.alpha = Mathf.Lerp(soundGroup.alpha, 1, Time.deltaTime);
+			//graphicsGroup.alpha = Mathf.Lerp(graphicsGroup.alpha, 0, Time.deltaTime*3);
+			//controlsGroup.alpha = Mathf.Lerp(controlsGroup.alpha, 0, Time.deltaTime*3);
 
 			soundGroup.interactable = true;
 			graphicsGroup.interactable = false;
@@ -95,9 +104,12 @@ public class movePanel : MonoBehaviour {
 		else if(toVect == controls.anchoredPosition)
 		{
 
-			soundGroup.alpha = Mathf.Lerp(soundGroup.alpha, 0, Time.deltaTime*3);
-			graphicsGroup.alpha = Mathf.Lerp(graphicsGroup.alpha, 0, Time.deltaTime*3);
-			controlsGroup.alpha = Mathf.Lerp(controlsGroup.alpha, 1, Time.deltaTime*3);
+			FVAPI.lerpAlphaChannelTimeMultiplied(soundGroup, 0, 3);
+			FVAPI.lerpAlphaChannelTimeMultiplied(graphicsGroup, 0, 3);
+			FVAPI.lerpAlphaChannelTimeMultiplied(controlsGroup, 1, 3);
+			//soundGroup.alpha = Mathf.Lerp(soundGroup.alpha, 0, Time.deltaTime*3);
+			//graphicsGroup.alpha = Mathf.Lerp(graphicsGroup.alpha, 0, Time.deltaTime*3);
+			//controlsGroup.alpha = Mathf.Lerp(controlsGroup.alpha, 1, Time.deltaTime*3);
 
 			soundGroup.interactable = false;
 			graphicsGroup.interactable = false;

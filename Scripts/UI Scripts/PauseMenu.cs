@@ -71,8 +71,10 @@ public class PauseMenu : MonoBehaviour {
 			{
 
 				//Lerps the alpha to visible of the side bar and the background
-				sidePanelGroup.alpha = Mathf.Lerp(sidePanelGroup.alpha, 1, elapsedTime);
-				backgroundPauseGroup.alpha = Mathf.Lerp (backgroundPauseGroup.alpha, 1, elapsedTime);
+				FVAPI.lerpAlphaChannel(sidePanelGroup, 1, elapsedTime);
+				FVAPI.lerpAlphaChannel(backgroundPauseGroup, 1, elapsedTime);
+				//sidePanelGroup.alpha = Mathf.Lerp(sidePanelGroup.alpha, 1, elapsedTime);
+				//backgroundPauseGroup.alpha = Mathf.Lerp (backgroundPauseGroup.alpha, 1, elapsedTime);
 				//Also set it so no raycasts can go through
 				sidePanelGroup.blocksRaycasts = true;
 				backgroundPauseGroup.blocksRaycasts = true;
@@ -84,7 +86,8 @@ public class PauseMenu : MonoBehaviour {
 
 				canvasTime += .05f;
 				//Lerp the alpha to visible of the buttons
-				buttonGroup.alpha = Mathf.Lerp(buttonGroup.alpha, 1, canvasTime);
+				FVAPI.lerpAlphaChannel(buttonGroup, 1, canvasTime);
+				//buttonGroup.alpha = Mathf.Lerp(buttonGroup.alpha, 1, canvasTime);
 				buttonGroup.interactable = true;
 				
 			}
@@ -97,7 +100,8 @@ public class PauseMenu : MonoBehaviour {
 			if (buttonGroup.alpha > 0) {
 				canvasTime += .05f;
 				//Lerp alpha to invisible of the buttons
-				buttonGroup.alpha = Mathf.Lerp(buttonGroup.alpha, 0, canvasTime);
+				FVAPI.lerpAlphaChannel(buttonGroup, 0, canvasTime);
+				//buttonGroup.alpha = Mathf.Lerp(buttonGroup.alpha, 0, canvasTime);
 				buttonGroup.interactable = false;
 			}
 			else if (backgroundPauseGroup.alpha >= 0)
@@ -107,8 +111,10 @@ public class PauseMenu : MonoBehaviour {
 				//Set journalKey to false since it will be fading out
 				journalKey = false;
 				//Lerp the alpha to invisible of the side panel and background
-				sidePanelGroup.alpha = Mathf.Lerp(sidePanelGroup.alpha, 0, elapsedTime);
-				backgroundPauseGroup.alpha = Mathf.Lerp (backgroundPauseGroup.alpha, 0, elapsedTime);
+				FVAPI.lerpAlphaChannel(sidePanelGroup, 0, elapsedTime);
+				FVAPI.lerpAlphaChannel(backgroundPauseGroup, 0, elapsedTime);
+				//sidePanelGroup.alpha = Mathf.Lerp(sidePanelGroup.alpha, 0, elapsedTime);
+				//backgroundPauseGroup.alpha = Mathf.Lerp (backgroundPauseGroup.alpha, 0, elapsedTime);
 				//Does not block raycasts
 				sidePanelGroup.blocksRaycasts = false;
 				backgroundPauseGroup.blocksRaycasts = false;

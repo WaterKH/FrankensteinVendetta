@@ -133,15 +133,17 @@ public class CreateNewUser : MonoBehaviour {
 		{
 			//.. The username in SaveLoad class is set to the playerName from User class, then calls the Load method
 			saveLoadData.userName = buttonClicked.GetComponentInChildren<Text>().text;
-			saveLoadData.Load();
+			saveLoadData.Load(saveLoadData.userName);
 			if(saveLoadData.loaded)
 				Debug.Log("Load successful");
 			else
 			{
 
 				Debug.Log("No load data found - Creating save file");
+				Player_MAIN.player.setName(saveLoadData.userName);
+				Debug.Log(Player_MAIN.player.getName());
 				saveLoadData.Save();
-				Debug.Log("Save file created");
+				Debug.Log("Save file created for "+Player_MAIN.player.getName());
 
 			}
 			//Then moves the player to the mainmenu
@@ -208,7 +210,8 @@ public class CreateNewUser : MonoBehaviour {
 		{
 
 			inputGroup.interactable = true;
-			inputGroup.alpha = Mathf.Lerp(inputGroup.alpha, 1, Time.deltaTime*2);
+			FVAPI.lerpAlphaChannelTimeMultiplied(inputGroup, 1, 2);
+			//inputGroup.alpha = Mathf.Lerp(inputGroup.alpha, 1, Time.deltaTime*2);
 			inputGroup.blocksRaycasts = true;
 
 		}
@@ -218,11 +221,13 @@ public class CreateNewUser : MonoBehaviour {
 
 			//Input field invisible
 			inputGroup.interactable = false;
-			inputGroup.alpha = Mathf.Lerp(inputGroup.alpha, 0, Time.deltaTime);
+			FVAPI.lerpAlphaChannel(inputGroup, 0);
+			//inputGroup.alpha = Mathf.Lerp(inputGroup.alpha, 0, Time.deltaTime);
 			inputGroup.blocksRaycasts = false;
 
 			usernameGroup.interactable = true;
-			usernameGroup.alpha = Mathf.Lerp(usernameGroup.alpha, 1, Time.deltaTime);
+			FVAPI.lerpAlphaChannel(inputGroup, 1);
+			//usernameGroup.alpha = Mathf.Lerp(usernameGroup.alpha, 1, Time.deltaTime);
 			usernameGroup.blocksRaycasts = true;
 
 			if(inputGroup.alpha <= 0.5f)
@@ -239,11 +244,13 @@ public class CreateNewUser : MonoBehaviour {
 		{
 			//Finishes making the inputGroup alpha invisible, not interactable and not able to block raycasts
 			inputGroup.interactable = false;
-			inputGroup.alpha = Mathf.Lerp(inputGroup.alpha, 0, Time.deltaTime*2);
+			FVAPI.lerpAlphaChannelTimeMultiplied(inputGroup, 0, 2);
+			//inputGroup.alpha = Mathf.Lerp(inputGroup.alpha, 0, Time.deltaTime*2);
 			inputGroup.blocksRaycasts = false;
 
 			usernameGroup.interactable = true;
-			usernameGroup.alpha = Mathf.Lerp(usernameGroup.alpha, 1, Time.deltaTime);
+			FVAPI.lerpAlphaChannel(usernameGroup, 1);
+			//usernameGroup.alpha = Mathf.Lerp(usernameGroup.alpha, 1, Time.deltaTime);
 			usernameGroup.blocksRaycasts = true;
 
 		}

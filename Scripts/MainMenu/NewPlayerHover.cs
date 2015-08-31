@@ -9,7 +9,7 @@ public class NewPlayerHover : MonoBehaviour {
 	bool hovering;
 
 	//When the mouse hovers over the Pencil
-	void OnMouseEnter()
+	public void OnMouseEnter()
 	{
 
 		hovering = true;
@@ -17,7 +17,7 @@ public class NewPlayerHover : MonoBehaviour {
 	}
 
 	//When the mouse exits the Pencil
-	void OnMouseExit()
+	public void OnMouseExit()
 	{
 
 		hovering = false;
@@ -28,9 +28,11 @@ public class NewPlayerHover : MonoBehaviour {
 
 		//If the mouse is over the Pencil, the add Player text will appear
 		if(hovering)
-			addPlayer.alpha = Mathf.Lerp(addPlayer.alpha, 1, Time.deltaTime);
+			FVAPI.lerpAlphaChannel(addPlayer, 1);
+			//addPlayer.alpha = Mathf.Lerp(addPlayer.alpha, 1, Time.deltaTime);
 		//Else the text will disappear
 		else
-			addPlayer.alpha = Mathf.Lerp(addPlayer.alpha, 0, Time.deltaTime*2);
+			FVAPI.lerpAlphaChannel(addPlayer, 0);
+			//addPlayer.alpha = Mathf.Lerp(addPlayer.alpha, 0, Time.deltaTime*2);
 	}
 }

@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
+[Serializable]
 public class Character {
 
 	private string characterName;
-	private int characterID; // <-- This determines whether the character is the main character, NPC, or enemy, respectively
+	private int characterID; // <-- This determines whether the character is the main character, 
+							 //NPC, or enemy, respectively
 
 	public Character()
 	{

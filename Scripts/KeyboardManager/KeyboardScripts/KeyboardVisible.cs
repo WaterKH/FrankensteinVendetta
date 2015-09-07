@@ -45,7 +45,6 @@ public class KeyboardVisible : MonoBehaviour
 		}
 		else
 		{
-			
 			keyboard.interactable = false;
 			keyboard.blocksRaycasts = false;
 			keyboard.alpha = Mathf.Lerp(keyboard.alpha, 0, Time.deltaTime*2);

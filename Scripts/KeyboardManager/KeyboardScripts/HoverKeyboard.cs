@@ -5,11 +5,9 @@ using System.Collections.Generic;
 
 public class HoverKeyboard : MonoBehaviour {
 
-	static bool hovering;
-	Vector3 mousePos;
-	static GameObject hoverHelper;
-	public static Dictionary<string, string> hoverHelperText;
-	public static Dictionary<string, string> legendText;
+	public bool hovering;
+	public Vector3 mousePos;
+	public GameObject hoverHelper;
 
 	public void keyboardHoverEnter(Button aButton)
 	{
@@ -21,9 +19,12 @@ public class HoverKeyboard : MonoBehaviour {
 			hovering = true;
 			hoverHelper = Instantiate(Resources.Load("HoverHelper") as GameObject);
 			hoverHelper.transform.SetParent(parent);
-			hoverHelper.transform.position = new Vector3(Input.mousePosition.x+60f, Input.mousePosition.y+25f, Input.mousePosition.z+5f);
+			hoverHelper.transform.position = new Vector3(Input.mousePosition.x+60f, 
+			                                             Input.mousePosition.y+25f, 
+			                                             Input.mousePosition.z+5f);
 			mousePos = hoverHelper.transform.position;
-			hoverHelper.GetComponentInChildren<Text>().text = HoverHelperText.hoverHelperText(hoverHelperText, aButton);
+			hoverHelper.GetComponentInChildren<Text>().text = 
+				hoverHelperText(InputManager.inputManagerList, aButton);
 
 		}
 
@@ -38,6 +39,17 @@ public class HoverKeyboard : MonoBehaviour {
 
 	}
 
+	public static string hoverHelperText(List<InputManager.INPUT_CLASS> inputManagerList, Button aButton)
+	{
+		
+		foreach(InputManager.INPUT_CLASS inputClass in inputManagerList)
+			if(aButton.tag.Equals(inputClass.Tag)) 
+				return "\b"+inputClass.Type+"\b:\n"+inputClass.Name+":\n"+inputClass.Input.ToString();
+		
+		return "No tag associated with this.";
+		
+	}
+
 	void Update()
 	{
 
@@ -47,7 +59,9 @@ public class HoverKeyboard : MonoBehaviour {
 			if(Input.mousePosition != mousePos)
 			{
 
-				hoverHelper.transform.position = new Vector3(Input.mousePosition.x+60f, Input.mousePosition.y+25f, Input.mousePosition.z+5f);
+				hoverHelper.transform.position = new Vector3(Input.mousePosition.x+60f, 
+				                                             Input.mousePosition.y+25f, 
+				                                             Input.mousePosition.z+5f);
 				mousePos = hoverHelper.transform.position;
 
 			}

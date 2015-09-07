@@ -13,7 +13,7 @@ public class glassUse : MonoBehaviour {
 	void Update () {
 
 
-		if (InputManager.GetKeyDown(KeyboardTags.lookBehind)) {
+		if (InputManager.GetKeyDown("lookBehind")) {
 			secCamera.GetComponent<Camera>().enabled = !secCamera.GetComponent<Camera>().enabled;
 			glassCol.enabled = !glassCol.enabled;
 			glassRen.enabled = !glassRen.enabled;

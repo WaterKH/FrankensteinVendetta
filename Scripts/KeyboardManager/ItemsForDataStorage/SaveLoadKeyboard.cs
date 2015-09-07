@@ -11,57 +11,27 @@ public class SaveLoadKeyboard : MonoBehaviour {
 	public ButtonSerializable buttonSer = new ButtonSerializable();
 	public InputManager inputManager;
 	public AllKeys allKeys;
-	public SaveLoad saveLoad;
 	public KeyboardVisible keyboardVisible;
+
 	public CanvasGroup askToSaveGroup;
-	public bool hasSaved = true;
+	public bool hasSaved;
 
 	public void SaveKeyboard()
 	{
 		
 		BinaryFormatter bf = new BinaryFormatter();
-		FileStream file = File.Create(Application.persistentDataPath + "/" + saveLoad.userName + "KeyboardInfo.dat");
+		FileStream file = File.Create(Application.persistentDataPath + "/KeyboardInfo.dat");
 		KeyboardDataSer keyData = new KeyboardDataSer();
-		
-		keyData.keyCodes = new List<string>();
-		keyData.buttonTags = new List<string>();
-		keyData.buttonNames = new List<string>();
-		keyData.hoverHelperDictKey = new List<string>();
-		keyData.hoverHelperValue = new List<string>();
-		keyData.legendDictKey = new List<string>();
-		keyData.legendDictValue = new List<string>();
-		keyData.legendList = new List<string>();
-		
-		foreach(KeyValuePair<string, Inputs> input in Inputs.inputDict)
-		{
-			
-			keyData.keyCodes.Add(input.Value.getInputKeyCode().ToString());
-			keyData.buttonTags.Add(input.Key);
-			keyData.buttonNames.Add(input.Value.getInputButton().name);
-			
-		}
-		
-		
-		foreach(KeyValuePair<string, string> input in HoverKeyboard.hoverHelperText)
-		{
-			
-			keyData.hoverHelperDictKey.Add(input.Key);
-			keyData.hoverHelperValue.Add(input.Value);
-			
-		}
-		
-		foreach(KeyValuePair<string, string> input in HoverKeyboard.legendText)
-		{
-			
-			keyData.legendDictKey.Add(input.Key);
-			keyData.legendDictValue.Add(input.Value);
-			
-		}
-		
-		foreach(Button input in AllKeys.legendList)
-			keyData.legendList.Add(buttonSer.returnButtonText(input));
+		keyData.inputManagerList = new List<InputManager.INPUT_CLASS_FOR_DATA_STORAGE>();
 
-		keyData.NAMES = inputManager.NAMES;
+		foreach(InputManager.INPUT_CLASS inputClass in InputManager.inputManagerList)
+		{
+			InputManager.INPUT_CLASS_FOR_DATA_STORAGE tempInputClass = 
+				new InputManager.INPUT_CLASS_FOR_DATA_STORAGE(inputClass.Input, buttonSer.returnButtonSer(inputClass.Key),
+											inputClass.Type, inputClass.Tag, inputClass.Name);
+
+			keyData.inputManagerList.Add(tempInputClass);
+		}
 
 		bf.Serialize(file, keyData);
 		file.Close();
@@ -69,36 +39,44 @@ public class SaveLoadKeyboard : MonoBehaviour {
 		hasSaved = true;
 		
 	}
-	
-	//TODO Fix the userName for use in game
+
 	public void LoadKeyboard()
 	{
 
-		KeyboardUI.resetKeyboard();
+		Keyboard.resetKeyboard();
 		AllKeys.removeLegend();
 
-		if (File.Exists (Application.persistentDataPath + "/" + saveLoad.userName + "KeyboardInfo.dat")) {
-			
+		if (File.Exists (Application.persistentDataPath + "/KeyboardInfo.dat")) 
+		{
+
 			BinaryFormatter bf = new BinaryFormatter ();
-			FileStream file = File.Open (Application.persistentDataPath + "/" + saveLoad.userName + "KeyboardInfo.dat", FileMode.Open);
+			FileStream file = File.Open (Application.persistentDataPath + "/KeyboardInfo.dat", FileMode.Open);
 			KeyboardDataSer keyData = (KeyboardDataSer)bf.Deserialize(file);
 			file.Close();
-			
+
+			InputManager.inputManagerList = new List<InputManager.INPUT_CLASS>();
 			Inputs.inputDict = new Dictionary<string, Inputs>();
-			HoverKeyboard.hoverHelperText = new Dictionary<string, string>();
-			HoverKeyboard.legendText = new Dictionary<string, string>();
 			AllKeys.legendList = new List<Button>();
-			KeyboardTags.keyboardTagsList = new List<string>();
-			
-			for(int i = 0; i < keyData.keyCodes.Count; i++)
+
+			foreach(InputManager.INPUT_CLASS_FOR_DATA_STORAGE inputClass in keyData.inputManagerList)
 			{
 				
-				
-				inputManager.setKey(keyData.keyCodes[i], buttonSer.getButtonSer(keyData.buttonNames[i], keyData.buttonTags[i]));
-				KeyboardTags.keyboardTags(keyData.buttonTags[i]);
-				AllKeys.INITIAL_LIST_LEGEND(keyData.NAMES[i], keyData.buttonTags[i]);
+				InputManager.INPUT_CLASS tempInputClass = new InputManager.INPUT_CLASS(
+					inputClass.Input, buttonSer.getButtonSer(inputClass.Key.buttonName, 
+				    inputClass.Key.buttonTag), inputClass.Type, inputClass.Tag, inputClass.Name);
 
+				InputManager.inputManagerList.Add(tempInputClass);
+				
 			}
+			for(int i = 0; i < keyData.inputManagerList.Count; i++)
+			{
+				
+				inputManager.setKey(InputManager.inputManagerList[i]);
+				AllKeys.INITIAL_LIST_LEGEND(keyData.inputManagerList[i].Name, keyData.inputManagerList[i].Tag);
+				
+			}
+
+			Keyboard.KeyboardTags.keyboardTagsAndTypes();
 			
 		}
 		else
@@ -110,7 +88,6 @@ public class SaveLoadKeyboard : MonoBehaviour {
 		}
 		
 	}
-
 	//TODO Make hasSaved change depending on if any input has been changed
 	public void askToSave()
 	{
@@ -138,21 +115,8 @@ public class SaveLoadKeyboard : MonoBehaviour {
 [Serializable]
 class KeyboardDataSer
 {
-	
-	//Tags on buttons, Keycode, Button String
-	public List<string> keyCodes;
-	public List<string> buttonTags;
-	public List<string> buttonNames;
-	
-	public List<string> hoverHelperDictKey;
-	public List<string> hoverHelperValue;
-	
-	public List<string> legendDictKey;
-	public List<string> legendDictValue;
-	
-	public List<string> legendList;
 
-	public List<string> NAMES;
+	public List<InputManager.INPUT_CLASS_FOR_DATA_STORAGE> inputManagerList;
 	
 }
 

@@ -70,21 +70,11 @@ public class DeleteUser : MonoBehaviour {
 		}
 		DeletionOver();
 
-
 	}
 
-	private void DeletionOver()
+	public void DeletionOver()
 	{
 
-		remove = false;
-		foreach(GameObject user in createUser.listOfUsers)
-		{
-			
-			ColorBlock colorBlock = user.GetComponent<Button>().colors;
-			colorBlock.normalColor = Color.white;
-			user.GetComponent<Button>().colors = colorBlock;
-			
-		}
 		User tempUser = new User();
 	
 		foreach(User user in createUser.userNamesMenu)
@@ -93,7 +83,8 @@ public class DeleteUser : MonoBehaviour {
 			if(user.getPlayerID() == 1 && user.getPlayerLayer() != 0)
 			{
 
-				if(user.getPlayerID()+3 == tempUser.getPlayerID())
+				//TODO This is broken..
+				if(user.getPlayerID()+4 == tempUser.getPlayerID())
 				{
 					user.setLayer(user.getPlayerLayer()-1);
 					user.setPlayerID(5);
@@ -127,6 +118,14 @@ public class DeleteUser : MonoBehaviour {
 			
 		}
 		saveLoad.SaveUsers();
+		foreach(GameObject user in createUser.listOfUsers)
+		{
+			
+			ColorBlock colorBlock = user.GetComponent<Button>().colors;
+			colorBlock.normalColor = Color.black;
+			user.GetComponent<Button>().colors = colorBlock;
+			
+		}
 		Debug.Log("Deletion complete");
 
 	}

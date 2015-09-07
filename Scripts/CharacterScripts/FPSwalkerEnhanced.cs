@@ -73,8 +73,8 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 
 	void FixedUpdate() {
 
-		float inputX = InputManager.GetAxis(KeyboardTags.moveLeft) + InputManager.GetAxis(KeyboardTags.moveRight);
-		float inputY = InputManager.GetAxis(KeyboardTags.moveBackward) + InputManager.GetAxis(KeyboardTags.moveForward);
+		float inputX = InputManager.GetAxis("moveLeft") + InputManager.GetAxis("moveRight");
+		float inputY = InputManager.GetAxis("moveBackward") + InputManager.GetAxis("moveForward");
 
 		// If both horizontal and vertical are used simultaneously, limit speed (if allowed), so the total doesn't exceed normal move speed
 		float inputModifyFactor = (inputX != 0.0f && inputY != 0.0f && limitDiagonalSpeed)? .7071f : 1.0f;
@@ -86,7 +86,7 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 			if (falling)
 				falling = false;
 
-			speed = InputManager.GetKey (KeyboardTags.run) ? runSpeed : walkSpeed;
+			speed = InputManager.GetKey ("run") ? runSpeed : walkSpeed;
 						
 			cameraYOffset = mainCamera.transform.localPosition.y;
 			moveDirection = new Vector3 (inputX * inputModifyFactor, -antiBumpFactor, inputY * inputModifyFactor);
@@ -101,9 +101,9 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 			rigidBod.AddForce(velocityChange, ForceMode.VelocityChange);
 
 			// Jump! But only if the jump button has been released and player has been grounded for a given number of frames
-			if(!InputManager.GetKey(KeyboardTags.jump))
+			if(!InputManager.GetKey("jump"))
 				jumpTimer++;
-			else if (jumpTimer >= antiBunnyHopFactor && InputManager.GetKeyDown(KeyboardTags.jump)) 
+			else if (jumpTimer >= antiBunnyHopFactor && InputManager.GetKeyDown("jump")) 
 			{
 	
 				moveDirection.y = jumpSpeed;
@@ -143,14 +143,14 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 
 		// If the run button is set to toggle, then switch between walk/run speed. (We use Update for this...
 		// FixedUpdate is a poor place to use GetButtonDown, since it doesn't necessarily run every frame and can miss the event)
-		if (grounded && InputManager.GetKey(KeyboardTags.run) && !crouching)
+		if (grounded && InputManager.GetKey("run") && !crouching)
 			speed = (speed == walkSpeed? runSpeed : walkSpeed);
 
-		if (InputManager.GetKey(KeyboardTags.run) && !crouching) {
+		if (InputManager.GetKey("run") && !crouching) {
 			running = true;
 
 			//Debug.Log ("Is running.");
-		} else if (InputManager.GetKeyDown(KeyboardTags.crouch)) {
+		} else if (InputManager.GetKeyDown("crouch")) {
 
 			crouching = !crouching;
 			running = false;
@@ -182,7 +182,7 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 			
 		}
 
-		if(InputManager.GetKey(KeyboardTags.leanLeft))
+		if(InputManager.GetKey("leanLeft"))
 			LeanLeft();
 
 	}

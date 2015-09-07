@@ -16,6 +16,7 @@ public class CreateNewUser : MonoBehaviour {
 	public NewPlayerClick playerClick;
 	public DeleteUser delete;
 	public PageFlipping flipPage;
+	public CancelDeletion cancelDelete;
 
 	public int usernameNumb;
 	//Used in PageFlipping
@@ -119,6 +120,11 @@ public class CreateNewUser : MonoBehaviour {
 			tempLayer = false;
 
 		}
+		else if(delete.remove)
+		{
+			cancelDelete.DeletionCancelation();
+			clickedCreateUser();
+		}
 		showInput = true;
 		CreateUser();
 
@@ -198,6 +204,7 @@ public class CreateNewUser : MonoBehaviour {
 			NameUser();
 			currUser.name = characterName.text;
 			flipPage.De_ActivateUsers();
+			saveLoadData.SaveUsers();
 
 		}
 	
@@ -226,7 +233,7 @@ public class CreateNewUser : MonoBehaviour {
 			inputGroup.blocksRaycasts = false;
 
 			usernameGroup.interactable = true;
-			FVAPI.lerpAlphaChannel(inputGroup, 1);
+			FVAPI.lerpAlphaChannel(usernameGroup, 1);
 			//usernameGroup.alpha = Mathf.Lerp(usernameGroup.alpha, 1, Time.deltaTime);
 			usernameGroup.blocksRaycasts = true;
 

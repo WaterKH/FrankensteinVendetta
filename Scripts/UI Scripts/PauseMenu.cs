@@ -33,7 +33,7 @@ public class PauseMenu : MonoBehaviour {
 		//TODO Still fix the "Hover over resume"
 
 		//If the esc button is pressed..
-		if (InputManager.GetKeyDown(KeyboardTags.pause) || InputManager.GetKeyDown(KeyboardTags.pauseSecondary)) 
+		if (InputManager.GetKeyDown("pause") || InputManager.GetKeyDown("pauseSecondary")) 
 		{
 
 			//.. set to false if true, true if false
@@ -46,7 +46,7 @@ public class PauseMenu : MonoBehaviour {
 
 		}
 		//If the notes button is pressed..
-		if (InputManager.GetKeyDown(KeyboardTags.notes)) 
+		if (InputManager.GetKeyDown("notes")) 
 		{
 
 			//.. Calls the method clickedJournal() which is below

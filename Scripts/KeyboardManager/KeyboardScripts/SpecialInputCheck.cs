@@ -3,135 +3,20 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class KeyboardUI {
-
-	public static Color whiteCol = Color.white;
-	public static Color inUseCol = new Color(0,45,178,255);
-	
-	//Removes the button within buttonList based on the tag
-	public static void removeKeyboardKey(Button input)
-	{
-		
-		input.GetComponent<Image>().color = whiteCol;
-		Inputs.inputDict.Remove(input.tag);
-
-	}
-
-	public static void resetKeyboard()
-	{
-		
-		foreach(Button key in AllKeys.allKeys)
-			key.GetComponent<Image>().color = whiteCol;
-		
-	}
-	
-	//Initial call to make another one below
-	public static void setKeyboardBasedOnTags(Button input, string tagString, string keyCode)
-	{
-		
-		//Calls the remove option above
-		removeKeyboardKey(input);
-		//Adds the previous button's tag, and the new button
-		Inputs.inputDict.Add(tagString, new Inputs(keyCode, tagString, input));
-		setKeyboardBasedOnTags(input.GetComponent<Image>(), tagString);
-		
-	}
-	
-	//Changes the color of the button based on the tag
-	private static void setKeyboardBasedOnTags(Image input, string tagString)
-	{
-		
-		switch(tagString)
-		{
-		case "moveForward":
-			input.color = inUseCol;
-			Debug.Log(tagString+" was recolored");
-			break;
-		case "moveBackward":
-			input.color = inUseCol;
-			Debug.Log(tagString+" was recolored");
-			break;
-		case "moveLeft":
-			input.color = inUseCol;
-			Debug.Log(tagString+" was recolored");
-			break;
-		case "moveRight":
-			input.color = inUseCol;
-			Debug.Log(tagString+" was recolored");
-			break;
-		case "leanLeft":
-			input.color = inUseCol;
-			Debug.Log(tagString+" was recolored");
-			break;
-		case "leanRight":
-			input.color = inUseCol;
-			Debug.Log(tagString+" was recolored");
-			break;
-		case "inventory":
-			input.color = inUseCol;
-			Debug.Log(tagString+" was recolored");
-			break;
-		case "inventorySecondary":
-			input.color = inUseCol;
-			Debug.Log(tagString+" was recolored");
-			break;
-		case "notes":
-			input.color = inUseCol;
-			Debug.Log(tagString+" was recolored");
-			break;
-		case "lightMatch":
-			input.color = inUseCol;
-			Debug.Log(tagString+" was recolored");
-			break;
-		case "action":
-			input.color = inUseCol;
-			Debug.Log(tagString+" was recolored");
-			break;
-		case "actionSecondary":
-			input.color = inUseCol;
-			Debug.Log(tagString+" was recolored");
-			break;
-		case "crouch":
-			input.color = inUseCol;
-			Debug.Log(tagString+" was recolored");
-			break;
-		case "run":
-			input.color = inUseCol;
-			Debug.Log(tagString+" was recolored");
-			break;
-		case "jump":
-			input.color = inUseCol;
-			Debug.Log(tagString+" was recolored");
-			break;
-		case "pause":
-			input.color = inUseCol;
-			Debug.Log(tagString+" was recolored");
-			break;
-		case "pauseSecondary":
-			input.color = inUseCol;
-			Debug.Log(tagString+" was recolored");
-			break;
-		case "lookBehind":
-			input.color = inUseCol;
-			Debug.Log(tagString+" was recolored");
-			break;
-		case "stifleBreathORCoverLight":
-			input.color = inUseCol;
-			Debug.Log(tagString+" was recolored");
-			break;
-		default:
-			Debug.Log("No tag could be found");
-			input.color = whiteCol;
-			break;
-			
-		}
-		
-	}
+public class SpecialInputCheck : MonoBehaviour
+{
 
 	//This method takes care of all of the odd keys that don't return the KeyCode string
-	public static bool checkSpecialInput(Button buttonInput, ChangeHelpMenuText changeText, HoverKeyboard hoverKeyboard)
+	/*****************************************************************************************************************
+	 * 
+	 * This class DOES stretch down a very long way, so nothing other than this method
+	 * 	will be down there. 
+	 * 
+	***/
+	public static bool checkSpecialInput(Button buttonInput, ChangeHelpMenuText changeText, 
+	                                     HoverKeyboard hoverKeyboard)
 	{
-
+		
 		bool foundKey = false;
 		string key = "";
 		int index = 0;
@@ -346,11 +231,11 @@ public class KeyboardUI {
 		}
 		else if(Input.GetKeyDown(KeyCode.Alpha1))
 		{
-
+			
 			foundKey = true;
 			key = "Alpha1";
 			index = 30;
-
+			
 		}
 		else if(Input.GetKeyDown(KeyCode.Alpha2))
 		{
@@ -424,21 +309,21 @@ public class KeyboardUI {
 			index = 39;
 			
 		}
-		else if(Input.GetKeyDown(KeyCode.Mouse0) || Input.GetMouseButton(0))
+		else if(Input.GetKeyDown(KeyCode.Mouse0))
 		{
-			Debug.Log("Mouse0");
+			
 			foundKey = true;
 			key = "Mouse0";
 			index = 62;
-
+			
 		}
-		else if(Input.GetKeyDown(KeyCode.Mouse1) || Input.GetMouseButton(1))
+		else if(Input.GetKeyDown(KeyCode.Mouse1))
 		{
-			Debug.Log("Mouse1");
+			
 			foundKey = true;
 			key = "Mouse1";
 			index = 63;
-
+			
 		}
 		
 		if(foundKey)
@@ -446,13 +331,12 @@ public class KeyboardUI {
 			bool contained = false;
 			foreach(KeyValuePair<string, Inputs> anInput in Inputs.inputDict)
 			{
-
+				
 				if(anInput.Value.getInputButton().name.ToLower().Equals(key.ToLower()))
 				{
-
+					
 					contained = true;
-					InputManager.isOn = false;
-					changeText.changedText("This key has already been binded, choose another one");
+					changeText.changedText("This key has already been binded, please choose another one");
 					Debug.Log("This key has already been binded, choose another one.");
 					break;
 					
@@ -461,18 +345,25 @@ public class KeyboardUI {
 			}
 			if(!contained)
 			{
-				changeText.selectedText(buttonInput.name);
-				removeKeyboardKey(buttonInput);
-				Inputs.setInput(buttonInput, AllKeys.allKeys[index], key);
-				setKeyboardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag, key);
-				HoverHelperText.setHoverKeys(buttonInput.tag);
-				AllKeys.setLegendKey(buttonInput.tag, key);
-				HoverHelperText.setLegendKeys(buttonInput.tag);
+				
+				changeText.changedText(key);
+				for(int i = 0; i < InputManager.inputManagerList.Count; i++)
+				{	
+					if(InputManager.inputManagerList[i].Tag.Equals(buttonInput.tag))
+					{
+						Keyboard.setKeyboardBasedOnTags(AllKeys.allKeys[index], 
+						                                buttonInput,
+						                                AllKeys.allKeys[index].name,
+						                                InputManager.inputManagerList[i].Type, 
+						                                AllKeys.allKeys[index].name);
+						break;
+					}
+				}
 				InputManager.isOn = false;
 				buttonInput.tag = "Untagged";
 				hoverKeyboard.keyboardKeyboardExit();
 				return true;
-
+				
 			}
 			else
 				return true;
@@ -482,5 +373,6 @@ public class KeyboardUI {
 		return false;
 		
 	}
-	
+
 }
+

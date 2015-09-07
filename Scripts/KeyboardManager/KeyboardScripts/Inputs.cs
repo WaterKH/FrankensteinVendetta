@@ -7,13 +7,11 @@ using System;
 [Serializable]
 public class Inputs {
 
-	
-	//Mouse click1 will be to use what is set in inventory to your main click
-	//Mouse click2 stifle breath
-	private KeyCode inputName;
+	private KeyCode inputKeycode;
 	private string inputTag;
 	private Button inputButton;
-
+	private string inputType;
+	private string inputName;
 	ButtonSerializable buttonSer = new ButtonSerializable();
 
 	//Dictionary 
@@ -25,32 +23,36 @@ public class Inputs {
 	public Inputs()
 	{
 
-		inputName = KeyCode.None;
-		inputTag = "";
+		inputKeycode = KeyCode.None;
+		inputTag = "untagged";
 		inputButton = null;
+		inputType = "untyped";
+		inputName = "unnamed";
 
 	}
 
 	//Paramaterized Constructor
-	public Inputs(string anInput, string aTag, Button aButton)
+	public Inputs(string aKeycode, string aTag, Button aButton, string aType, string aName)
 	{
 
-		setInputKeyCode(anInput);
+		setInputKeyCode(aKeycode);
 		setInputTag(aTag);
 		setInputButton (aButton);
 		setInputButtonTag(aTag);
+		setInputType(aType);
 
 	}
 
-	//Overloaded
-	public Inputs(string anInput, string aTag, string buttonText)
+	//Overloaded - string value for button
+	public Inputs(string aKeycode, string aTag, string buttonText, string aType, string aName)
 	{
 
-		setInputKeyCode(anInput);
+		setInputKeyCode(aKeycode);
 		setInputTag(aTag);
 		setInputButton(buttonSer.getButtonSer(buttonText, aTag));
 		setInputButtonTag(aTag);
-
+		setInputType(aType);
+		setInputName(aName);
 
 	}
 
@@ -59,7 +61,7 @@ public class Inputs {
 	public void setInputKeyCode(string anInput)
 	{
 
-		inputName = (KeyCode)Enum.Parse(typeof(KeyCode), anInput);
+		inputKeycode = (KeyCode)Enum.Parse(typeof(KeyCode), anInput);
 
 	}
 
@@ -84,11 +86,25 @@ public class Inputs {
 
 	}
 
+	public void setInputType(string aType)
+	{
+
+		inputType = aType;
+
+	}
+
+	public void setInputName(string aName)
+	{
+
+		inputName = aName;
+
+	}
+
 	//Accessors
 	public KeyCode getInputKeyCode()
 	{
 
-		return inputName;
+		return inputKeycode;
 
 	}
 	
@@ -113,31 +129,17 @@ public class Inputs {
 
 	}
 
-	//Called from SaveLoad
-	public static void setInputFromData(string aKey, Button aButton)
+	public string getInputType()
 	{
 
-		Inputs inputForDict = new Inputs(aKey, aButton.tag, aButton);
-		inputDict.Add(inputForDict.getInputTag(), inputForDict);
+		return inputType;
 
 	}
 
-	//First argument will be the previous tag to carry over, buttonForInput will be the buton to change to,
-	//aKey will be which key button on keyboard to replace with
-	public static void setInput(Button buttonForTag, Button buttonForInput, string aKey)
-	{
-	
-		Inputs inputForDict = new Inputs(aKey, buttonForTag.tag, buttonForInput);
-		inputDict.Add(inputForDict.getInputTag(), inputForDict);
-		Debug.Log ("Key to change to: "+inputDict[inputForDict.getInputTag()].getInputKeyCode().ToString());
-
-	}
-
-	//Removes the previous button
-	private static void removeInput(Button anInput)
+	public string getInputName()
 	{
 
-		inputDict.Remove(anInput.tag);
+		return inputName;
 
 	}
 

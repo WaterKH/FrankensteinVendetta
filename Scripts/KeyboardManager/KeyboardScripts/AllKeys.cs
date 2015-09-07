@@ -55,14 +55,14 @@ public class AllKeys : MonoBehaviour {
 
 	public static void removeLegend()
 	{
-		
+
 		Transform[] children = parent.GetComponentsInChildren<Transform>();
 		for(int i = 2; i < children.Length; i++)
 			Destroy(children[i].gameObject);
 		counter = 0;
 		startPosName = new Vector3(0,0,0);
 		startPosButton = new Vector3(0,0,0);
-		
+
 	}
 
 	public static List<Button> getButtons()
@@ -109,7 +109,6 @@ public class AllKeys : MonoBehaviour {
 		inputDescr.GetComponent<Text>().text = anInput;
 
 		GameObject inputButton = Instantiate(Resources.Load("InputNonUIButton") as GameObject);
-
 		inputButton.transform.SetParent(parent.transform, false);
 		if(startPosButton == new Vector3(0,0,0))
 		{
@@ -130,7 +129,7 @@ public class AllKeys : MonoBehaviour {
 		inputButton.GetComponentInChildren<Text>().text = Inputs.inputDict[aTag].getInputKeyCode().ToString();
 
 		counter++;
-		if(counter < 15)
+		if(counter < 13)
 		{
 			startPosName = inputDescr.transform.position;
 			startPosButton = inputButton.transform.position;
@@ -145,21 +144,12 @@ public class AllKeys : MonoBehaviour {
 
 	}
 	
-	public static void INITIAL_LIST_LEGEND(List<Button> listButton)
+	public static void INITIAL_LIST_LEGEND(List<InputManager.INPUT_CLASS> inputManagerList)
 	{
-		
-		INITIAL_LIST_LEGEND("Forward", listButton[2].tag);
-		INITIAL_LIST_LEGEND("Backward", listButton[11].tag);
-		INITIAL_LIST_LEGEND("Left", listButton[10].tag);
-		INITIAL_LIST_LEGEND("Right", listButton[12].tag);
-		INITIAL_LIST_LEGEND("Run", listButton[49].tag);
-		INITIAL_LIST_LEGEND("Crouch", listButton[55].tag);
-		INITIAL_LIST_LEGEND("Action", listButton[3].tag);
-		INITIAL_LIST_LEGEND("Action (S)", listButton[62].tag);
-		INITIAL_LIST_LEGEND("Pause", listButton[53].tag);
-		INITIAL_LIST_LEGEND("Pause (S)", listButton[6].tag);
-		INITIAL_LIST_LEGEND("Jump", listButton[56].tag);
-		
+
+		for(int i = 0; i < inputManagerList.Count; i++)
+			INITIAL_LIST_LEGEND(inputManagerList[i].Name, inputManagerList[i].Tag);
+
 	}
 
 }

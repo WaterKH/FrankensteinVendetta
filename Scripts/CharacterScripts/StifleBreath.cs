@@ -20,10 +20,10 @@ public class StifleBreath : MonoBehaviour {
 
 	void Update () {
 
-		if(InputManager.GetKey(KeyboardTags.run))
+		if(InputManager.GetKey("run"))
 			running = true; 
 
-		if(!InputManager.GetKey(KeyboardTags.run))
+		if(!InputManager.GetKey("run"))
 			running = false;
 
 		if(running == true)

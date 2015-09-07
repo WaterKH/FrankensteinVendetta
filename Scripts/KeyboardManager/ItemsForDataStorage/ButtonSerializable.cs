@@ -6,35 +6,45 @@ using System.Collections.Generic;
 
 [Serializable]
 public class ButtonSerializable {
-
-	public string buttonText;
+	
+	public string buttonName;
+	public string buttonTag;
 
 	public ButtonSerializable()
 	{
 
-		buttonText = "";
+		buttonName = "noname";
+		buttonTag = "notag";
 
 	}
 
-	public ButtonSerializable(string aText)
+	public ButtonSerializable(string aName, string aTag)
 	{
 
-		setButtonSer(aText);
+		setButtonSerName(aName);
+		setButtonSerTag(aTag);
 
 	}
 
-	public void setButtonSer(string aText)
+	public void setButtonSerName(string aName)
 	{
 
-		buttonText = aText;
+		buttonName = aName;
 
 	}
 
-	public string returnButtonText(Button aButton)
+	public void setButtonSerTag(string aTag)
 	{
 
-		return aButton.GetComponentInChildren<Text>().text;
+		buttonTag = aTag;
 
+	}
+
+	public ButtonSerializable returnButtonSer(Button aButton)
+	{
+
+		ButtonSerializable buttonSer = new ButtonSerializable(aButton.name, aButton.tag);
+		return buttonSer;
 	}
 
 	public Button getButtonSer(string aName, string buttonTag)
@@ -45,7 +55,7 @@ public class ButtonSerializable {
 
 			if(AllKeys.allKeys[i].name.ToLower().Equals(aName.ToLower()))
 			{
-				Debug.Log(AllKeys.allKeys[i].GetComponentInChildren<Text>().text);
+
 				AllKeys.allKeys[i].tag = buttonTag;
 				return AllKeys.allKeys[i];
 
@@ -53,7 +63,7 @@ public class ButtonSerializable {
 
 		}
 
-		Debug.Log(aName + " " + buttonTag);
+		Debug.Log("ERROR: " + aName + " " + buttonTag + " will return null value.");
 		return null;
 
 	}

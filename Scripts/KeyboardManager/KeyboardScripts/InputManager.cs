@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
@@ -6,79 +6,120 @@ using System.IO;
 
 public class InputManager : MonoBehaviour {
 
+	//TODO FIX ALL OF THE "" SET FOR TYPES
+	//TODO What is anInput? Keycode Input or string Tag
 	public HoverKeyboard hoverKeyboard;
 	public AllKeys allKeys;
-	public SaveLoadKeyboard saveLoad;
+	public SaveLoadKeyboard saveLoadKey;
 	public ChangeHelpMenuText changeText;
 	ButtonSerializable buttonSer = new ButtonSerializable();
-	
-	//!! Make sure that they correspond !!
-	//!! THIS WILL BE EDITED IN THE INSPECTOR
-	//This will be where you input in the inspector what names you want for your keys
-	public List<string> INPUTS;
-	//This will be where you add the buttons from the scene
-	public List<Button> BUTTONS;
-	public static List<Button> BUTTONS_STATIC;
-	//This will be where you add your types/ classifications for each key (ie - moveForward = Movement, pause = Modification)
-	public List<string> TYPES;
-	//This will be where you add the button names for each key
-	public List<string> NAMES;
-	//!! THIS WILL BE EDITED IN THE INSPECTOR
-	//!! Make sure that they correspond !!
-	
+
 	public static bool isOn;
 	Button buttonInput;
 
-	void Awake()
+	public List<INPUT_CLASS> inputManagerList_FROM_INSPECTOR = new List<INPUT_CLASS>(1);
+	public static List<INPUT_CLASS> inputManagerList;
+
+	[System.Serializable]
+	public class INPUT_CLASS_FOR_DATA_STORAGE
+	{
+		
+		public KeyCode Input;
+		public ButtonSerializable Key;
+		public string Type;
+		public string Tag;
+		public string Name;
+		
+		public INPUT_CLASS_FOR_DATA_STORAGE(KeyCode anInput, ButtonSerializable aKey, string aType, string aTag, 
+		                                    string aName)
+		{
+			
+			Input = anInput;
+			Key = aKey;
+			Type = aType;
+			Tag = aTag;
+			Name = aName;
+			
+		}
+		
+	}
+	
+	[System.Serializable]
+	public class INPUT_CLASS
+	{
+		
+		public KeyCode Input;
+		public Button Key;
+		public string Type;
+		public string Tag;
+		public string Name;
+
+		public INPUT_CLASS(KeyCode anInput, Button aKey, string aType, string aTag, string aName)
+		{
+
+			Input = anInput;
+			Key = aKey;
+			Type = aType;
+			Tag = aTag;
+			Name = aName;
+
+		}
+		
+	}
+
+	void Start()
 	{
 
-		BUTTONS_STATIC = BUTTONS;
+		//TODO Include a save function of the inputManagerList
+		if (File.Exists (Application.persistentDataPath + "/KeyboardInfo.dat"))
+			saveLoadKey.LoadKeyboard();
+		else
+		{
+			inputManagerList = new List<INPUT_CLASS>();
+			DEFAULT_LAYOUT();
+		}
 
 	}
 
 	//Called by Default Button
 	public void CONFIGURE_LAYOUT()
 	{
-		KeyboardUI.resetKeyboard();
+
+		Keyboard.resetKeyboard();
+		AllKeys.removeLegend();
 		Inputs.inputDict = new Dictionary<string, Inputs>();
-		HoverKeyboard.hoverHelperText = new Dictionary<string, string>();
-		HoverKeyboard.legendText = new Dictionary<string, string>();
 		AllKeys.legendList = new List<Button>();
 
-		if(INPUTS.Count == BUTTONS.Count && INPUTS.Count > 0)
+		if(inputManagerList.Count > 0)
 		{
 
-			KeyboardTags.keyboardTagsList = new List<string>();
-
-			for(int i = 0; i < INPUTS.Count; i++)
+			for(int i = 0; i < inputManagerList.Count; i++)
 			{
 
-				KeyboardTags.keyboardTagsList.Add(INPUTS[i]);
-				KeyBindings.KEYS(INPUTS[i], BUTTONS[i]);
-				KeyBindings.HOVER_KEYS(INPUTS[i], BUTTONS[i]);
-				KeyBindings.LEGEND(INPUTS[i], TYPES[i]);
-				AllKeys.INITIAL_LIST_LEGEND(NAMES[i], INPUTS[i]);
+				Keyboard.KeyboardTags.keyboardTagsAndTypes();
+				Keyboard.KeyBindings.DISTRIBUTE_KEYS (inputManagerList[i]);
+				AllKeys.INITIAL_LIST_LEGEND(inputManagerList[i].Name, inputManagerList[i].Tag);
 
 			}
 
 		}
 		else
-		{
-			Debug.Log("Inputs didn't match buttons or there was no user input..");
-			DEFAULT_LAYOUT(AllKeys.getButtons());
-
-		}
-		
+			Debug.Log("No user input located");
+	
 	}
 	
 	//Sets the keys to default
-	private void DEFAULT_LAYOUT(List<Button> buttonList)
+	public void DEFAULT_LAYOUT()
 	{
-
-		KeyboardTags.keyboardTags();
-		KeyBindings.DEFAULT_KEYS(buttonList);
-		KeyBindings.DEFAULT_HOVER_KEYS();
-		AllKeys.INITIAL_LIST_LEGEND(buttonList);
+		inputManagerList.Clear();
+		foreach(INPUT_CLASS inputClass in inputManagerList_FROM_INSPECTOR)
+		{
+			INPUT_CLASS tempInputClass = new INPUT_CLASS(inputClass.Input, inputClass.Key,
+			                                             inputClass.Type, inputClass.Tag,
+			                                             inputClass.Name);
+			inputManagerList.Add(tempInputClass);
+		}
+		CONFIGURE_LAYOUT();
 		
 	}
 
@@ -90,6 +131,7 @@ public class InputManager : MonoBehaviour {
 		if(!aButton.tag.Equals("Untagged"))
 		{
 
+			changeText.selectedText(aButton.name);
 			buttonInput = Inputs.inputDict[aButton.tag].getInputButton();
 			Debug.Log("Key to be changed: "+buttonInput.name);
 			foreach(KeyValuePair<string, Inputs> input in Inputs.inputDict)
@@ -97,7 +139,6 @@ public class InputManager : MonoBehaviour {
 
 				if(buttonInput.tag.Equals(input.Key))
 				{
-					changeText.selectedText(buttonInput.name);
 					isOn = true;
 					break;
 				}
@@ -133,7 +174,7 @@ public class InputManager : MonoBehaviour {
 	private void setKey()
 	{
 		//Checks the above method for special cases
-		if(!KeyboardUI.checkSpecialInput(buttonInput, changeText, hoverKeyboard))
+		if(!SpecialInputCheck.checkSpecialInput(buttonInput, changeText, hoverKeyboard))
 		{
 	
 			//sets the string to what's pressed on the keyboard
@@ -145,9 +186,9 @@ public class InputManager : MonoBehaviour {
 				if(anInput.Value.getInputButton().GetComponentInChildren<Text>().text.ToLower().Equals(setInput.ToLower()))
 				{
 
+					changeText.changedText("This key has already been binded, please choose another one");
 					contained = true;
 					isOn = false;
-					changeText.changedText("This key has already been binded, choose another one");
 					Debug.Log("This key has already been binded, choose another one.");
 					break;
 					
@@ -155,7 +196,7 @@ public class InputManager : MonoBehaviour {
 
 			}
 
-			if(!setInput.Equals("") && !contained)
+			if(!setInput.Equals("") && setInput.Length == 1 && !contained)
 			{
 
 				foreach(Button aButton in AllKeys.getButtons())
@@ -165,19 +206,23 @@ public class InputManager : MonoBehaviour {
 					if(aButton.name.ToLower().Equals(setInput))
 					{
 
-						saveLoad.hasSaved = false;
 						changeText.changedText(aButton.name);
-						//Removes the current button (Got from when the player clicks the button above)
-						KeyboardUI.removeKeyboardKey(buttonInput);
-						//Gets the tag from buttonInput, button to add, String value of what was pressed
-						Inputs.setInput(buttonInput, aButton, setInput.ToUpper());
-						//Gets the button that was added above, and the tag from above
-						KeyboardUI.setKeyboardBasedOnTags(Inputs.inputDict[buttonInput.tag].getInputButton(), buttonInput.tag, setInput.ToUpper());
-						//Sets the value of the hover input
-						HoverHelperText.setHoverKeys(buttonInput.tag);
-						//Causes the tool tip to disappear
-						AllKeys.setLegendKey(buttonInput.tag, Inputs.inputDict[buttonInput.tag].getInputKeyCode().ToString());
-						HoverHelperText.setLegendKeys(buttonInput.tag);
+						//TODO RENAME THESE VARS
+						for(int i = 0; i < inputManagerList.Count; i++)
+						{	
+							if(inputManagerList[i].Tag.Equals(buttonInput.tag))
+							{
+								Keyboard.setKeyboardBasedOnTags(aButton, 
+								                                buttonInput,
+								                                aButton.name,
+								                                inputManagerList[i].Type, 
+								                                aButton.name);
+								break;
+							}
+						}	
+						AllKeys.setLegendKey(aButton.tag, aButton.name);
+						saveLoadKey.hasSaved = false;
+						break;
 			
 					}
 
@@ -188,23 +233,19 @@ public class InputManager : MonoBehaviour {
 				isOn = false;
 				
 			}
+			else if(setInput.Length > 1)
+				Debug.Log("You pressed two keys..");
 			
 		}
 		
 	}
-
-	public void setKey(string anInput, Button aButtonInput)
+	
+	public void setKey(InputManager.INPUT_CLASS inputClass)
 	{
 
-		//Gets the tag from buttonInput, button to add, String value of what was pressed
-		Inputs.setInputFromData(anInput, aButtonInput);
 		//Gets the button that was added above, and the tag from above
-		KeyboardUI.setKeyboardBasedOnTags(Inputs.inputDict[aButtonInput.tag].getInputButton(), aButtonInput.tag,
-		                                  Inputs.inputDict[aButtonInput.tag].getInputKeyCode().ToString());
-		//Sets the value of the hover input
-		HoverHelperText.setHoverKeys(aButtonInput.tag);
-		AllKeys.setLegendKey(aButtonInput.tag, Inputs.inputDict[aButtonInput.tag].getInputKeyCode().ToString());
-		HoverHelperText.setLegendKeys(aButtonInput.tag);
+		Keyboard.setKeyboardBasedOnTags(inputClass.Key, inputClass.Tag, inputClass.Input.ToString(), inputClass.Type,
+		                                inputClass.Name);
 
 	}
 
@@ -228,6 +269,7 @@ public class InputManager : MonoBehaviour {
 		return Input.GetKeyUp(Inputs.inputDict[aKey].getInputKeyCode());
 
 	}
+	//TODO FIX THIS ASAP!!!!
 
 	public static float GetAxis(string aKey)
 	{
@@ -235,19 +277,15 @@ public class InputManager : MonoBehaviour {
 		if(Input.GetKey(Inputs.inputDict[aKey].getInputKeyCode()))
 		{
 
-			if(Inputs.inputDict[aKey].getInputKeyCode().ToString().Equals(
-				Inputs.inputDict[KeyboardTags.moveForward].getInputKeyCode().ToString())
-			   		||Inputs.inputDict[aKey].getInputKeyCode().ToString().Equals(
-				Inputs.inputDict[KeyboardTags.moveRight].getInputKeyCode().ToString()))
+			if(Inputs.inputDict[aKey].getInputTag().Equals("moveForward")
+			   		||Inputs.inputDict[aKey].getInputTag().Equals("moveRight"))
 			{
 
 				return 1.0f;
 
 			}
-			else if(Inputs.inputDict[aKey].getInputKeyCode().ToString().Equals(
-				Inputs.inputDict[KeyboardTags.moveBackward].getInputKeyCode().ToString())
-			        || Inputs.inputDict[aKey].getInputKeyCode().ToString().Equals(
-				Inputs.inputDict[KeyboardTags.moveLeft].getInputKeyCode().ToString()))
+			else if(Inputs.inputDict[aKey].getInputTag().Equals("moveBackward")
+			        || Inputs.inputDict[aKey].getInputTag().Equals("moveLeft"))
 			{
 
 				return -1.0f;

@@ -227,7 +227,7 @@ public class FVAPI {
 		else
 			return false;
 		
-		if (InputManager.GetKeyDown(KeyboardTags.action) || InputManager.GetKeyDown(KeyboardTags.actionSecondary)) 
+		if (InputManager.GetKeyDown("action") || InputManager.GetKeyDown("actionSecondary")) 
 		{       
 			if (Physics.Raycast (ray, out hit, distance))
 			{

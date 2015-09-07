@@ -14,7 +14,7 @@ public class Match : MonoBehaviour {
 	void Update ()
 	{
 
-		if (InputManager.GetKeyDown(KeyboardTags.lightMatch) && !walkerEn.running) {
+		if (InputManager.GetKeyDown("lightMatch") && !walkerEn.running) {
 			if (matchScript.match >= 1)
 			{
 				matchScript.counting = !matchScript.counting;
@@ -55,7 +55,7 @@ public class Match : MonoBehaviour {
 		else
 			matchScript.matchStickGO.GetComponent<MeshRenderer>().enabled = false;
 
-		if (InputManager.GetKey(KeyboardTags.run)) {    	
+		if (InputManager.GetKey("run")) {    	
 			matchLight.enabled = false;
 
 			if (matchScript.counting)
@@ -96,7 +96,7 @@ public class Match : MonoBehaviour {
 
 	    if(matchScript.match >= 1)
 	    {
-	       if(InputManager.GetKeyDown(KeyboardTags.lightMatch))
+	       if(InputManager.GetKeyDown("lightMatch"))
 	       {
 	         if(!matchLight.enabled)
 	         {

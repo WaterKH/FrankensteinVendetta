@@ -36,4 +36,12 @@ public class CancelDeletion : MonoBehaviour {
 
 	}
 
+	void Update()
+	{
+
+		if(createUser.listOfUsers.Count == 0)
+			DeletionCancelation();
+
+	}
+
 }

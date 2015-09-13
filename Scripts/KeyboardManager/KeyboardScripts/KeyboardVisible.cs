@@ -1,27 +1,55 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using UnityEngine.UI;
 
 public class KeyboardVisible : MonoBehaviour
 {
 	
 	public CanvasGroup keyboard;
 	public CanvasGroup askToSave;
-	public bool isOn;
+	static CanvasGroup askToSave_STATIC;
+	public static bool isOn;
+
+	public Button backButton;
+	public static Button backButton_STATIC;
+
+	void Awake()
+	{
+
+		askToSave_STATIC = askToSave;
+		backButton_STATIC = backButton;
+
+	}
+
+	public void visibleKeyboardCall()
+	{
+
+		visibleKeyboard();
+		backButton.interactable = false;
+
+	}
 	
-	public void visibleKeyboard()
+	public static void visibleKeyboard()
 	{
 		
 		isOn = true;
 		
 	}
+
+	public void invisibleKeyboardCall()
+	{
+
+		invisibleKeyboard();
+
+	}
 	
-	public void invisibleKeyboard()
+	public static void invisibleKeyboard()
 	{
 		
-		askToSave.alpha = 0;
-		askToSave.blocksRaycasts = false;
-		askToSave.interactable = false;
+		askToSave_STATIC.alpha = 0;
+		askToSave_STATIC.blocksRaycasts = false;
+		askToSave_STATIC.interactable = false;
+		backButton_STATIC.interactable = true;
 		isOn = false;
 		
 	}
@@ -34,7 +62,8 @@ public class KeyboardVisible : MonoBehaviour
 			
 			keyboard.interactable = true;
 			keyboard.blocksRaycasts = true;
-			keyboard.alpha = Mathf.Lerp(keyboard.alpha, 1, Time.deltaTime*2);
+			FVAPI.lerpAlphaChannelTimeMultiplied(keyboard, 1, 2);
+			//keyboard.alpha = Mathf.Lerp(keyboard.alpha, 1, Time.deltaTime*2);
 			
 		}
 		else if(isOn && InputManager.GetKeyDown("pause"))
@@ -47,7 +76,8 @@ public class KeyboardVisible : MonoBehaviour
 		{
 			keyboard.interactable = false;
 			keyboard.blocksRaycasts = false;
-			keyboard.alpha = Mathf.Lerp(keyboard.alpha, 0, Time.deltaTime*2);
+			FVAPI.lerpAlphaChannelTimeMultiplied(keyboard, 0, 2);
+			//keyboard.alpha = Mathf.Lerp(keyboard.alpha, 0, Time.deltaTime*2);
 			
 		}
 		

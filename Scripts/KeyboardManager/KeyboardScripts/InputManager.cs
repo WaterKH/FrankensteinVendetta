@@ -69,7 +69,7 @@ public class InputManager : MonoBehaviour {
 
 	void Start()
 	{
-
+	/*
 		//TODO Include a save function of the inputManagerList
 		if (File.Exists (Application.persistentDataPath + "/KeyboardInfo.dat"))
 			saveLoadKey.LoadKeyboard();
@@ -77,7 +77,7 @@ public class InputManager : MonoBehaviour {
 		{
 			inputManagerList = new List<INPUT_CLASS>();
 			DEFAULT_LAYOUT();
-		}
+		}*/
 
 	}
 
@@ -221,7 +221,7 @@ public class InputManager : MonoBehaviour {
 							}
 						}	
 						AllKeys.setLegendKey(aButton.tag, aButton.name);
-						saveLoadKey.hasSaved = false;
+						SaveLoadKeyboard.hasSaved = false;
 						break;
 			
 					}

@@ -210,7 +210,8 @@ public class FVAPI {
 	                                                         float rateOfTime)
 	{
 		
-		initialTrans.position = Vector3.Lerp(initialTrans.position, moveToTrans.position, Time.deltaTime * rateOfTime);
+		initialTrans.position = Vector3.Lerp(initialTrans.position, moveToTrans.position, 
+		                                     Time.deltaTime * rateOfTime);
 		initialTrans.rotation = Quaternion.Lerp(initialTrans.rotation, moveToTrans.rotation, 
 		                                        Time.deltaTime * rateOfTime);
 		

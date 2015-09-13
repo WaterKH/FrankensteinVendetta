@@ -69,13 +69,14 @@ public class SaveLoad : MonoBehaviour {
 		file.Close ();
 
 	}
-	public void Load(string aUserName)
+	public void Load()
 	{
+		Debug.Log("Loading User: " + userName);
 		//If it does exist this will run
-		if (File.Exists (Application.persistentDataPath + "/" + aUserName + "Info.dat")) {
+		if (File.Exists (Application.persistentDataPath + "/" + userName + "Info.dat")) {
 
 			BinaryFormatter bf = new BinaryFormatter ();
-			FileStream file = File.Open (Application.persistentDataPath + "/" + aUserName + "Info.dat", FileMode.Open);
+			FileStream file = File.Open (Application.persistentDataPath + "/" + userName + "Info.dat", FileMode.Open);
 			PlayerData data = (PlayerData)bf.Deserialize (file);
 			file.Close ();
 
@@ -89,7 +90,7 @@ public class SaveLoad : MonoBehaviour {
 			rendTexture.rendTextCameras = data.inventoryCamera;
 
 			loaded = true;
-			saveLoadKey.LoadKeyboard();
+			saveLoadKey.LoadKeyboard(userName);
 			SaveUsers();
 		}
 		else
@@ -114,8 +115,8 @@ public class SaveLoad : MonoBehaviour {
 
 		MenuData data = new MenuData();
 
-		data.Users = createUser.userNamesMenu;
-		data.userNames = createUser.usernames;
+		data.Users = createUser.listOfTypeUSERS;
+		//data.userNames = createUser.usernames;
 		data.usernameNumb = createUser.usernameNumb;
 		data.layer = createUser.layer;
 		data.usernameTracker = createUser.userNumbTracker;
@@ -138,20 +139,26 @@ public class SaveLoad : MonoBehaviour {
 			MenuData data = (MenuData)bf.Deserialize (file);
 			file.Close ();
 
-			createUser.userNamesMenu = data.Users;
-			createUser.usernames = data.userNames;
+			createUser.listOfTypeUSERS = data.Users;
+			//createUser.usernames = data.userNames;
 			createUser.usernameNumb = data.usernameNumb;
 			createUser.layer = data.layer;
 			createUser.userNumbTracker = data.usernameTracker;
 			createUser.tempLayer = data.tempLayer;
 	
+			int tempPlacement = 0;
 			for(int j = 0; j < data.usernameTracker; j++)
 			{
-				
-				createUser.CreateUser(j);
+
+				if(tempPlacement == 5)
+					tempPlacement = 0;
+
+				createUser.CreateUser(tempPlacement);
 				createUser.NameUser(data.Users[j].getPlayerName());
 				createUser.listOfUsers[j].GetComponent<CanvasGroup>().alpha = 1;
 				createUser.currUser.name = data.Users[j].getPlayerName();
+
+				tempPlacement++;
 				
 			}
 

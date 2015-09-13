@@ -9,6 +9,7 @@ public class MoveToMainMenu : MonoBehaviour {
 	public Transform transCam;
 	public Transform finalCam;
 	public Transform initialCam;
+	public Transform loginCam;
 
 	//Used in NewPlayerClick
 	public bool moveTo;
@@ -16,8 +17,10 @@ public class MoveToMainMenu : MonoBehaviour {
 	public bool doNotMove;
 	public float elapsedTime;
 	public float timeToMoveToMain;
+	public float canvasTime;
 
 	public CanvasGroup mainMenuText;
+	public CanvasGroup login;
 	public bool moveBack;
 	public Animation doorOpen;
 
@@ -53,7 +56,7 @@ public class MoveToMainMenu : MonoBehaviour {
 					//camPos.position = Vector3.Lerp(camPos.position, transCamPos.position, elapsedTime/7);
 					//camRot.rotation = Quaternion.Lerp(camRot.rotation, transCamRot.rotation, elapsedTime/7);
 					//When the Camera position eqauls the transition point..
-					if(mainCam.position == transCam.position)
+					if(mainCam.position.z > transCam.position.z - 0.075f)
 						//..atMain becomes true
 						atMain = true;
 
@@ -89,7 +92,7 @@ public class MoveToMainMenu : MonoBehaviour {
 				FVAPI.lerpVectorAndQuaternion(mainCam, transCam, timeToMoveToMain/10);
 				//mainCam.position = Vector3.Lerp(camPos.position, transCamPos.position, timeToMoveToMain/10);
 				//mainCam.rotation = Quaternion.Lerp(camRot.rotation, transCamRot.rotation, timeToMoveToMain/10);
-				if(mainCam.position == transCam.position)
+				if(mainCam.position.z < transCam.position.z + 0.075f)
 					atMain = false;
 
 			}
@@ -98,11 +101,24 @@ public class MoveToMainMenu : MonoBehaviour {
 
 				elapsedTime += Time.deltaTime;
 
-				mainCam.position = Vector3.Lerp(transCam.position, initialCam.position, elapsedTime/3);
-				mainCam.rotation = Quaternion.Lerp(transCam.rotation, initialCam.rotation, elapsedTime/3);
+				//mainCam.position = Vector3.Lerp(transCam.position, initialCam.position, elapsedTime);
+				//mainCam.rotation = Quaternion.Lerp(transCam.rotation, initialCam.rotation, elapsedTime);
+				FVAPI.lerpVectorAndQuaternion(mainCam, loginCam, elapsedTime/10);
+
+				if(mainCam.position == loginCam.position)
+				{
+
+					canvasTime += Time.deltaTime;
+					FVAPI.lerpAlphaChannel(login, 1, canvasTime);
+					if(login.alpha == 1)
+					{
+						moveBack = false;
+						login.interactable = true;
+					}
+
+				}
 
 			}
-
 
 		}
 

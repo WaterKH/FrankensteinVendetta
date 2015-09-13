@@ -13,6 +13,11 @@ public class ChangeUI : MonoBehaviour {
 	public int index = 0;
 	public int prevIndex = 0;
 
+	public GameObject defaultObject;
+	public GameObject saveObject;
+
+	bool UIBool = false;
+
 	void Awake()
 	{
 
@@ -26,10 +31,10 @@ public class ChangeUI : MonoBehaviour {
 			initialTrans[i] = objToMove[i].GetComponent<RectTransform>().anchoredPosition;
 			if(i < 3)
 				finalTrans[i] = new Vector2(objToMove[i].GetComponent<RectTransform>().anchoredPosition.x,
-				                            objToMove[i].GetComponent<RectTransform>().anchoredPosition.y+30f);
+				                            objToMove[i].GetComponent<RectTransform>().anchoredPosition.y+40f);
 			else
 				finalTrans[i] = new Vector2(objToMove[i].GetComponent<RectTransform>().anchoredPosition.x,
-				                            objToMove[i].GetComponent<RectTransform>().anchoredPosition.y-30f);
+				                            objToMove[i].GetComponent<RectTransform>().anchoredPosition.y-45f);
 
 		}
 
@@ -37,27 +42,85 @@ public class ChangeUI : MonoBehaviour {
 
 	public void changeToUI()
 	{
+		if(UIBool)
+		{
+			UIGroup.alpha = 1;
+			UIGroup.interactable = true;
+			UIGroup.blocksRaycasts = true;
 
-		UIGroup.alpha = 1;
-		UIGroup.interactable = true;
-		UIGroup.blocksRaycasts = true;
+			NonUIGroup.alpha = 0;
+			NonUIGroup.interactable = false;
+			NonUIGroup.blocksRaycasts = false;
 
-		NonUIGroup.alpha = 0;
-		NonUIGroup.interactable = false;
-		NonUIGroup.blocksRaycasts = false;
-		
+			initialTrans[3] = new Vector2(objToMove[3].GetComponent<RectTransform>().anchoredPosition.x,
+			                              objToMove[3].GetComponent<RectTransform>().anchoredPosition.y+160f);
+			initialTrans[4] = new Vector2(objToMove[4].GetComponent<RectTransform>().anchoredPosition.x,
+			                              objToMove[4].GetComponent<RectTransform>().anchoredPosition.y+160f);
+
+			objToMove[3].GetComponent<RectTransform>().anchoredPosition = new Vector2(
+				objToMove[3].GetComponent<RectTransform>().anchoredPosition.x,
+				objToMove[3].GetComponent<RectTransform>().anchoredPosition.y+160f);
+			objToMove[4].GetComponent<RectTransform>().anchoredPosition = new Vector2(
+				objToMove[4].GetComponent<RectTransform>().anchoredPosition.x,
+				objToMove[4].GetComponent<RectTransform>().anchoredPosition.y+160f);
+
+			finalTrans[3] = new Vector2(objToMove[3].GetComponent<RectTransform>().anchoredPosition.x,
+			                            objToMove[3].GetComponent<RectTransform>().anchoredPosition.y-45f);
+			finalTrans[4] = new Vector2(objToMove[4].GetComponent<RectTransform>().anchoredPosition.x,
+			                            objToMove[4].GetComponent<RectTransform>().anchoredPosition.y-45f);
+
+			defaultObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(
+				defaultObject.GetComponent<RectTransform>().anchoredPosition.x,
+				defaultObject.GetComponent<RectTransform>().anchoredPosition.y+160f);
+			saveObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(
+				saveObject.GetComponent<RectTransform>().anchoredPosition.x,
+				saveObject.GetComponent<RectTransform>().anchoredPosition.y+160f);
+
+			UIBool = false;
+
+		}
+
 	}
 
 	public void changeToNonUI()
 	{
-		
-		UIGroup.alpha = 0;
-		UIGroup.interactable = false;
-		UIGroup.blocksRaycasts = false;
-		
-		NonUIGroup.alpha = 1;
-		NonUIGroup.interactable = true;
-		NonUIGroup.blocksRaycasts = true;
+		if(!UIBool)
+		{
+			UIGroup.alpha = 0;
+			UIGroup.interactable = false;
+			UIGroup.blocksRaycasts = false;
+			
+			NonUIGroup.alpha = 1;
+			NonUIGroup.interactable = true;
+			NonUIGroup.blocksRaycasts = true;
+
+			initialTrans[3] = new Vector2(objToMove[3].GetComponent<RectTransform>().anchoredPosition.x,
+			                              objToMove[3].GetComponent<RectTransform>().anchoredPosition.y-160f);
+			initialTrans[4] = new Vector2(objToMove[4].GetComponent<RectTransform>().anchoredPosition.x,
+			                              objToMove[4].GetComponent<RectTransform>().anchoredPosition.y-160f);
+
+			objToMove[3].GetComponent<RectTransform>().anchoredPosition = new Vector2(
+				objToMove[3].GetComponent<RectTransform>().anchoredPosition.x,
+				objToMove[3].GetComponent<RectTransform>().anchoredPosition.y-160f);
+			objToMove[4].GetComponent<RectTransform>().anchoredPosition = new Vector2(
+				objToMove[4].GetComponent<RectTransform>().anchoredPosition.x,
+				objToMove[4].GetComponent<RectTransform>().anchoredPosition.y-160f);
+
+			finalTrans[3] = new Vector2(objToMove[3].GetComponent<RectTransform>().anchoredPosition.x,
+			                            objToMove[3].GetComponent<RectTransform>().anchoredPosition.y-45f);
+			finalTrans[4] = new Vector2(objToMove[4].GetComponent<RectTransform>().anchoredPosition.x,
+			                            objToMove[4].GetComponent<RectTransform>().anchoredPosition.y-45f);
+
+			defaultObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(
+				defaultObject.GetComponent<RectTransform>().anchoredPosition.x,
+				defaultObject.GetComponent<RectTransform>().anchoredPosition.y-160f);
+			saveObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(
+				saveObject.GetComponent<RectTransform>().anchoredPosition.x,
+				saveObject.GetComponent<RectTransform>().anchoredPosition.y-160f);
+
+			UIBool = true;
+
+		}
 
 	}
 

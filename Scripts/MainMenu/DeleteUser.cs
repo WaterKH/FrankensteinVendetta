@@ -7,6 +7,7 @@ using System;
 public class DeleteUser : MonoBehaviour {
 
 	public bool remove;
+	int index = 0;
 
 	//Script instances
 	public CreateNewUser createUser;
@@ -48,16 +49,16 @@ public class DeleteUser : MonoBehaviour {
 		saveLoad.userName = userObject.GetComponentInChildren<Text>().text;
 		//Deletes and then saves the Users after deltetion
 		saveLoad.Delete();
-		foreach(User user in createUser.userNamesMenu)
+		foreach(User user in createUser.listOfTypeUSERS)
 		{
 
 			if(userObject.GetComponentInChildren<Text>().text == user.getPlayerName())
 			{
 
 				Debug.Log("Deleting "+userObject.GetComponentInChildren<Text>().text);
-				createUser.usernames.Remove(userObject.GetComponentInChildren<Text>().text);
-				createUser.userNamesMenu.Remove(user);
+				index = createUser.listOfUsers.IndexOf(userObject);
 				createUser.listOfUsers.Remove(userObject);
+				createUser.listOfTypeUSERS.Remove(user);
 				Destroy (userObject);
 				if(createUser.usernameNumb != 0)
 					createUser.usernameNumb--;
@@ -75,57 +76,39 @@ public class DeleteUser : MonoBehaviour {
 	public void DeletionOver()
 	{
 
-		User tempUser = new User();
-	
-		foreach(User user in createUser.userNamesMenu)
+		int tempPlacementIndex = index;
+		bool ableToRun = true;
+		for(int i = index; i < createUser.listOfUsers.Count; i++)
 		{
-			Debug.Log(user.getPlayerName()+" "+user.getPlayerID()+" "+user.getPlayerLayer());
-			if(user.getPlayerID() == 1 && user.getPlayerLayer() != 0)
+			ableToRun = true;
+
+			if(tempPlacementIndex > 5)
 			{
 
-				//TODO This is broken..
-				if(user.getPlayerID()+4 == tempUser.getPlayerID())
-				{
-					user.setLayer(user.getPlayerLayer()-1);
-					user.setPlayerID(5);
-				
-				}
+				tempPlacementIndex -= 5;
+				i--;
+				ableToRun = false;
 
 			}
-			else if(user.getPlayerID() != 1 && user.getPlayerID() > tempUser.getPlayerID()+1)
-				user.setPlayerID(user.getPlayerID()-1);
-			else if(user.getPlayerID () != 1 && user.getPlayerID()+3 == tempUser.getPlayerID())
-				user.setPlayerID(user.getPlayerID()-1);
+			else if(tempPlacementIndex == 5)
+				tempPlacementIndex = 0;
 
-			tempUser = user;
+			if(ableToRun)
+			{
+				if(createUser.listOfTypeUSERS[i].getPlayerID() == 1)
+					createUser.listOfTypeUSERS[i].setLayer(createUser.listOfTypeUSERS[i].getPlayerLayer() - 1);
+
+				createUser.listOfUsers[i].GetComponent<RectTransform>().anchoredPosition = 
+					createUser.userPlacements[tempPlacementIndex].anchoredPosition;
+
+				tempPlacementIndex++;
+			}
 
 		}
+
+		flipPage.De_ActivateUsers();
 		saveLoad.SaveUsers();
-		createUser.userNamesMenu.Clear();
-		foreach(GameObject user in createUser.listOfUsers)
-			Destroy(user);
-		createUser.listOfUsers.Clear();
-		createUser.usernames.Clear();
-		createUser.layer = 0;
-		createUser.usernameNumb = 0;
-		createUser.userNumbTracker = 0;
-		saveLoad.LoadUsers();
-		if(tempUser.getPlayerID() == 5 && createUser.layer > 0)
-		{
-			
-			createUser.layer--;
-			createUser.tempLayer = true;
-			
-		}
-		saveLoad.SaveUsers();
-		foreach(GameObject user in createUser.listOfUsers)
-		{
-			
-			ColorBlock colorBlock = user.GetComponent<Button>().colors;
-			colorBlock.normalColor = Color.black;
-			user.GetComponent<Button>().colors = colorBlock;
-			
-		}
+
 		Debug.Log("Deletion complete");
 
 	}

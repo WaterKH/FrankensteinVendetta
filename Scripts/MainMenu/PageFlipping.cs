@@ -28,10 +28,10 @@ public class PageFlipping : MonoBehaviour {
 
 	public void De_ActivateUsers()
 	{
-		for(int i = 0; i < createUser.userNamesMenu.Count; i++)
+		for(int i = 0; i < createUser.listOfUsers.Count; i++)
 		{
 
-			if(createUser.userNamesMenu[i].getPlayerLayer() != currLayer)
+			if(createUser.listOfTypeUSERS[i].getPlayerLayer() != currLayer)
 			{
 
 				createUser.listOfUsers[i].GetComponent<CanvasGroup>().alpha = 0;
@@ -60,13 +60,11 @@ public class PageFlipping : MonoBehaviour {
 			flipBack.interactable = false;
 		else
 			flipBack.interactable = true;
+
 		if(currLayer == createUser.layer)
 			flipForward.interactable = false;
 		else
 			flipForward.interactable = true;
-		if(currLayer > createUser.layer)
-			FlipPageBack();
-		 
 
 	}
 

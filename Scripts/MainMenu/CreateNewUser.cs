@@ -11,7 +11,7 @@ public class CreateNewUser : MonoBehaviour {
 	public InputField characterName;
 
 	//Script Instances
-	public List<User> userNamesMenu;
+	public List<User> listOfTypeUSERS; //Was userNamesMenu
 	public SaveLoad saveLoadData;
 	public NewPlayerClick playerClick;
 	public DeleteUser delete;
@@ -30,7 +30,7 @@ public class CreateNewUser : MonoBehaviour {
 	bool showNewName;
 
 	public Animation doorOpen;
-	public List<string> usernames;
+	//public List<string> usernames; //Grouped with listOfUsers
 	public CanvasGroup inputGroup;
 	public CanvasGroup usernameGroup;
 	public RectTransform parent;
@@ -45,23 +45,24 @@ public class CreateNewUser : MonoBehaviour {
 			//Loads the Users for the mainmenu
 			saveLoadData.LoadUsers();
 
-		if(usernames.Count != userNamesMenu.Count)
+		//TODO Fix this if neccessary
+		/*if(listOfUsers.Count != listOfTypeUSERS.Count)
 		{
-
+			
 			usernames.Clear();
 			foreach(User user in userNamesMenu)
 				usernames.Add(user.getPlayerName());
-
+			
 		}
-
+		
 		//Runs a for loop for how many slots there are for users
 		for(int i = 0; i < userNamesMenu.Count; i++)
 		{
 			//text equals the playerName saved with the SavedUsers() method
 			if(usernames[i] != null)
 				usernames[i] = userNamesMenu[i].getPlayerName();
-
-		}
+			
+		}*/
 
 	}
 
@@ -69,6 +70,7 @@ public class CreateNewUser : MonoBehaviour {
 	{
 		
 		GameObject newUser = Instantiate(Resources.Load ("User")) as GameObject;
+		Debug.Log("Creating User");
 		listOfUsers.Add(newUser);
 		currUser = newUser;
 		newUser.GetComponent<RectTransform>().SetParent(parent, false);
@@ -90,7 +92,7 @@ public class CreateNewUser : MonoBehaviour {
 	private void NameUser()
 	{
 
-		currUser.GetComponentInChildren<Text>().text = userNamesMenu[userNamesMenu.Count-1].getPlayerName();
+		currUser.GetComponentInChildren<Text>().text = listOfTypeUSERS[listOfTypeUSERS.Count-1].getPlayerName();
 
 	}
 
@@ -104,6 +106,12 @@ public class CreateNewUser : MonoBehaviour {
 	public void clickedCreateUser()
 	{
 
+		if(delete.remove)
+		{
+			cancelDelete.DeletionCancelation();
+			clickedCreateUser();
+		}
+	
 		if(usernameNumb == 5)
 		{
 
@@ -120,11 +128,7 @@ public class CreateNewUser : MonoBehaviour {
 			tempLayer = false;
 
 		}
-		else if(delete.remove)
-		{
-			cancelDelete.DeletionCancelation();
-			clickedCreateUser();
-		}
+
 		showInput = true;
 		CreateUser();
 
@@ -139,7 +143,7 @@ public class CreateNewUser : MonoBehaviour {
 		{
 			//.. The username in SaveLoad class is set to the playerName from User class, then calls the Load method
 			saveLoadData.userName = buttonClicked.GetComponentInChildren<Text>().text;
-			saveLoadData.Load(saveLoadData.userName);
+			saveLoadData.Load();
 			if(saveLoadData.loaded)
 				Debug.Log("Load successful");
 			else
@@ -152,6 +156,7 @@ public class CreateNewUser : MonoBehaviour {
 				Debug.Log("Save file created for "+Player_MAIN.player.getName());
 
 			}
+			saveLoadData.loaded = false;
 			//Then moves the player to the mainmenu
 			playerClick.moveToMainMenu();
 			doorOpen.Play("MainMenuDoorOpen");
@@ -166,7 +171,7 @@ public class CreateNewUser : MonoBehaviour {
 		showInput = false;
 		showNewName = true;
 		bool nameAvailable = true;
-		foreach(User user in userNamesMenu)
+		foreach(User user in listOfTypeUSERS)
 		{
 
 			if(characterName.text != user.getPlayerName())
@@ -174,7 +179,7 @@ public class CreateNewUser : MonoBehaviour {
 			else if(characterName.text == user.getPlayerName())
 			{
 
-				Debug.Log("Input:"+characterName.text);
+				Debug.Log("Input: "+characterName.text);
 				nameAvailable = false;
 				listOfUsers.Remove(currUser);
 				Destroy(currUser);
@@ -195,16 +200,16 @@ public class CreateNewUser : MonoBehaviour {
 
 		if(nameAvailable)
 		{
-
-			Debug.Log("Successfully created user: "+characterName.text);
+			Debug.Log("Creating user: " + characterName.text);
 			usernameNumb++;
 			userNumbTracker++;
-			userNamesMenu.Add(new User(characterName.text, false, layer, usernameNumb));
-			usernames.Add(characterName.text);
+			listOfTypeUSERS.Add(new User(characterName.text, false, layer, usernameNumb));
+			//usernames.Add(characterName.text);
 			NameUser();
 			currUser.name = characterName.text;
 			flipPage.De_ActivateUsers();
 			saveLoadData.SaveUsers();
+			Debug.Log("Successfully created user: " + characterName.text);
 
 		}
 	

@@ -65,7 +65,7 @@ public class NewPlayerClick : MonoBehaviour {
 			//camRot.rotation = Quaternion.Lerp(camRot.rotation, finalCamRot.rotation, elapsedTime/10);
 
 			//if the Camera position equals the position to go to..
-			if(mainCam.position == finalCam.position)
+			if(mainCam.position.z >= finalCam.position.z -0.05f)
 			{
 
 				//..The alpha channels of the Users Canvas Group and Back button become visible and interactable

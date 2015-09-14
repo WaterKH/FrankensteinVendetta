@@ -154,6 +154,7 @@ public class CreateNewUser : MonoBehaviour {
 				Debug.Log(Player_MAIN.player.getName());
 				saveLoadData.Save();
 				Debug.Log("Save file created for "+Player_MAIN.player.getName());
+				saveLoadData.Load ();
 
 			}
 			saveLoadData.loaded = false;

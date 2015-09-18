@@ -5,8 +5,8 @@ using System.Collections;
 public class movePanel : MonoBehaviour {
 
 	//Instance Variables
-	Vector2 initialVect;
-	Vector2 toVect;
+	Vector3 initialVect;
+	Vector3 toVect;
 	float elapsedTime = 0f;
 	bool switchPan = false;
 
@@ -14,7 +14,6 @@ public class movePanel : MonoBehaviour {
 	public RectTransform sound;
 	public RectTransform controls;
 
-	public CanvasGroup scrollOver;
 	public CanvasGroup graphicsGroup;
 	public CanvasGroup soundGroup;
 	public CanvasGroup controlsGroup;
@@ -23,8 +22,8 @@ public class movePanel : MonoBehaviour {
 	public void panelMove(RectTransform rectT)
 	{
 
-		initialVect = GetComponent<RectTransform>().anchoredPosition;
-		toVect = rectT.anchoredPosition;
+		initialVect = GetComponent<RectTransform>().position;
+		toVect = rectT.position;
 		switchPan = true;
 		elapsedTime = 0;
 
@@ -33,37 +32,22 @@ public class movePanel : MonoBehaviour {
 	void Update()
 	{
 		//If switchPan is true, move panel to the correct option
-		if (switchPan) {
+		if (switchPan) 
+		{
 
 			elapsedTime += Time.deltaTime;
-			GetComponent<RectTransform> ().anchoredPosition = Vector2.Lerp (initialVect, new Vector2(toVect.x-425, toVect.y), elapsedTime);
-			if (GetComponent<RectTransform> ().anchoredPosition == new Vector2(toVect.x-425, toVect.y))
+			GetComponent<RectTransform> ().position = Vector3.Lerp (GetComponent<RectTransform>().position, 
+			                                                                toVect, elapsedTime);
+			if (GetComponent<RectTransform> ().position == toVect)
 				switchPan = false;
-		} else
+
+		} 
+		else
 			elapsedTime = 0;
 
 		//TODO Finish the Options Menu
 		//Shows correct menu based on which option is selected
-		if(scrollOver.alpha <= 0)
-		{
-
-			FVAPI.lerpAlphaChannelTimeMultiplied(soundGroup, 0, 5);
-			FVAPI.lerpAlphaChannelTimeMultiplied(graphicsGroup, 0, 5);
-			FVAPI.lerpAlphaChannelTimeMultiplied(controlsGroup, 0, 5);
-			//soundGroup.alpha = Mathf.Lerp(soundGroup.alpha, 0, Time.deltaTime*5);
-			//graphicsGroup.alpha = Mathf.Lerp(graphicsGroup.alpha, 0, Time.deltaTime*5);
-			//controlsGroup.alpha = Mathf.Lerp(controlsGroup.alpha, 0, Time.deltaTime*5);
-
-			soundGroup.interactable = false;
-			graphicsGroup.interactable = false;
-			controlsGroup.interactable = false;
-
-			soundGroup.blocksRaycasts = false;
-			graphicsGroup.blocksRaycasts = false;
-			controlsGroup.blocksRaycasts = false;
-
-		}
-		else if(toVect == graphics.anchoredPosition)
+		if(toVect == graphics.position)
 		{
 
 			FVAPI.lerpAlphaChannelTimeMultiplied(soundGroup, 0, 3);
@@ -82,7 +66,7 @@ public class movePanel : MonoBehaviour {
 			controlsGroup.blocksRaycasts = false;
 
 		}
-		else if(toVect == sound.anchoredPosition)
+		else if(toVect == sound.position)
 		{
 
 			FVAPI.lerpAlphaChannelTimeMultiplied(soundGroup, 1, 3);
@@ -101,7 +85,7 @@ public class movePanel : MonoBehaviour {
 			controlsGroup.blocksRaycasts = false;
 
 		}
-		else if(toVect == controls.anchoredPosition)
+		else if(toVect == controls.position)
 		{
 
 			FVAPI.lerpAlphaChannelTimeMultiplied(soundGroup, 0, 3);

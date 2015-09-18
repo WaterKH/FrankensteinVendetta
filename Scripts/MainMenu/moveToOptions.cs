@@ -16,8 +16,6 @@ public class moveToOptions : MonoBehaviour {
 
 	//Canvas Groups
 	public CanvasGroup optionsMenu;
-	public CanvasGroup backOption;
-	public CanvasGroup scrollOver;
 	public CanvasGroup graphics;
 	public CanvasGroup sound;
 	public CanvasGroup controls;
@@ -62,11 +60,7 @@ public class moveToOptions : MonoBehaviour {
 				//.. Options menu's alpha becomes visible and interactable
 				canvasTime += Time.deltaTime;
 				optionsMenu.interactable = true;
-				backOption.interactable = true;
-				scrollOver.interactable = true;
 				FVAPI.lerpAlphaChannel(optionsMenu, 1, canvasTime);
-				FVAPI.lerpAlphaChannel(backOption, 1, canvasTime);
-				FVAPI.lerpAlphaChannel(scrollOver, 1, canvasTime);
 				//optionsMenu.alpha = Mathf.Lerp (optionsMenu.alpha, 1, canvasTime);
 				//backOption.alpha = Mathf.Lerp (backOption.alpha, 1, canvasTime);
 				//scrollOver.alpha = Mathf.Lerp (scrollOver.alpha, 1, canvasTime);
@@ -84,8 +78,6 @@ public class moveToOptions : MonoBehaviour {
 			//mainCam.rotation = Quaternion.Slerp (mainCam.rotation, initCam.rotation, elapsedTime/2);
 			//Alpha invisible and interactable
 			FVAPI.lerpAlphaChannel(optionsMenu, 0, elapsedTime*2);
-			FVAPI.lerpAlphaChannel(backOption, 0, elapsedTime*2);
-			FVAPI.lerpAlphaChannel(scrollOver, 0, elapsedTime*2);
 			FVAPI.lerpAlphaChannel(graphics, 0);
 			FVAPI.lerpAlphaChannel(sound, 0);
 			FVAPI.lerpAlphaChannel(controls, 0);
@@ -96,8 +88,6 @@ public class moveToOptions : MonoBehaviour {
 			//sound.alpha = Mathf.Lerp(sound.alpha, 0, Time.deltaTime);
 			//controls.alpha = Mathf.Lerp(controls.alpha, 0, Time.deltaTime);
 			optionsMenu.interactable = false;
-			backOption.interactable = false;
-			scrollOver.interactable = false;
 			
 		} 
 

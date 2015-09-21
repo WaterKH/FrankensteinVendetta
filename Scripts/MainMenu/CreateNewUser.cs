@@ -11,7 +11,7 @@ public class CreateNewUser : MonoBehaviour {
 	public InputField characterName;
 
 	//Script Instances
-	public List<User> listOfTypeUSERS; //Was userNamesMenu
+	public List<User> listOfTypeUSERS;
 	public SaveLoad saveLoadData;
 	public NewPlayerClick playerClick;
 	public DeleteUser delete;
@@ -19,7 +19,6 @@ public class CreateNewUser : MonoBehaviour {
 	public CancelDeletion cancelDelete;
 
 	public int usernameNumb;
-	//Used in PageFlipping
 	public int layer;
 	public bool tempLayer;
 	public int userNumbTracker;
@@ -30,7 +29,6 @@ public class CreateNewUser : MonoBehaviour {
 	bool showNewName;
 
 	public Animation doorOpen;
-	//public List<string> usernames; //Grouped with listOfUsers
 	public CanvasGroup inputGroup;
 	public CanvasGroup usernameGroup;
 	public RectTransform parent;
@@ -42,30 +40,18 @@ public class CreateNewUser : MonoBehaviour {
 	{
 
 		if(File.Exists(Application.persistentDataPath + "/UsernameMenuInfo.dat"))
-			//Loads the Users for the mainmenu
+			//Loads the Users for the mainmenu if the file exists
 			saveLoadData.LoadUsers();
 
-		//TODO Fix this if neccessary
-		/*if(listOfUsers.Count != listOfTypeUSERS.Count)
-		{
-			
-			usernames.Clear();
-			foreach(User user in userNamesMenu)
-				usernames.Add(user.getPlayerName());
-			
-		}
-		
-		//Runs a for loop for how many slots there are for users
-		for(int i = 0; i < userNamesMenu.Count; i++)
-		{
-			//text equals the playerName saved with the SavedUsers() method
-			if(usernames[i] != null)
-				usernames[i] = userNamesMenu[i].getPlayerName();
-			
-		}*/
+	} //void Awake()
 
-	}
-
+	/******************************************************************************************************************
+	 * 
+	 * Function: CreateUser()
+	 * 
+	 * We create a new user and set the position.
+	 * 
+	**/ 
 	private void CreateUser()
 	{
 		
@@ -76,8 +62,17 @@ public class CreateNewUser : MonoBehaviour {
 		newUser.GetComponent<RectTransform>().SetParent(parent, false);
 		newUser.GetComponent<RectTransform>().anchoredPosition = userPlacements[usernameNumb].anchoredPosition;
 
-	}
-	
+	} //private void CreateUser()
+
+	/******************************************************************************************************************
+	 * 
+	 * Function: CreateUser(int)
+	 * 
+	 * Called from SaveLoad.cs
+	 * 
+	 * We create a new user and set the position based on the integer value passed in.
+	 * 
+	**/ 
 	public void CreateUser(int placement)
 	{
 		
@@ -87,22 +82,51 @@ public class CreateNewUser : MonoBehaviour {
 		newUser.GetComponent<RectTransform>().SetParent(parent, false);
 		newUser.GetComponent<RectTransform>().anchoredPosition = userPlacements[placement].anchoredPosition;
 
-	}
+	} //public void CreateUser(int)
 
+	/******************************************************************************************************************
+	 * 
+	 * Function: NameUser()
+	 * 
+	 * Names the current user.
+	 * 
+	**/ 
 	private void NameUser()
 	{
 
 		currUser.GetComponentInChildren<Text>().text = listOfTypeUSERS[listOfTypeUSERS.Count-1].getPlayerName();
 
-	}
+	} //private void NameUser()
 
+	/******************************************************************************************************************
+	 * 
+	 * Function: CreateUser()
+	 * 
+	 * Called from SaveLoad.cs
+	 * 
+	 * Names the current user based on the string value passed in.
+	 * 
+	**/ 
 	public void NameUser(string user)
 	{
 
 		currUser.GetComponentInChildren<Text>().text = user;
 
-	}
+	} //public void NameUser(string)
 
+
+	/******************************************************************************************************************
+	 * 
+	 * Function: clickedCreateUser()
+	 * 
+	 * Called when the user clicks on the "Create User" button within game.
+	 * 
+	 * First, we check if we are removing, and if so we cancel the deletion and recall this method. Next, we 
+	 * 	check if the limit has been reached (ie 5) and if has been, we flip the page (add to the layer)
+	 * 	reset the username's counter. We then set our boolean that dictates whether or not the input is shown
+	 * 	to true and call CreateUser() (Above).
+	 * 
+	**/ 
 	public void clickedCreateUser()
 	{
 
@@ -132,8 +156,20 @@ public class CreateNewUser : MonoBehaviour {
 		showInput = true;
 		CreateUser();
 
-	}
-	
+	} //public void clickedCreateUser()
+
+	/******************************************************************************************************************
+	 * 
+	 * Function: clickedUsername()
+	 * 
+	 * Called when the user clicks on a user button within game.
+	 * 
+	 * First, we check if we are removing, and if so we delete the user clicked on. Else, we load the data.
+	 * 	If we successfully loaded, we print out that we did and continue. Else, we set the global name of the
+	 * 	user and save the data then load that data. We then move the player to the menu.
+	 * 	
+	 * 
+	**/
 	public void clickedUsername(GameObject buttonClicked)
 	{
 
@@ -141,7 +177,7 @@ public class CreateNewUser : MonoBehaviour {
 			delete.ClickedUser(buttonClicked);
 		else
 		{
-			//.. The username in SaveLoad class is set to the playerName from User class, then calls the Load method
+
 			saveLoadData.userName = buttonClicked.GetComponentInChildren<Text>().text;
 			saveLoadData.Load();
 			if(saveLoadData.loaded)
@@ -163,8 +199,23 @@ public class CreateNewUser : MonoBehaviour {
 			doorOpen.Play("MainMenuDoorOpen");
 		}
 
-	}
+	} //public void clickedUsername(GameObject)
 
+	/******************************************************************************************************************
+	 * 
+	 * Function: pressedEnterUsername()
+	 * 
+	 * Called when the user presses enter after entering in a new username.
+	 * 
+	 * We close our input and set our new username to be shown, as well as create a variable to show if the user
+	 * 	is already in use or not. We then cycle through the entire listOfTypeUSERS and if the names equal each
+	 * 	other we remove the user from the list and destroy it and cycle back through our users accordingly.
+	 * 	
+	 * We then add the user to the listOfTypeUSERS and set everything else incremented by one to account
+	 * 	for the new user.
+	 * 	
+	 * 
+	**/
 	public void pressedEnterUsername()
 	{
 
@@ -205,7 +256,6 @@ public class CreateNewUser : MonoBehaviour {
 			usernameNumb++;
 			userNumbTracker++;
 			listOfTypeUSERS.Add(new User(characterName.text, false, layer, usernameNumb));
-			//usernames.Add(characterName.text);
 			NameUser();
 			currUser.name = characterName.text;
 			flipPage.De_ActivateUsers();
@@ -214,8 +264,15 @@ public class CreateNewUser : MonoBehaviour {
 
 		}
 	
-	}
+	} //public void pressedUserName()
 
+	/******************************************************************************************************************
+	 * 
+	 * Function: Update()
+	 * 
+	 * Updates the alpha channels based on the booleans set above.
+	 * 
+	**/
 	void Update()
 	{
 		//Calls first, shows input field
@@ -224,7 +281,6 @@ public class CreateNewUser : MonoBehaviour {
 
 			inputGroup.interactable = true;
 			FVAPI.lerpAlphaChannelTimeMultiplied(inputGroup, 1, 2);
-			//inputGroup.alpha = Mathf.Lerp(inputGroup.alpha, 1, Time.deltaTime*2);
 			inputGroup.blocksRaycasts = true;
 
 		}
@@ -235,12 +291,10 @@ public class CreateNewUser : MonoBehaviour {
 			//Input field invisible
 			inputGroup.interactable = false;
 			FVAPI.lerpAlphaChannel(inputGroup, 0);
-			//inputGroup.alpha = Mathf.Lerp(inputGroup.alpha, 0, Time.deltaTime);
 			inputGroup.blocksRaycasts = false;
 
 			usernameGroup.interactable = true;
 			FVAPI.lerpAlphaChannel(usernameGroup, 1);
-			//usernameGroup.alpha = Mathf.Lerp(usernameGroup.alpha, 1, Time.deltaTime);
 			usernameGroup.blocksRaycasts = true;
 
 			if(inputGroup.alpha <= 0.5f)
@@ -258,12 +312,10 @@ public class CreateNewUser : MonoBehaviour {
 			//Finishes making the inputGroup alpha invisible, not interactable and not able to block raycasts
 			inputGroup.interactable = false;
 			FVAPI.lerpAlphaChannelTimeMultiplied(inputGroup, 0, 2);
-			//inputGroup.alpha = Mathf.Lerp(inputGroup.alpha, 0, Time.deltaTime*2);
 			inputGroup.blocksRaycasts = false;
 
 			usernameGroup.interactable = true;
 			FVAPI.lerpAlphaChannel(usernameGroup, 1);
-			//usernameGroup.alpha = Mathf.Lerp(usernameGroup.alpha, 1, Time.deltaTime);
 			usernameGroup.blocksRaycasts = true;
 
 		}

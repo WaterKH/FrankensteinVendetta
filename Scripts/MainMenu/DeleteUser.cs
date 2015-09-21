@@ -5,10 +5,7 @@ using UnityEngine.UI;
 using System;
 
 public class DeleteUser : MonoBehaviour {
-
-	public bool remove;
-	int index = 0;
-
+	
 	//Script instances
 	public CreateNewUser createUser;
 	public SaveLoad saveLoad;
@@ -17,6 +14,8 @@ public class DeleteUser : MonoBehaviour {
 
 	public Button deleteButton;
 	public CanvasGroup deleteCanvas;
+	public bool remove;
+	int index = 0;
 
 	//Called by DeleteUser on MainMenu
 	public void ClickedDelete()

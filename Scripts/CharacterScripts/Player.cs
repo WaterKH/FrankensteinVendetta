@@ -26,11 +26,9 @@ public class Player : Character {
 
 	}
 
-	public Player(int anID, string aName, float playerHealth, Vector3 aPos, Quaternion aRot)
+	public Player(int anID, string aName, float playerHealth, Vector3 aPos, Quaternion aRot) : base(aName, anID)
 	{
-		
-		base.setID(anID);
-		base.setName(aName);
+
 		health = playerHealth;
 		vect3Ser = vect3Ser.returnVector3Ser(aPos);
 		quatSer = quatSer.returnQuaternionSer(aRot);

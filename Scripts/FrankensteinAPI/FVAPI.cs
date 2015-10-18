@@ -161,10 +161,11 @@ public class FVAPI {
 		
 	}
 
-	public static void lerpVector3TimeMultiplied(Vector3 initialVector, Vector3 moveToVector, float rateOfTime)
+	public static void lerpVector3TimeMultiplied(Transform initialVector, Transform moveToVector, float rateOfTime)
 	{
 		
-		initialVector = Vector3.Lerp(initialVector, moveToVector, Time.deltaTime * rateOfTime);
+		initialVector.position = Vector3.Lerp(initialVector.position, moveToVector.position, 
+		                                      Time.deltaTime * rateOfTime);
 		
 	}
 
@@ -212,7 +213,7 @@ public class FVAPI {
 		
 		initialTrans.position = Vector3.Lerp(initialTrans.position, moveToTrans.position, 
 		                                     Time.deltaTime * rateOfTime);
-		initialTrans.rotation = Quaternion.Lerp(initialTrans.rotation, moveToTrans.rotation, 
+		initialTrans.rotation = Quaternion.Slerp(initialTrans.rotation, moveToTrans.rotation, 
 		                                        Time.deltaTime * rateOfTime);
 		
 	}

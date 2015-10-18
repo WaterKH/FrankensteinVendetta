@@ -37,7 +37,6 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 	public Rigidbody rigidBod;
 
 	private Vector3 moveDirection = Vector3.zero;
-	public bool grounded = true;
 	private Transform myTransform;
 	private float speed;
 	private RaycastHit hit;
@@ -51,6 +50,11 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 	private float crouchHeight;
 	private GameObject mainCamera;
 	private float height;
+
+	public bool grounded = true;
+	public Transform groundCheck;
+	public float groundRadius = 0.2f;
+	public LayerMask whatIsGround;
 
 	void Start() {
 
@@ -73,6 +77,8 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 
 	void FixedUpdate() {
 
+		grounded = isGrounded();
+
 		float inputX = InputManager.GetAxis("moveLeft") + InputManager.GetAxis("moveRight");
 		float inputY = InputManager.GetAxis("moveBackward") + InputManager.GetAxis("moveForward");
 
@@ -91,7 +97,8 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 			cameraYOffset = mainCamera.transform.localPosition.y;
 			moveDirection = new Vector3 (inputX * inputModifyFactor, -antiBumpFactor, inputY * inputModifyFactor);
 			moveDirection = myTransform.TransformDirection (moveDirection) * speed;
-			
+
+
 			Vector3 velocity = rigidBod.velocity;
 			Vector3 velocityChange = moveDirection - velocity;
 			velocityChange.x = Mathf.Clamp(velocityChange.x, -maxChangeVel, maxChangeVel);
@@ -136,7 +143,6 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 
 		// Apply gravity
 		rigidBod.AddForce(new Vector3 (0, -gravity * rigidBod.mass, 0));
-		grounded = isGrounded();
 						
 	}
 	void Update () {
@@ -167,8 +173,8 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 		{
 			elapsedTime = 0;
 			height = Mathf.Lerp(height, crouchHeight, Time.deltaTime*10);
-			walkSpeed = crouchSpeed*1.5f;
-			runSpeed = crouchSpeed*2f;
+			walkSpeed = crouchSpeed;
+			runSpeed = crouchSpeed;
 
 		}
 		else if(!crouching)
@@ -182,9 +188,6 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 			
 		}
 
-		if(InputManager.GetKey("leanLeft"))
-			LeanLeft();
-
 	}
 
 	float CalculateJumpVerticalSpeed () {
@@ -193,18 +196,12 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 		return Mathf.Sqrt(2 * jumpSpeed * gravity);
 	}
 
-	bool isGrounded()
+	public bool isGrounded()
 	{
 
-		return (Physics.Raycast(transform.position, new Vector3(0,-1.15f,0), out hit, 1.15f));
+		return Physics.CheckSphere(groundCheck.position, groundRadius, whatIsGround);
 
 	}
 
-	void LeanLeft()
-	{
-		Quaternion mainCamRot = mainCamera.transform.rotation;
-		mainCamera.transform.rotation = Quaternion.Euler(new Vector3(30,0,0));
-
-	}
 
 }

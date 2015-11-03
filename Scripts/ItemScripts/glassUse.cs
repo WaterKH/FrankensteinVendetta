@@ -12,7 +12,6 @@ public class glassUse : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-
 		if (InputManager.GetKeyDown("lookBehind")) {
 			secCamera.GetComponent<Camera>().enabled = !secCamera.GetComponent<Camera>().enabled;
 			glassCol.enabled = !glassCol.enabled;

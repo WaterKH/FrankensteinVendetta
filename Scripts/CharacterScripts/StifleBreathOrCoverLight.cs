@@ -59,14 +59,20 @@ public class StifleBreathOrCoverLight : MonoBehaviour {
 		if(allowedToStifleBreath)
 		{
 			if(InputManager.GetKey("stifleBreathORCoverLight"))
+			{
+				Debug.Log("Stifling breath");
 				stifleBreath = true;
+			}
 			else
 				stifleBreath = false;
 		}
 		else
 		{
 			if(InputManager.GetKey("stifleBreathORCoverLight"))
+			{
+				Debug.Log("Covering light");
 				coverLight = true;
+			}
 			else
 				coverLight = false;
 		}

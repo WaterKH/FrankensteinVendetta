@@ -44,7 +44,10 @@ public class MoveToMainMenu : MonoBehaviour {
 					//camPos.position = Vector3.Lerp(camPos.position, finalCamPos.position, timeToMoveToMain/7);
 					//camRot.rotation = Quaternion.Lerp(camRot.rotation, finalCamRot.rotation, timeToMoveToMain/7);
 					if(mainCam.position == finalCam.position)
+					{
+						timeToMoveToMain = 0;
 						doNotMove = false;
+					}
 				}
 				//runs if atMain is false
 				else
@@ -57,8 +60,11 @@ public class MoveToMainMenu : MonoBehaviour {
 					//camRot.rotation = Quaternion.Lerp(camRot.rotation, transCamRot.rotation, elapsedTime/7);
 					//When the Camera position eqauls the transition point..
 					if(mainCam.position.z > transCam.position.z - 0.075f)
+					{
 						//..atMain becomes true
+						elapsedTime = 0;
 						atMain = true;
+					}
 
 				}
 			}
@@ -93,7 +99,10 @@ public class MoveToMainMenu : MonoBehaviour {
 				//mainCam.position = Vector3.Lerp(camPos.position, transCamPos.position, timeToMoveToMain/10);
 				//mainCam.rotation = Quaternion.Lerp(camRot.rotation, transCamRot.rotation, timeToMoveToMain/10);
 				if(mainCam.position.z < transCam.position.z + 0.075f)
+				{
+					timeToMoveToMain = 0;
 					atMain = false;
+				}
 
 			}
 			else
@@ -107,11 +116,12 @@ public class MoveToMainMenu : MonoBehaviour {
 
 				if(mainCam.position == loginCam.position)
 				{
-
+					elapsedTime = 0;
 					canvasTime += Time.deltaTime;
 					FVAPI.lerpAlphaChannel(login, 1, canvasTime);
 					if(login.alpha == 1)
 					{
+						canvasTime = 0;
 						moveBack = false;
 						login.interactable = true;
 					}

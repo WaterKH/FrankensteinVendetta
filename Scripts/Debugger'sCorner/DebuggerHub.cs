@@ -26,7 +26,6 @@ public class DebuggerHub : MonoBehaviour {
 	void Update()
 	{
 
-		Debug.Log(Player_MAIN.player.getHealth());
 		if( m_timeCounter < m_refreshTime )
 		{
 			m_timeCounter += Time.deltaTime;

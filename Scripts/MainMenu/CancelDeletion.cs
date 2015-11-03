@@ -15,7 +15,6 @@ public class CancelDeletion : MonoBehaviour {
 	public void DeletionCancelation()
 	{
 
-		deleteUser.DeletionOver();
 		deleteUser.remove = false;
 		foreach(GameObject user in createUser.listOfUsers)
 		{

@@ -34,7 +34,6 @@ public class LeanLeftRight : MonoBehaviour {
 
 	void LeanBack()
 	{
-		Debug.Log("LeanBack");
 		FVAPI.lerpVectorAndQuaternionTimeMultiplied(cam, initCam, 4);
 		if(cam.rotation.z <= 0.01f && cam.rotation.z >= -0.01f)
 		{

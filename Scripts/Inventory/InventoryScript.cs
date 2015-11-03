@@ -19,16 +19,13 @@ public class InventoryScript : MonoBehaviour {
 	// Update is called once per frame
 	void LateUpdate () {
 		//TODO
-		/*
-		if (Input.inputString.Equals(inputs.ruckSack) || Input.inputString.Equals(inputs.ruckSackSecondary))
-		{
 
+		if (InputManager.GetKeyDown("inventory") || InputManager.GetKeyDown("inventorySecondary"))
+		{
 			RPressed = !RPressed;
 			elapsedTime = 0;
 			canvasTime = 0;
-
 		}
-		*/
 
 		if (RPressed) 
 		{
@@ -55,8 +52,8 @@ public class InventoryScript : MonoBehaviour {
 		else if (!RPressed && !pauseMenu.escKey)
 		{
 		
-			xLook.GetComponent<MouseLook>().enabled = true;
-			yLook.GetComponent<MouseLook>().enabled = true;
+//			xLook.GetComponent<MouseLook>().enabled = true;
+//			yLook.GetComponent<MouseLook>().enabled = true;
 			Cursor.lockState = CursorLockMode.Locked;
 			Cursor.visible = false;
 			canvasTime += Time.deltaTime;

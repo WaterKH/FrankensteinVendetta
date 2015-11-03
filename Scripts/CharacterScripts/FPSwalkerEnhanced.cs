@@ -4,13 +4,13 @@ using UnityEngine.UI;
 
 public class FPSwalkerEnhanced: MonoBehaviour {
 
-	public float walkSpeed = 6.0f;
-	public float runSpeed = 12.0f;
-	public float crouchSpeed = 6.5f;
+	public float walkSpeed = 250.0f;
+	public float runSpeed = 475.0f;
+	public float crouchSpeed = 230.0f;
 
-	float initWalkSpeed = 10.0f;
-	float initRunSpeed = 12.0f;
-	float initialHeight = 0f;
+	float initWalkSpeed = 250.0f;
+	float initRunSpeed = 475.0f;
+	float initialHeight = 2f;
 	float elapsedTime = 0f;
 
 	public bool running = false;
@@ -96,7 +96,8 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 						
 			cameraYOffset = mainCamera.transform.localPosition.y;
 			moveDirection = new Vector3 (inputX * inputModifyFactor, -antiBumpFactor, inputY * inputModifyFactor);
-			moveDirection = myTransform.TransformDirection (moveDirection) * speed;
+
+			moveDirection = myTransform.TransformDirection (moveDirection * speed * Time.deltaTime);
 
 
 			Vector3 velocity = rigidBod.velocity;
@@ -135,8 +136,7 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 
 				moveDirection.x = inputX * speed * inputModifyFactor;
 				moveDirection.z = inputY * speed * inputModifyFactor;
-				moveDirection = myTransform.TransformDirection (moveDirection);
-		
+				moveDirection = myTransform.TransformDirection (moveDirection * speed * Time.deltaTime);
 			}
 			
 		}
@@ -152,21 +152,19 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 		if (grounded && InputManager.GetKey("run") && !crouching)
 			speed = (speed == walkSpeed? runSpeed : walkSpeed);
 
-		if (InputManager.GetKey("run") && !crouching) {
+		if (InputManager.GetKey("run") && !crouching)
+		{
 			running = true;
-
-			//Debug.Log ("Is running.");
-		} else if (InputManager.GetKeyDown("crouch")) {
-
+			Debug.Log ("Is running.");
+		} 
+		else if (InputManager.GetKeyDown("crouch")) 
+		{
 			crouching = !crouching;
 			running = false;
-
 		}
 		else
 		{
-
 			running = false;
-
 		}
 
 		if(crouching)
@@ -175,17 +173,15 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 			height = Mathf.Lerp(height, crouchHeight, Time.deltaTime*10);
 			walkSpeed = crouchSpeed;
 			runSpeed = crouchSpeed;
-
+			Debug.Log ("Is crouching.");
 		}
 		else if(!crouching)
 		{
 			elapsedTime += Time.deltaTime;
 			height = Mathf.Lerp(height, initialHeight, elapsedTime);
-			if(height >= 1.9)
-				height = initialHeight;
+			height = initialHeight;
 			walkSpeed = initWalkSpeed;
 			runSpeed = initRunSpeed;
-			
 		}
 
 	}

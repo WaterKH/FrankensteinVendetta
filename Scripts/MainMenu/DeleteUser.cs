@@ -53,7 +53,6 @@ public class DeleteUser : MonoBehaviour {
 
 			if(userObject.GetComponentInChildren<Text>().text == user.getPlayerName())
 			{
-
 				Debug.Log("Deleting "+userObject.GetComponentInChildren<Text>().text);
 				index = createUser.listOfUsers.IndexOf(userObject);
 				createUser.listOfUsers.Remove(userObject);
@@ -76,18 +75,17 @@ public class DeleteUser : MonoBehaviour {
 	{
 
 		int tempPlacementIndex = index;
+		Debug.Log(tempPlacementIndex);
 		bool ableToRun = true;
 		for(int i = index; i < createUser.listOfUsers.Count; i++)
 		{
 			ableToRun = true;
-
 			if(tempPlacementIndex > 5)
 			{
-
+				Debug.Log(tempPlacementIndex);
 				tempPlacementIndex -= 5;
-				i--;
+				--i;
 				ableToRun = false;
-
 			}
 			else if(tempPlacementIndex == 5)
 				tempPlacementIndex = 0;
@@ -95,7 +93,14 @@ public class DeleteUser : MonoBehaviour {
 			if(ableToRun)
 			{
 				if(createUser.listOfTypeUSERS[i].getPlayerID() == 1)
+				{
 					createUser.listOfTypeUSERS[i].setLayer(createUser.listOfTypeUSERS[i].getPlayerLayer() - 1);
+					createUser.listOfTypeUSERS[i].setPlayerID(5);
+				}
+				else
+				{
+					createUser.listOfTypeUSERS[i].setPlayerID(createUser.listOfTypeUSERS[i].getPlayerID() - 1);
+				}
 
 				createUser.listOfUsers[i].GetComponent<RectTransform>().anchoredPosition = 
 					createUser.userPlacements[tempPlacementIndex].anchoredPosition;
@@ -105,6 +110,9 @@ public class DeleteUser : MonoBehaviour {
 
 		}
 
+		createUser.layer = (createUser.listOfUsers.Count - 1) / 5;
+		Debug.Log("Users: " + createUser.listOfUsers.Count);
+		Debug.Log("Layer: " + createUser.layer);
 		flipPage.De_ActivateUsers();
 		saveLoad.SaveUsers();
 

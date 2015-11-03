@@ -106,6 +106,32 @@ public class SaveLoad : MonoBehaviour {
 
 	}
 
+	//Deletes everything 
+	public void DeleteAll()
+	{
+		if(File.Exists(Application.persistentDataPath + "/UsernameMenuInfo.dat"))
+		{
+			BinaryFormatter bf = new BinaryFormatter ();
+			FileStream file = File.Open (Application.persistentDataPath + "/UsernameMenuInfo.dat", FileMode.Open);
+			MenuData data = (MenuData)bf.Deserialize (file);
+			file.Close ();
+		
+			foreach(User name in data.Users)
+			{
+				Debug.Log(name.getPlayerName() + " Deleted.");
+				File.Delete(Application.persistentDataPath + "/" + name.getPlayerName() + "Info.dat");
+			}
+			File.Delete(Application.persistentDataPath + "/UsernameMenuInfo.dat");
+			RestartLevel();
+		}
+	}
+
+	public void RestartLevel()
+	{
+		Debug.Log("Restarting Level");
+		Application.LoadLevel(Application.loadedLevel);
+	}
+
 	//Simply stores the data for the Users at the MainMenu
 	public void SaveUsers()
 	{
@@ -116,7 +142,7 @@ public class SaveLoad : MonoBehaviour {
 		MenuData data = new MenuData();
 
 		data.Users = createUser.listOfTypeUSERS;
-		//data.userNames = createUser.usernames;
+		//data.userNames = createUser.listOfUsers;
 		data.usernameNumb = createUser.usernameNumb;
 		data.layer = createUser.layer;
 		data.usernameTracker = createUser.userNumbTracker;
@@ -140,7 +166,7 @@ public class SaveLoad : MonoBehaviour {
 			file.Close ();
 
 			createUser.listOfTypeUSERS = data.Users;
-			//createUser.usernames = data.userNames;
+			//createUser.listOfUsers = data.userNames;
 			createUser.usernameNumb = data.usernameNumb;
 			createUser.layer = data.layer;
 			createUser.userNumbTracker = data.usernameTracker;

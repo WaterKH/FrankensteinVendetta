@@ -34,13 +34,13 @@ public class FadeInOut : MonoBehaviour {
 		}
 		else if(postlevel)
 		{
-			FVAPI.lerpAlphaChannel(blackFader, 1);
+			FVAPI.lerpAlphaChannel(blackFader, 1, 0.25f);
 			//blackFader.alpha = Mathf.Lerp(blackFader, 1, Time.deltaTime);
-			if(blackFader.alpha >= 0.9f)
+			if(blackFader.alpha >= 0.9999999f)
 			{
 
 				postlevel = false;
-				Application.LoadLevel (2);
+				Application.LoadLevel (2); // Make this more variable soon
 
 			}
 

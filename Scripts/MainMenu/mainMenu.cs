@@ -1,6 +1,7 @@
 ﻿//On ScriptHolder
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 //This Script makes the transition between English and German text
@@ -10,130 +11,152 @@ public class mainMenu : MonoBehaviour {
 	public bool buttonOption;
 	public bool buttonExit;
 	public bool buttonUser;
-	public Text textToRemove;
-	public Text textToReplace;
-	public Text textToRemoveOption;
-	public Text textToReplaceOption;
-	public Text textToRemoveExit;
-	public Text textToReplaceExit;
-	public Text textToRemoveUser;
-	public Text textToReplaceUser;
+
+	public Text playGerman;
+	public Text playEnglish;
+	public Text optionGerman;
+	public Text optionEnglish;
+	public Text exitGerman;
+	public Text exitEnglish;
+	public Text userGerman;
+	public Text userEnglish;
 
 	public MoveToMainMenu moveToMain;
 	public NewPlayerClick newPlayerClick;
 	public mainMenu menuScript;
 
 	public FadeInOut menuFade;
+	public Stack<char> playEnglishStack = new Stack<char>();
+	public Stack<char> playGermanStack = new Stack<char>();
 
 	void Awake()
 	{
-
 		Time.timeScale = 1;
-
 	}
 
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+	{
+		/* THIS CAUSES ERRORS...
+		if(buttonPlay)
+		{
+			if(playGerman.text.Length > 0)
+				playGermanStack.Push (playGerman.text[0]);
+			if(playGerman.text.Length >= 1)
+				playGerman.text = playGerman.text.Substring(1);
+			if(playEnglishStack.Count > 0)
+				playEnglish.text += playEnglishStack.Pop();
+		}
+		else
+		{
+			if(playEnglish.text.Length > 0)
+				playEnglishStack.Push(playEnglish.text[0]);
+			if(playEnglish.text.Length >= 1)
+				playEnglish.text = playEnglish.text.Substring(1);
+			if(playGermanStack.Count > 0)
+				playGerman.text += playGermanStack.Pop();
+		}*/
 
-		if (buttonPlay) {
-
-			if (textToRemove.text.Equals ("Neus Spiel")) {
-				textToRemove.text = "Neus Spie";
-				textToReplace.text = "P";
-			} else if (textToRemove.text.Equals ("Neus Spie")) {
-				textToRemove.text = "Neus Spi";
-				textToReplace.text = "Pl";
-			} else if (textToRemove.text.Equals ("Neus Spi")) {
-				textToRemove.text = "Neus Sp";
-				textToReplace.text = "Pla";
-			} else if (textToRemove.text.Equals ("Neus Sp")) {
-				textToRemove.text = "Neus S";
-				textToReplace.text = "Play";
-			} else if (textToRemove.text.Equals ("Neus S")) {
-				textToRemove.text = "Neus ";
-				textToReplace.text = "Play ";
-			} else if (textToRemove.text.Equals ("Neus ")) {
-				textToRemove.text = "Neus";
-				textToReplace.text = "Play G";
-			} else if (textToRemove.text.Equals ("Neus")) {
-				textToRemove.text = "Neu";
-				textToReplace.text = "Play Ga";
-			} else if (textToRemove.text.Equals ("Neu")) {
-				textToRemove.text = "Ne";
-				textToReplace.text = "Play Gam";
-			} else if (textToRemove.text.Equals ("Ne")) {
-				textToRemove.text = "N";
-				textToReplace.text = "Play Game";
-			} else if (textToRemove.text.Equals ("N")) {
-				textToRemove.text = "";
+		if (buttonPlay) 
+		{
+			if (playGerman.text.Equals ("Neus Spiel")) {
+				playGerman.text = "Neus Spie";
+				playEnglish.text = "P";
+			} else if (playGerman.text.Equals ("Neus Spie")) {
+				playGerman.text = "Neus Spi";
+				playEnglish.text = "Pl";
+			} else if (playGerman.text.Equals ("Neus Spi")) {
+				playGerman.text = "Neus Sp";
+				playEnglish.text = "Pla";
+			} else if (playGerman.text.Equals ("Neus Sp")) {
+				playGerman.text = "Neus S";
+				playEnglish.text = "Play";
+			} else if (playGerman.text.Equals ("Neus S")) {
+				playGerman.text = "Neus ";
+				playEnglish.text = "Play ";
+			} else if (playGerman.text.Equals ("Neus ")) {
+				playGerman.text = "Neus";
+				playEnglish.text = "Play G";
+			} else if (playGerman.text.Equals ("Neus")) {
+				playGerman.text = "Neu";
+				playEnglish.text = "Play Ga";
+			} else if (playGerman.text.Equals ("Neu")) {
+				playGerman.text = "Ne";
+				playEnglish.text = "Play Gam";
+			} else if (playGerman.text.Equals ("Ne")) {
+				playGerman.text = "N";
+				playEnglish.text = "Play Game";
+			} else if (playGerman.text.Equals ("N")) {
+				playGerman.text = "";
 			}
 						
 		} else {
 
-			if (textToReplace.text.Equals ("Play Game")) {
-				textToRemove.text = "N";
-				textToReplace.text = "Play Gam";
-			} else if (textToReplace.text.Equals ("Play Gam")) {
-				textToRemove.text = "Ne";
-				textToReplace.text = "Play Ga";
-			} else if (textToReplace.text.Equals ("Play Ga")) {
-				textToRemove.text = "Neu";
-				textToReplace.text = "Play G";
-			} else if (textToReplace.text.Equals ("Play G")) {
-				textToRemove.text = "Neus";
-				textToReplace.text = "Play ";
-			} else if (textToReplace.text.Equals ("Play ")) {
-				textToRemove.text = "Neus ";
-				textToReplace.text = "Play";
-			} else if (textToReplace.text.Equals ("Play")) {
-				textToReplace.text = "Neus S";
-				textToReplace.text = "Pla";
-			} else if (textToReplace.text.Equals ("Pla")) {
-				textToRemove.text = "Neus Sp";
-				textToReplace.text = "Pl";
-			} else if (textToReplace.text.Equals ("Pl")) {
-				textToRemove.text = "Neus Spi";
-				textToReplace.text = "P";
-			} else if (textToReplace.text.Equals ("P")) {
-				textToRemove.text = "Neus Spie";
-				textToReplace.text = "";
-			} else if (textToReplace.text.Equals ("")) {
-				textToRemove.text = "Neus Spiel";
+			if (playEnglish.text.Equals ("Play Game")) {
+				playGerman.text = "N";
+				playEnglish.text = "Play Gam";
+			} else if (playEnglish.text.Equals ("Play Gam")) {
+				playGerman.text = "Ne";
+				playEnglish.text = "Play Ga";
+			} else if (playEnglish.text.Equals ("Play Ga")) {
+				playGerman.text = "Neu";
+				playEnglish.text = "Play G";
+			} else if (playEnglish.text.Equals ("Play G")) {
+				playGerman.text = "Neus";
+				playEnglish.text = "Play ";
+			} else if (playEnglish.text.Equals ("Play ")) {
+				playGerman.text = "Neus ";
+				playEnglish.text = "Play";
+			} else if (playEnglish.text.Equals ("Play")) {
+				playEnglish.text = "Neus S";
+				playEnglish.text = "Pla";
+			} else if (playEnglish.text.Equals ("Pla")) {
+				playGerman.text = "Neus Sp";
+				playEnglish.text = "Pl";
+			} else if (playEnglish.text.Equals ("Pl")) {
+				playGerman.text = "Neus Spi";
+				playEnglish.text = "P";
+			} else if (playEnglish.text.Equals ("P")) {
+				playGerman.text = "Neus Spie";
+				playEnglish.text = "";
+			} else if (playEnglish.text.Equals ("")) {
+				playGerman.text = "Neus Spiel";
 			}
 
 		}
+
 		if (buttonOption) {
 
-			if (textToRemoveOption.text.Equals ("Optiones")) {
-				textToRemoveOption.text = "Optione";
-				textToReplaceOption.text = "O";
+			if (optionGerman.text.Equals ("Optiones")) {
+				optionGerman.text = "Optione";
+				optionEnglish.text = "O";
 			}
-			else if (textToRemoveOption.text.Equals ("Optione")) {
-				textToRemoveOption.text = "Option";
-				textToReplaceOption.text = "Op";
+			else if (optionGerman.text.Equals ("Optione")) {
+				optionGerman.text = "Option";
+				optionEnglish.text = "Op";
 			}
-			else if (textToRemoveOption.text.Equals ("Option")) {
-				textToRemoveOption.text = "Optio";
-				textToReplaceOption.text = "Opt";
+			else if (optionGerman.text.Equals ("Option")) {
+				optionGerman.text = "Optio";
+				optionEnglish.text = "Opt";
 			}
-			else if (textToRemoveOption.text.Equals ("Optio")) {
-				textToRemoveOption.text = "Opti";
-				textToReplaceOption.text = "Opti";
+			else if (optionGerman.text.Equals ("Optio")) {
+				optionGerman.text = "Opti";
+				optionEnglish.text = "Opti";
 			}
-			else if (textToRemoveOption.text.Equals ("Opti")) {
-				textToRemoveOption.text = "Opt";
-				textToReplaceOption.text = "Optio";
+			else if (optionGerman.text.Equals ("Opti")) {
+				optionGerman.text = "Opt";
+				optionEnglish.text = "Optio";
 			}
-			else if (textToRemoveOption.text.Equals ("Opt")) {
-				textToRemoveOption.text = "Op";
-				textToReplaceOption.text = "Option";
+			else if (optionGerman.text.Equals ("Opt")) {
+				optionGerman.text = "Op";
+				optionEnglish.text = "Option";
 			}
-			else if (textToRemoveOption.text.Equals ("Op")) {
-				textToRemoveOption.text = "O";
-				textToReplaceOption.text = "Options";
+			else if (optionGerman.text.Equals ("Op")) {
+				optionGerman.text = "O";
+				optionEnglish.text = "Options";
 			}
-			else if (textToRemoveOption.text.Equals ("O")) {
-				textToRemoveOption.text = "";
+			else if (optionGerman.text.Equals ("O")) {
+				optionGerman.text = "";
 
 			}
 
@@ -141,68 +164,68 @@ public class mainMenu : MonoBehaviour {
 		else 
 		{
 
-			if (textToReplaceOption.text.Equals ("Options")) {
-				textToRemoveOption.text = "O";
-				textToReplaceOption.text = "Option";
-			} else if (textToReplaceOption.text.Equals ("Option")) {
-				textToRemoveOption.text = "Op";
-				textToReplaceOption.text = "Optio";
-			} else if (textToReplaceOption.text.Equals ("Optio")) {
-				textToRemoveOption.text = "Opt";
-				textToReplaceOption.text = "Opti";
-			} else if (textToReplaceOption.text.Equals ("Opti")) {
-				textToRemoveOption.text = "Opti";
-				textToReplaceOption.text = "Opt";
-			} else if (textToReplaceOption.text.Equals ("Opt")) {
-				textToRemoveOption.text = "Optio";
-				textToReplaceOption.text = "Op";
-			} else if (textToReplaceOption.text.Equals ("Op")) {
-				textToReplaceOption.text = "Option";
-				textToReplaceOption.text = "O";
-			} else if (textToReplaceOption.text.Equals ("O")) {
-				textToRemoveOption.text = "Optione";
-				textToReplaceOption.text = "";
-			} else if (textToReplaceOption.text.Equals ("")) {
-				textToRemoveOption.text = "Optiones";
+			if (optionEnglish.text.Equals ("Options")) {
+				optionGerman.text = "O";
+				optionEnglish.text = "Option";
+			} else if (optionEnglish.text.Equals ("Option")) {
+				optionGerman.text = "Op";
+				optionEnglish.text = "Optio";
+			} else if (optionEnglish.text.Equals ("Optio")) {
+				optionGerman.text = "Opt";
+				optionEnglish.text = "Opti";
+			} else if (optionEnglish.text.Equals ("Opti")) {
+				optionGerman.text = "Opti";
+				optionEnglish.text = "Opt";
+			} else if (optionEnglish.text.Equals ("Opt")) {
+				optionGerman.text = "Optio";
+				optionEnglish.text = "Op";
+			} else if (optionEnglish.text.Equals ("Op")) {
+				optionEnglish.text = "Option";
+				optionEnglish.text = "O";
+			} else if (optionEnglish.text.Equals ("O")) {
+				optionGerman.text = "Optione";
+				optionEnglish.text = "";
+			} else if (optionEnglish.text.Equals ("")) {
+				optionGerman.text = "Optiones";
 				
 			}
 		}
 
 		if (buttonExit) {
 
-			if (textToRemoveExit.text.Equals ("Ausgang")) {
-				textToRemoveExit.text = "Ausgan";
-				textToReplaceExit.text = "";
-			} else if (textToRemoveExit.text.Equals ("Ausgan")) {
-				textToRemoveExit.text = "Ausga";
-				textToReplaceExit.text = "E";
-			} else if (textToRemoveExit.text.Equals ("Ausga")) {
-				textToRemoveExit.text = "Aus";
-				textToReplaceExit.text = "Ex";
-			} else if (textToRemoveExit.text.Equals ("Aus")) {
-				textToRemoveExit.text = "Au";
-				textToReplaceExit.text = "Exi";
-			} else if (textToRemoveExit.text.Equals ("Au")) {
-				textToRemoveExit.text = "";
-				textToReplaceExit.text = "Exit";
+			if (exitGerman.text.Equals ("Ausgang")) {
+				exitGerman.text = "Ausgan";
+				exitEnglish.text = "";
+			} else if (exitGerman.text.Equals ("Ausgan")) {
+				exitGerman.text = "Ausga";
+				exitEnglish.text = "E";
+			} else if (exitGerman.text.Equals ("Ausga")) {
+				exitGerman.text = "Aus";
+				exitEnglish.text = "Ex";
+			} else if (exitGerman.text.Equals ("Aus")) {
+				exitGerman.text = "Au";
+				exitEnglish.text = "Exi";
+			} else if (exitGerman.text.Equals ("Au")) {
+				exitGerman.text = "";
+				exitEnglish.text = "Exit";
 			}
 
 		} else {
 
-			if (textToReplaceExit.text.Equals ("Exit")) {
-				textToRemoveExit.text = "A";
-				textToReplaceExit.text = "Exi";
-			} else if (textToReplaceExit.text.Equals ("Exi")) {
-				textToRemoveExit.text = "Aus";
-				textToReplaceExit.text = "Ex";
-			} else if (textToReplaceExit.text.Equals ("Ex")) {
-				textToRemoveExit.text = "Ausga";
-				textToReplaceExit.text = "E";
-			} else if (textToReplaceExit.text.Equals ("E")) {
-				textToRemoveExit.text = "Ausgan";
-				textToReplaceExit.text = "";
-			} else if (textToReplaceExit.text.Equals ("")) {
-				textToRemoveExit.text = "Ausgang";
+			if (exitEnglish.text.Equals ("Exit")) {
+				exitGerman.text = "A";
+				exitEnglish.text = "Exi";
+			} else if (exitEnglish.text.Equals ("Exi")) {
+				exitGerman.text = "Aus";
+				exitEnglish.text = "Ex";
+			} else if (exitEnglish.text.Equals ("Ex")) {
+				exitGerman.text = "Ausga";
+				exitEnglish.text = "E";
+			} else if (exitEnglish.text.Equals ("E")) {
+				exitGerman.text = "Ausgan";
+				exitEnglish.text = "";
+			} else if (exitEnglish.text.Equals ("")) {
+				exitGerman.text = "Ausgang";
 
 			}  
 
@@ -210,149 +233,147 @@ public class mainMenu : MonoBehaviour {
 
 		if(buttonUser)
 		{
-			if(textToRemoveUser.text.Equals("Erneut Benutzer"))
+			if(userGerman.text.Equals("Erneut Benutzer"))
 			{
-				textToRemoveUser.text = "Erneut Benutze";
-				textToReplaceUser.text = "R";
+				userGerman.text = "Erneut Benutze";
+				userEnglish.text = "R";
 			}
-			else if(textToRemoveUser.text.Equals("Erneut Benutze"))
+			else if(userGerman.text.Equals("Erneut Benutze"))
 			{
-				textToRemoveUser.text = "Erneut Benutz";
-				textToReplaceUser.text = "Re";
+				userGerman.text = "Erneut Benutz";
+				userEnglish.text = "Re";
 			}
-			else if(textToRemoveUser.text.Equals("Erneut Benutz"))
+			else if(userGerman.text.Equals("Erneut Benutz"))
 			{
-				textToRemoveUser.text = "Erneut Benut";
-				textToReplaceUser.text = "Res";
+				userGerman.text = "Erneut Benut";
+				userEnglish.text = "Res";
 			}
-			else if(textToRemoveUser.text.Equals("Erneut Benut"))
+			else if(userGerman.text.Equals("Erneut Benut"))
 			{
-				textToRemoveUser.text = "Erneut Benu";
-				textToReplaceUser.text = "Rese";
+				userGerman.text = "Erneut Benu";
+				userEnglish.text = "Rese";
 			}
-			else if(textToRemoveUser.text.Equals("Erneut Benu"))
+			else if(userGerman.text.Equals("Erneut Benu"))
 			{
-				textToRemoveUser.text = "Erneut Ben";
-				textToReplaceUser.text = "Resel";
+				userGerman.text = "Erneut Ben";
+				userEnglish.text = "Resel";
 			}
-			else if(textToRemoveUser.text.Equals("Erneut Ben"))
+			else if(userGerman.text.Equals("Erneut Ben"))
 			{
-				textToRemoveUser.text = "Erneut Be";
-				textToReplaceUser.text = "Resele";
+				userGerman.text = "Erneut Be";
+				userEnglish.text = "Resele";
 			}
-			else if(textToRemoveUser.text.Equals("Erneut Be"))
+			else if(userGerman.text.Equals("Erneut Be"))
 			{
-				textToRemoveUser.text = "Erneut ";
-				textToReplaceUser.text = "Reselec";
+				userGerman.text = "Erneut ";
+				userEnglish.text = "Reselec";
 			}
-			else if(textToRemoveUser.text.Equals("Erneut "))
+			else if(userGerman.text.Equals("Erneut "))
 			{
-				textToRemoveUser.text = "Erneut";
-				textToReplaceUser.text = "Reselect";
+				userGerman.text = "Erneut";
+				userEnglish.text = "Reselect";
 			}
-			else if(textToRemoveUser.text.Equals("Erneut"))
+			else if(userGerman.text.Equals("Erneut"))
 			{
-				textToRemoveUser.text = "Erneu";
-				textToReplaceUser.text = "Reselect U";
+				userGerman.text = "Erneu";
+				userEnglish.text = "Reselect U";
 			}
-			else if(textToRemoveUser.text.Equals("Erneu"))
+			else if(userGerman.text.Equals("Erneu"))
 			{
-				textToRemoveUser.text = "Erne";
-				textToReplaceUser.text = "Reselect Us";
+				userGerman.text = "Erne";
+				userEnglish.text = "Reselect Us";
 			}
-			else if(textToRemoveUser.text.Equals("Erne"))
+			else if(userGerman.text.Equals("Erne"))
 			{
-				textToRemoveUser.text = "Ern";
-				textToReplaceUser.text = "Reselect Use";
+				userGerman.text = "Ern";
+				userEnglish.text = "Reselect Use";
 			}
-			else if(textToRemoveUser.text.Equals("Ern"))
+			else if(userGerman.text.Equals("Ern"))
 			{
-				textToRemoveUser.text = "Er";
-				textToReplaceUser.text = "Reselect User";
+				userGerman.text = "Er";
+				userEnglish.text = "Reselect User";
 			}
-			else if(textToRemoveUser.text.Equals("Er"))
+			else if(userGerman.text.Equals("Er"))
 			{
-				textToRemoveUser.text = "E";
+				userGerman.text = "E";
 			}
 			else
 			{
-				textToRemoveUser.text = "";
+				userGerman.text = "";
 			}
 
 		}
 		else
 		{
 
-			if(textToReplaceUser.text.Equals("Reselect User"))
+			if(userEnglish.text.Equals("Reselect User"))
 			{
-				textToRemoveUser.text = "E";
-				textToReplaceUser.text = "Reselect Use";
+				userGerman.text = "E";
+				userEnglish.text = "Reselect Use";
 			}
-			else if(textToReplaceUser.text.Equals("Reselect Use"))
+			else if(userEnglish.text.Equals("Reselect Use"))
 			{
-				textToRemoveUser.text = "Er";
-				textToReplaceUser.text = "Reselect Us";
+				userGerman.text = "Er";
+				userEnglish.text = "Reselect Us";
 			}
-			else if(textToReplaceUser.text.Equals("Reselect Us"))
+			else if(userEnglish.text.Equals("Reselect Us"))
 			{
-				textToRemoveUser.text = "Ern";
-				textToReplaceUser.text = "Reselect U";
+				userGerman.text = "Ern";
+				userEnglish.text = "Reselect U";
 			}
-			else if(textToReplaceUser.text.Equals("Reselect U"))
+			else if(userEnglish.text.Equals("Reselect U"))
 			{
-				textToRemoveUser.text = "Erne";
-				textToReplaceUser.text = "Reselect ";
+				userGerman.text = "Erne";
+				userEnglish.text = "Reselect ";
 			}
-			else if(textToReplaceUser.text.Equals("Reselect "))
+			else if(userEnglish.text.Equals("Reselect "))
 			{
-				textToRemoveUser.text = "Erneu";
-				textToReplaceUser.text = "Reselect";
+				userGerman.text = "Erneu";
+				userEnglish.text = "Reselect";
 			}
-			else if(textToReplaceUser.text.Equals("Reselect"))
+			else if(userEnglish.text.Equals("Reselect"))
 			{
-				textToRemoveUser.text = "Erneut";
-				textToReplaceUser.text = "Reselec";
+				userGerman.text = "Erneut";
+				userEnglish.text = "Reselec";
 			}
-			else if(textToReplaceUser.text.Equals("Reselec"))
+			else if(userEnglish.text.Equals("Reselec"))
 			{
-				textToRemoveUser.text = "Erneut B";
-				textToReplaceUser.text = "Resele";
+				userGerman.text = "Erneut B";
+				userEnglish.text = "Resele";
 			}
-			else if(textToReplaceUser.text.Equals("Resele"))
+			else if(userEnglish.text.Equals("Resele"))
 			{
-				textToRemoveUser.text = "Erneut Be";
-				textToReplaceUser.text = "Resel";
+				userGerman.text = "Erneut Be";
+				userEnglish.text = "Resel";
 			}
-			else if(textToReplaceUser.text.Equals("Resel"))
+			else if(userEnglish.text.Equals("Resel"))
 			{
-				textToRemoveUser.text = "Erneut Ben";
-				textToReplaceUser.text = "Rese";
+				userGerman.text = "Erneut Ben";
+				userEnglish.text = "Rese";
 			}
-			else if(textToReplaceUser.text.Equals("Rese"))
+			else if(userEnglish.text.Equals("Rese"))
 			{
-				textToRemoveUser.text = "Erneut Benu";
-				textToReplaceUser.text = "Res";
+				userGerman.text = "Erneut Benu";
+				userEnglish.text = "Res";
 			}
-			else if(textToReplaceUser.text.Equals("Res"))
+			else if(userEnglish.text.Equals("Res"))
 			{
-				textToRemoveUser.text = "Erneut Benut";
-				textToReplaceUser.text = "Re";
+				userGerman.text = "Erneut Benut";
+				userEnglish.text = "Re";
 			}
-			else if(textToReplaceUser.text.Equals("Re"))
+			else if(userEnglish.text.Equals("Re"))
 			{
-				textToRemoveUser.text = "Erneut Benutz";
-				textToReplaceUser.text = "R";
+				userGerman.text = "Erneut Benutz";
+				userEnglish.text = "R";
 			}
-			else if(textToReplaceUser.text.Equals("R"))
+			else if(userEnglish.text.Equals("R"))
 			{
-				textToRemoveUser.text = "Erneut Benutze";
-				textToReplaceUser.text = "";
+				userGerman.text = "Erneut Benutze";
+				userEnglish.text = "";
 			}
 			else
 			{
-				
-				textToRemoveUser.text = "Erneut Benutzer";
-				
+				userGerman.text = "Erneut Benutzer";
 			}
 
 		}
@@ -382,7 +403,6 @@ public class mainMenu : MonoBehaviour {
 		moveToMain.timeToMoveToMain = 0;
 		newPlayerClick.pointerDown = false;
 		newPlayerClick.goingToMenu = false;
-
 
 	}
 				

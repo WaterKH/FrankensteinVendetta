@@ -32,7 +32,6 @@ public class SaveLoad : MonoBehaviour {
 	// Use this for initialization
 	void Awake ()
 	{
-
 		playerVector3Ser.setVector3Ser (transform.position.x, transform.position.y, 
 		                                transform.position.z);
 		playerQuatSer.setQuaternionSer (transform.rotation.x, transform.rotation.y, 
@@ -43,6 +42,7 @@ public class SaveLoad : MonoBehaviour {
 	
 	public void Save()
 	{
+
 		//When saved, the playerData and CameraData set the location
 		Player_MAIN.player.setLocation(gameObject);
 		cameraData.setLocation ();
@@ -193,6 +193,18 @@ public class SaveLoad : MonoBehaviour {
 
 	}
 
+	public void SaveOptions()
+	{
+		BinaryFormatter bf = new BinaryFormatter ();
+		FileStream file = File.Create (Application.persistentDataPath + "/" + userName + "Options.dat");
+		OptionsData optionsData = new OptionsData();
+		/****************************************************************
+	 	* General
+	 	*/ 
+		optionsData.mouseSensitivity = 
+
+	}
+
 }
 
 [Serializable]
@@ -208,6 +220,49 @@ class PlayerData
 	public List<GameObject> listInventoryObjects;
 	public List<Camera> inventoryCamera;
 
+}
+
+[Serializable]
+class OptionsData
+{
+	/****************************************************************
+	 * General
+	 */ 
+	public float mouseSensitivity;
+	public float fieldOfView;
+	public bool subtitles;
+	public bool mouseInversion;
+	public int language; // We will store each language in an enum struct, the integer will represent language
+	/****************************************************************
+	 * Audio
+	 */ 
+	public float masterLevel;
+	public float effectsLevel;
+	public float voiceLevel;
+	public float musicLevel;
+
+	/****************************************************************
+	 * Graphics
+	 */ 
+	public int resolution; // We will store each resolution in an enum struct, the integer will represent resolution
+	public bool windowedOrFullscreen;
+	public float brightness;
+	public int graphics; // We will store each graphic (low, med, high, supa high) in an enum struct, the integer 
+						 // represents the graphic
+
+	/****************************************************************
+	 * Advanced
+	 */ 
+	public int antialiasingMode; // We will store each AA setting in an enum struct, the integer will represent AA.
+	//TODO Add individual settings here...?
+	public int filteringMode; // We will store each filtering in an enum struct, the integer will represent filtering
+	//TODO Add each modifiable thing here... (Low, med, high, supa high)
+	// Lighting
+	// Shading
+	// Textures
+	// Models
+	// Shadows
+	// Water (?)
 }
 
 [Serializable]

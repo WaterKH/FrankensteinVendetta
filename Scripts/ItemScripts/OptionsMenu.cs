@@ -5,127 +5,85 @@ using System.Collections.Generic;
 
 public class OptionsMenu : MonoBehaviour {
 
-	//Graphics
-	public Text getGraphics;
-	public Button increaseButton;
-	public Button decreaseButton;
+	/****************************************************************
+	 * General
+	 */ 
+	public Text mouseSensText;
+	public Slider mouseSens;
+	public Text FOVText;
+	public Slider fovValue;
+	public Text subtitles;
+	public Toggle subtitlesOnOff;
+	public Text languageText;
+	public enum languages {
+		english = 0,
+		//TODO What languages do we want?
+	};
+	public Button languageButton;
+	public CanvasGroup languagesSelection; 
+	public Text mouseInverText;
+	public Toggle mouseInver;
 
-	//Brightness
-	public Slider brightnessSlider;
-	public Color ambientDark;
-	public Color ambientLight;
+	/****************************************************************
+	 * Audio
+	 */ 
+	public Text masterVolText;
+	public Slider masterVol;
+	public Text effectVolText;
+	public Slider effectVol;
+	public Text voiceVolText;
+	public Slider voiceVol;
+	public Text musicVolText;
+	public Slider musicVol;
 
-	//Window Size
-	public Text getScreenSize;
-	public Button windowedButton;
-	public Button fullScreenButton;
+	/****************************************************************
+	 * Graphics
+	 */ 
+	public Text resolutionText;
+	public enum resolutions {
+		//TODO Add resolutions when you get the chance
+	};
+	public Button resolutionButton;
+	public CanvasGroup resolutionSelection;
+	public Text windowFullText;
+	public Toggle windowFull;
+	public Text brightnessText;
+	public Slider brightness;
+	public Text graphicsText;
+	public enum graphics {
+		low = 0,
+		med = 1,
+		high = 2,
+		shigh = 3,
+	};
+	public Button graphicsButton;
+	public CanvasGroup graphicsSelection;
 
-	//AnisoLevel
-	public Button disableAnisoButton;
-	public Button enableAnisoButton;
-	public Button forceEnableAnisoButton;
-
-	//Volume
-	public Slider effectSlider;
-	public Slider dialogueSlider;
-	public Slider musicSlider;
+	/****************************************************************
+	 * Advanced
+	 */ 
+	public Text AAText;
+	public enum AA {
+		//TODO Add AA options
+	};
+	public Button AAButton;
+	public CanvasGroup AASelection;
+	public Text filteringText;
+	public enum filtering {
+		//TODO Add trilinear, bilinear, anisotropic
+	};
+	public Button filteringButton;
+	public CanvasGroup filteringSelection;
+	//TODO Add stuff from SaveLoad.cs
 
 	public StaticVolumeSettings volumeSettings;
 
 	void Awake()
 	{
 
-		int graphics = QualitySettings.GetQualityLevel()-2;
-		getGraphics.text = graphics.ToString();
-		RenderSettings.ambientLight = Color.Lerp (ambientLight, ambientDark, brightnessSlider.value);
-		fullScreenButton.interactable = false;
-
-		effectVolumeLevel(effectSlider);
-		dialogueVolumeLevel(dialogueSlider);
-		musicVolumeLevel(musicSlider);
-
 	}
 
-	public void decreaseGraphics()
-	{
-
-		QualitySettings.DecreaseLevel();
-		int graphics = QualitySettings.GetQualityLevel()-2;
-		getGraphics.text = graphics.ToString();
-		if(graphics == 0)
-			decreaseButton.interactable = false;
-		increaseButton.interactable = true;
-
-	}
-
-	public void increaseGraphics()
-	{
-
-		QualitySettings.IncreaseLevel();
-		int graphics = QualitySettings.GetQualityLevel()-2;
-		getGraphics.text = graphics.ToString();
-		if(graphics == 3)
-			increaseButton.interactable = false;
-		decreaseButton.interactable = true;
-
-	}
-
-	public void windowed()
-	{
-
-		getScreenSize.text = "Windowed";
-		windowedButton.interactable = false;
-		fullScreenButton.interactable = true;
-		Screen.fullScreen = false;
-
-	}
-
-	public void fullScreen()
-	{
-
-		getScreenSize.text = "Full Screen";
-		fullScreenButton.interactable = false;
-		windowedButton.interactable = true;
-		Screen.fullScreen = true;
-
-	}
-
-	public void brightnessBar(Slider brightnessBarVal)
-	{
-
-		RenderSettings.ambientLight = Color.Lerp (ambientLight, ambientDark, brightnessBarVal.value);
-
-	}
-
-	public void disableAniso()
-	{
-
-		QualitySettings.anisotropicFiltering = AnisotropicFiltering.Disable;
-		disableAnisoButton.interactable = false;
-		enableAnisoButton.interactable = true;
-		forceEnableAnisoButton.interactable = true;
-
-	}
-
-	public void enableAniso()
-	{
-
-		QualitySettings.anisotropicFiltering = AnisotropicFiltering.Enable;
-		disableAnisoButton.interactable = true;
-		enableAnisoButton.interactable = false;
-		forceEnableAnisoButton.interactable = true;
-
-	}
-
-	public void forceEnableAniso()
-	{
-		
-		QualitySettings.anisotropicFiltering = AnisotropicFiltering.ForceEnable;
-		disableAnisoButton.interactable = true;
-		enableAnisoButton.interactable = true;
-		forceEnableAnisoButton.interactable = false;
-
-	}
+	//TODO Add general functions...
 
 	public void masterVolumeLevel(Slider masterVolume)
 	{

@@ -8,74 +8,65 @@ public class OptionsMenu : MonoBehaviour {
 	/****************************************************************
 	 * General
 	 */ 
-	public Text mouseSensText;
 	public Slider mouseSens;
-	public Text FOVText;
 	public Slider fovValue;
-	public Text subtitles;
 	public Toggle subtitlesOnOff;
-	public Text languageText;
 	public enum languages {
 		english = 0,
 		//TODO What languages do we want?
 	};
+	public int currentLanguage = 0;
 	public Button languageButton;
 	public CanvasGroup languagesSelection; 
-	public Text mouseInverText;
 	public Toggle mouseInver;
 
 	/****************************************************************
 	 * Audio
 	 */ 
-	public Text masterVolText;
 	public Slider masterVol;
-	public Text effectVolText;
 	public Slider effectVol;
-	public Text voiceVolText;
 	public Slider voiceVol;
-	public Text musicVolText;
 	public Slider musicVol;
 
 	/****************************************************************
 	 * Graphics
 	 */ 
-	public Text resolutionText;
 	public enum resolutions {
 		//TODO Add resolutions when you get the chance
 	};
+	public int currentResolution = 0;
 	public Button resolutionButton;
 	public CanvasGroup resolutionSelection;
-	public Text windowFullText;
 	public Toggle windowFull;
-	public Text brightnessText;
 	public Slider brightness;
-	public Text graphicsText;
 	public enum graphics {
 		low = 0,
 		med = 1,
 		high = 2,
 		shigh = 3,
 	};
+	public int currentGraphics = 1;
 	public Button graphicsButton;
 	public CanvasGroup graphicsSelection;
 
 	/****************************************************************
 	 * Advanced
 	 */ 
-	public Text AAText;
 	public enum AA {
 		//TODO Add AA options
 	};
+	public int currentAA;
 	public Button AAButton;
 	public CanvasGroup AASelection;
-	public Text filteringText;
 	public enum filtering {
 		//TODO Add trilinear, bilinear, anisotropic
 	};
+	public int currentFiltering;
 	public Button filteringButton;
 	public CanvasGroup filteringSelection;
 	//TODO Add stuff from SaveLoad.cs
 
+	//TODO Is this needed anymore?
 	public StaticVolumeSettings volumeSettings;
 
 	void Awake()

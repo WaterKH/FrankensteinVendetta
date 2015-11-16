@@ -10,13 +10,15 @@ public class movePanel : MonoBehaviour {
 	float elapsedTime = 0f;
 	bool switchPan = false;
 
-	public RectTransform graphics;
+	public RectTransform general;
 	public RectTransform sound;
-	public RectTransform controls;
+	public RectTransform graphics;
+	public RectTransform advanced;
 
-	public CanvasGroup graphicsGroup;
+	public CanvasGroup generalGroup;
 	public CanvasGroup soundGroup;
-	public CanvasGroup controlsGroup;
+	public CanvasGroup graphicsGroup;
+	public CanvasGroup advancedGroup;
 
 	//Called on Multiple buttons in OptionsMenu Canvas
 	public void panelMove(RectTransform rectT)
@@ -47,61 +49,92 @@ public class movePanel : MonoBehaviour {
 
 		//TODO Finish the Options Menu
 		//Shows correct menu based on which option is selected
-		if(toVect == graphics.position)
+		if(toVect == general.position)
 		{
 
+			FVAPI.lerpAlphaChannelTimeMultiplied(generalGroup, 1, 3);
 			FVAPI.lerpAlphaChannelTimeMultiplied(soundGroup, 0, 3);
-			FVAPI.lerpAlphaChannelTimeMultiplied(graphicsGroup, 1, 3);
-			FVAPI.lerpAlphaChannelTimeMultiplied(controlsGroup, 0, 3);
+			FVAPI.lerpAlphaChannelTimeMultiplied(graphicsGroup, 0, 3);
+			FVAPI.lerpAlphaChannelTimeMultiplied(advancedGroup, 0, 3);
 			//soundGroup.alpha = Mathf.Lerp(soundGroup.alpha, 0, Time.deltaTime*3);
 			//graphicsGroup.alpha = Mathf.Lerp(graphicsGroup.alpha, 1, Time.deltaTime*3);
 			//controlsGroup.alpha = Mathf.Lerp(controlsGroup.alpha, 0, Time.deltaTime*3);
 
+			generalGroup.interactable = true;
 			soundGroup.interactable = false;
-			graphicsGroup.interactable = true;
-			controlsGroup.interactable = false;
+			graphicsGroup.interactable = false;
+			advancedGroup.interactable = false;
 
+			generalGroup.blocksRaycasts = true;
 			soundGroup.blocksRaycasts = false;
-			graphicsGroup.blocksRaycasts = true;
-			controlsGroup.blocksRaycasts = false;
+			graphicsGroup.blocksRaycasts = false;
+			advancedGroup.blocksRaycasts = false;
 
 		}
 		else if(toVect == sound.position)
 		{
 
+			FVAPI.lerpAlphaChannelTimeMultiplied(generalGroup, 0, 3);
 			FVAPI.lerpAlphaChannelTimeMultiplied(soundGroup, 1, 3);
 			FVAPI.lerpAlphaChannelTimeMultiplied(graphicsGroup, 0, 3);
-			FVAPI.lerpAlphaChannelTimeMultiplied(controlsGroup, 0, 3);
+			FVAPI.lerpAlphaChannelTimeMultiplied(advancedGroup, 0, 3);
 			//soundGroup.alpha = Mathf.Lerp(soundGroup.alpha, 1, Time.deltaTime);
 			//graphicsGroup.alpha = Mathf.Lerp(graphicsGroup.alpha, 0, Time.deltaTime*3);
 			//controlsGroup.alpha = Mathf.Lerp(controlsGroup.alpha, 0, Time.deltaTime*3);
 
+			generalGroup.interactable = false;
 			soundGroup.interactable = true;
 			graphicsGroup.interactable = false;
-			controlsGroup.interactable = false;
-			
+			advancedGroup.interactable = false;
+
+			generalGroup.blocksRaycasts = false;
 			soundGroup.blocksRaycasts = true;
 			graphicsGroup.blocksRaycasts = false;
-			controlsGroup.blocksRaycasts = false;
+			advancedGroup.blocksRaycasts = false;
 
 		}
-		else if(toVect == controls.position)
+		else if(toVect == graphics.position)
+		{
+			
+			FVAPI.lerpAlphaChannelTimeMultiplied(generalGroup, 0, 3);
+			FVAPI.lerpAlphaChannelTimeMultiplied(soundGroup, 0, 3);
+			FVAPI.lerpAlphaChannelTimeMultiplied(graphicsGroup, 1, 3);
+			FVAPI.lerpAlphaChannelTimeMultiplied(advancedGroup, 0, 3);
+			//soundGroup.alpha = Mathf.Lerp(soundGroup.alpha, 0, Time.deltaTime*3);
+			//graphicsGroup.alpha = Mathf.Lerp(graphicsGroup.alpha, 1, Time.deltaTime*3);
+			//controlsGroup.alpha = Mathf.Lerp(controlsGroup.alpha, 0, Time.deltaTime*3);
+			
+			generalGroup.interactable = false;
+			soundGroup.interactable = false;
+			graphicsGroup.interactable = true;
+			advancedGroup.interactable = false;
+			
+			generalGroup.blocksRaycasts = false;
+			soundGroup.blocksRaycasts = false;
+			graphicsGroup.blocksRaycasts = true;
+			advancedGroup.blocksRaycasts = false;
+			
+		}
+		else if(toVect == advanced.position)
 		{
 
+			FVAPI.lerpAlphaChannelTimeMultiplied(generalGroup, 0, 3);
 			FVAPI.lerpAlphaChannelTimeMultiplied(soundGroup, 0, 3);
 			FVAPI.lerpAlphaChannelTimeMultiplied(graphicsGroup, 0, 3);
-			FVAPI.lerpAlphaChannelTimeMultiplied(controlsGroup, 1, 3);
+			FVAPI.lerpAlphaChannelTimeMultiplied(advancedGroup, 1, 3);
 			//soundGroup.alpha = Mathf.Lerp(soundGroup.alpha, 0, Time.deltaTime*3);
 			//graphicsGroup.alpha = Mathf.Lerp(graphicsGroup.alpha, 0, Time.deltaTime*3);
 			//controlsGroup.alpha = Mathf.Lerp(controlsGroup.alpha, 1, Time.deltaTime*3);
 
+			generalGroup.interactable = false;
 			soundGroup.interactable = false;
 			graphicsGroup.interactable = false;
-			controlsGroup.interactable = true;
+			advancedGroup.interactable = true;
 
+			generalGroup.blocksRaycasts = false;
 			soundGroup.blocksRaycasts = false;
 			graphicsGroup.blocksRaycasts = false;
-			controlsGroup.blocksRaycasts = true;
+			advancedGroup.blocksRaycasts = true;
 
 		}
 

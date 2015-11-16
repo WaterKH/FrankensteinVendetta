@@ -21,6 +21,7 @@ public class SaveLoad : MonoBehaviour {
 	public PageFlipping flipPage;
 	public RenderTextureScript rendTexture;
 	public SaveLoadKeyboard saveLoadKey;
+	public OptionsMenu options;
 
 	//Used for making the save/ load paths
 	public string userName;
@@ -193,6 +194,7 @@ public class SaveLoad : MonoBehaviour {
 
 	}
 
+	// Called from the Back button
 	public void SaveOptions()
 	{
 		BinaryFormatter bf = new BinaryFormatter ();
@@ -201,8 +203,80 @@ public class SaveLoad : MonoBehaviour {
 		/****************************************************************
 	 	* General
 	 	*/ 
-		optionsData.mouseSensitivity = 
+		optionsData.mouseSensitivity = options.mouseSens.value;
+		optionsData.fieldOfView = options.fovValue.value;
+		optionsData.subtitles = options.subtitlesOnOff.isOn;
+		optionsData.mouseInversion = options.mouseInver.isOn;
+		optionsData.language = options.currentLanguage;
 
+		/****************************************************************
+	 	* Audio
+	 	*/ 
+		optionsData.masterLevel = options.masterVol.value;
+		optionsData.effectsLevel = options.effectVol.value;
+		optionsData.voiceLevel = options.voiceVol.value;
+		optionsData.musicLevel = options.musicVol.value;
+
+		/****************************************************************
+		* Graphics
+	 	*/
+		optionsData.resolution = options.currentResolution;
+		optionsData.windowedOrFullscreen = options.windowFull.isOn;
+		optionsData.brightness = options.brightness.value;
+		optionsData.graphics = options.currentGraphics;
+
+		/****************************************************************
+	 	* Advanced
+	 	*/ 
+		optionsData.antialiasingMode = options.currentAA;
+		optionsData.filteringMode = options.currentFiltering;
+	}
+
+	// Called when you click Play Game (TODO Is this the best place to call it? How do we load it for the user?)
+	public void LoadOptions()
+	{
+		Debug.Log("Loading Options for User: " + userName);
+		//If it does exist this will run
+		if (File.Exists (Application.persistentDataPath + "/" + userName + "Options.dat")) {
+			
+			BinaryFormatter bf = new BinaryFormatter ();
+			FileStream file = File.Open (Application.persistentDataPath + "/" + userName + "Options.dat", FileMode.Open);
+			OptionsData optionsData = (OptionsData)bf.Deserialize (file);
+			file.Close ();
+
+			/****************************************************************
+	 		* General
+	 		*/ 
+			options.mouseSens.value = optionsData.mouseSensitivity;
+			options.fovValue.value = optionsData.fieldOfView;
+			options.subtitlesOnOff.isOn = optionsData.subtitles;
+			options.mouseInver.isOn = optionsData.mouseInversion;
+			options.currentLanguage = optionsData.language;
+			
+			/****************************************************************
+	 		* Audio
+	 		*/ 
+			options.masterVol.value = optionsData.masterLevel;
+			options.effectVol.value = optionsData.effectsLevel;
+			options.voiceVol.value = optionsData.voiceLevel;
+			options.musicVol.value = optionsData.musicLevel;
+			
+			/****************************************************************
+			* Graphics
+	 		*/
+			options.currentResolution = optionsData.resolution;
+			options.windowFull.isOn = optionsData.windowedOrFullscreen;
+			options.brightness.value = optionsData.brightness;
+			options.currentGraphics = optionsData.graphics;
+			
+			/****************************************************************
+	 		* Advanced
+	 		*/ 
+			options.currentAA = optionsData.antialiasingMode;
+			options.currentFiltering = optionsData.filteringMode;
+		}
+		else
+			Debug.Log("Didn't load Options");
 	}
 
 }
@@ -233,6 +307,7 @@ class OptionsData
 	public bool subtitles;
 	public bool mouseInversion;
 	public int language; // We will store each language in an enum struct, the integer will represent language
+
 	/****************************************************************
 	 * Audio
 	 */ 

@@ -28,7 +28,6 @@ public class StaticVolumeSettings : MonoBehaviour {
 		foreach(GameObject eff in effectArr)
 			eff.GetComponent<AudioSource>().volume = value;
 
-
 	}
 
 	public void updateMusic(float value)
@@ -38,7 +37,6 @@ public class StaticVolumeSettings : MonoBehaviour {
 		foreach(GameObject mus in musicArr)
 			mus.GetComponent<AudioSource>().volume = value;
 
-
 	}
 
 	public void updateDialogue(float value)
@@ -47,7 +45,6 @@ public class StaticVolumeSettings : MonoBehaviour {
 		GameObject[] dialogueArr = GameObject.FindGameObjectsWithTag("dia");
 		foreach(GameObject dia in dialogueArr)
 			dia.GetComponent<AudioSource>().volume = value;
-
 
 	}
 

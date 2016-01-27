@@ -10,6 +10,11 @@ public class StaticVolumeSettings : MonoBehaviour {
 
 	void Awake()
 	{
+		UpdateAllAudio();
+	}
+
+	void UpdateAllAudio()
+	{
 
 		Debug.Log ("Setting Volume Levels");
 

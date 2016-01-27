@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class InventorySlots : MonoBehaviour {
 
-	public InventoryScript inventory;
+	//public InventoryScript inventory;
 	public PauseMenu pauseMenu;
 	//TODO Add lists of inventory
 	public RenderTextureScript rendTexture;
@@ -28,7 +28,7 @@ public class InventorySlots : MonoBehaviour {
 
 		numObjects = inventoryList.Count; 
 
-		if(inventory.RPressed && !pauseMenu.escKey)
+		/*if(inventory.RPressed && !pauseMenu.escKey)
 		{
 
 			//TODO Add mouse functionality
@@ -58,7 +58,7 @@ public class InventorySlots : MonoBehaviour {
 			/*foreach(Camera rendCam in rendTexture.rendTextCameras)
 				rendCam.clearFlags = CameraClearFlags.SolidColor;*/
 
-		}
+		//}
 
 	}
 

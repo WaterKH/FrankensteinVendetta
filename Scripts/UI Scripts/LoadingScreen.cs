@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class LoadingScreen : MonoBehaviour {
 
-	public InventoryScript inventory;
+	//public InventoryScript inventory;
 	public PauseMenu pauseMenu;
 	public List<GameObject> loadingCircles;
 
@@ -18,7 +18,7 @@ public class LoadingScreen : MonoBehaviour {
 		
 		numObjects = loadingCircles.Count; 
 		
-		if(inventory.RPressed && !pauseMenu.escKey)
+		if(/*inventory.RPressed && */!pauseMenu.escKey)
 		{
 			for(int i = 0; i < loadingCircles.Count; i++)
 			{

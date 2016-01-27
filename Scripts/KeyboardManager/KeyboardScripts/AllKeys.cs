@@ -15,10 +15,12 @@ public class AllKeys : MonoBehaviour {
 
 	public GameObject KeyboardLayout;
 	public GameObject MouseLayout;
-	public static GameObject parent;
+	public static GameObject parentDescr;
+	public static GameObject parentButtons;
 	public static GameObject startRefNameSta;
 	public static GameObject startRefButtonSta;
-	public GameObject parentSet;
+	public GameObject parentSetDescr;
+	public GameObject parentSetButton;
 	public GameObject startRefName;
 	public GameObject startRefButton;
 
@@ -42,7 +44,8 @@ public class AllKeys : MonoBehaviour {
 		if(allKeys.Count == 64)
 			Debug.Log("All keys successfully found");
 
-		parent = parentSet;
+		parentDescr = parentSetDescr;
+		parentButtons = parentSetButton;
 		startRefNameSta = startRefName;
 		startRefButtonSta = startRefButton;
 
@@ -56,7 +59,10 @@ public class AllKeys : MonoBehaviour {
 	public static void removeLegend()
 	{
 
-		Transform[] children = parent.GetComponentsInChildren<Transform>();
+		Transform[] children = parentDescr.GetComponentsInChildren<Transform>();
+		for(int i = 2; i < children.Length; i++)
+			Destroy(children[i].gameObject);
+		children = parentButtons.GetComponentsInChildren<Transform>();
 		for(int i = 2; i < children.Length; i++)
 			Destroy(children[i].gameObject);
 		counter = 0;
@@ -90,7 +96,7 @@ public class AllKeys : MonoBehaviour {
 	{
 
 		GameObject inputDescr = Instantiate(Resources.Load("InputNonUI") as GameObject);
-		inputDescr.transform.SetParent(parent.transform, false);
+		inputDescr.transform.SetParent(parentDescr.transform, false);
 		if(startPosName == new Vector3(0,0,0))
 		{
 			startPosName = startRefNameSta.transform.position;
@@ -109,7 +115,7 @@ public class AllKeys : MonoBehaviour {
 		inputDescr.GetComponent<Text>().text = anInput;
 
 		GameObject inputButton = Instantiate(Resources.Load("InputNonUIButton") as GameObject);
-		inputButton.transform.SetParent(parent.transform, false);
+		inputButton.transform.SetParent(parentButtons.transform, false);
 		if(startPosButton == new Vector3(0,0,0))
 		{
 			startPosButton = startRefButtonSta.transform.position;
@@ -126,6 +132,8 @@ public class AllKeys : MonoBehaviour {
 
 		inputButton.tag = aTag;
 		inputButton.name = aTag;
+//		Debug.Log(Inputs.inputDict[aTag].getInputKeyCode().ToString());
+//		Debug.Log(inputButton.GetComponentInChildren<Transform>().name);//GetComponentInChildren<Text>().text);
 		inputButton.GetComponentInChildren<Text>().text = Inputs.inputDict[aTag].getInputKeyCode().ToString();
 
 		counter++;

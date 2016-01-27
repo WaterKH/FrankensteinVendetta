@@ -39,8 +39,8 @@ public class PauseMenu : MonoBehaviour {
 			//.. set to false if true, true if false
 			if(!inventory.RPressed)
 				escKey = !escKey;
-			else
-				inventory.RPressed = false;
+			//else
+			//	inventory.RPressed = false;
 			elapsedTime = 0;
 			canvasTime = 0;
 
@@ -78,8 +78,6 @@ public class PauseMenu : MonoBehaviour {
 				//Also set it so no raycasts can go through
 				sidePanelGroup.blocksRaycasts = true;
 				backgroundPauseGroup.blocksRaycasts = true;
-
-			
 			}
 			//else if it is equal to or above 1
 			else if (backgroundPauseGroup.alpha >= 1) {
@@ -95,9 +93,10 @@ public class PauseMenu : MonoBehaviour {
 
 		} 	
 		//Else if the esc key is false
-		else if(!escKey && !inventory.RPressed){
-
-			if (buttonGroup.alpha > 0) {
+		else if(!escKey) //&& !inventory.RPressed)
+		{
+			if (buttonGroup.alpha > 0) 
+			{
 				canvasTime += .05f;
 				//Lerp alpha to invisible of the buttons
 				FVAPI.lerpAlphaChannel(buttonGroup, 0, canvasTime);
@@ -106,7 +105,6 @@ public class PauseMenu : MonoBehaviour {
 			}
 			else if (backgroundPauseGroup.alpha >= 0)
 			{
-
 				elapsedTime += .05f;
 				//Set journalKey to false since it will be fading out
 				journalKey = false;
@@ -119,59 +117,47 @@ public class PauseMenu : MonoBehaviour {
 				sidePanelGroup.blocksRaycasts = false;
 				backgroundPauseGroup.blocksRaycasts = false;
 				//Set cursor to locked and invisible
+				//Debug.Log("Invisible");
 				Cursor.lockState = CursorLockMode.Locked;
 				Cursor.visible = false;
 				if(sidePanelGroup.alpha <= 0)
 				{
 					//Resume gameplay
 					Time.timeScale = 1;
-				
 				}
-
 			}
-			
 		}
-
 	}
 
 	//Called on ResumeGame under the onClick() event
 	public void clickedResume()
 	{
-
 		elapsedTime = 0;
 		canvasTime = 0;
 		//Sets the game to continue
 		escKey = false;
 		journalKey = false;
-
 	}
 
 	//Called on JournalEntries under the onClick() event
 	public void clickedJournal()
 	{
-
 		elapsedTime = 0;
 		canvasTime = 0;
 		//Sets the journalKey to be true, used in ResumeButton and JournalAppear class
 		journalKey = true; 
 		journalAppear.journalTime = 0;
-
 	}
 
 	//TODO Display Options
 	public void clickedOptions()
 	{
 
-		
-
 	}
 
 	public void clickedMainMenu()
 	{
-
 		Time.timeScale = 1;
 		Application.LoadLevelAsync(0);
-
 	}
-
 }

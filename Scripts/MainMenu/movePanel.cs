@@ -137,6 +137,26 @@ public class movePanel : MonoBehaviour {
 			advancedGroup.blocksRaycasts = true;
 
 		}
+		else
+		{
+			FVAPI.lerpAlphaChannelTimeMultiplied(generalGroup, 1, 3);
+			FVAPI.lerpAlphaChannelTimeMultiplied(soundGroup, 0, 3);
+			FVAPI.lerpAlphaChannelTimeMultiplied(graphicsGroup, 0, 3);
+			FVAPI.lerpAlphaChannelTimeMultiplied(advancedGroup, 0, 3);
+			//soundGroup.alpha = Mathf.Lerp(soundGroup.alpha, 0, Time.deltaTime*3);
+			//graphicsGroup.alpha = Mathf.Lerp(graphicsGroup.alpha, 1, Time.deltaTime*3);
+			//controlsGroup.alpha = Mathf.Lerp(controlsGroup.alpha, 0, Time.deltaTime*3);
+			
+			generalGroup.interactable = true;
+			soundGroup.interactable = false;
+			graphicsGroup.interactable = false;
+			advancedGroup.interactable = false;
+			
+			generalGroup.blocksRaycasts = true;
+			soundGroup.blocksRaycasts = false;
+			graphicsGroup.blocksRaycasts = false;
+			advancedGroup.blocksRaycasts = false;
+		}
 
 	}
 

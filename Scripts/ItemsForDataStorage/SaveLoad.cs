@@ -22,6 +22,7 @@ public class SaveLoad : MonoBehaviour {
 	public RenderTextureScript rendTexture;
 	public SaveLoadKeyboard saveLoadKey;
 	public OptionsMenu options;
+	public LoadToPlayer loadToPlayer;
 
 	//Used for making the save/ load paths
 	public string userName;
@@ -93,6 +94,7 @@ public class SaveLoad : MonoBehaviour {
 			loaded = true;
 			saveLoadKey.LoadKeyboard(userName);
 			SaveUsers();
+			LoadOptions();
 		}
 		else
 			loaded = false;
@@ -207,7 +209,6 @@ public class SaveLoad : MonoBehaviour {
 		optionsData.fieldOfView = options.fovValue.value;
 		optionsData.subtitles = options.subtitlesOnOff.isOn;
 		optionsData.mouseInversion = options.mouseInver.isOn;
-		optionsData.language = options.currentLanguage;
 
 		/****************************************************************
 	 	* Audio
@@ -230,6 +231,9 @@ public class SaveLoad : MonoBehaviour {
 	 	*/ 
 		optionsData.antialiasingMode = options.currentAA;
 		optionsData.filteringMode = options.currentFiltering;
+
+		bf.Serialize (file, optionsData);
+		file.Close();
 	}
 
 	// Called when you click Play Game (TODO Is this the best place to call it? How do we load it for the user?)
@@ -238,12 +242,13 @@ public class SaveLoad : MonoBehaviour {
 		Debug.Log("Loading Options for User: " + userName);
 		//If it does exist this will run
 		if (File.Exists (Application.persistentDataPath + "/" + userName + "Options.dat")) {
-			
+
 			BinaryFormatter bf = new BinaryFormatter ();
 			FileStream file = File.Open (Application.persistentDataPath + "/" + userName + "Options.dat", FileMode.Open);
 			OptionsData optionsData = (OptionsData)bf.Deserialize (file);
+			Debug.Log("Loading to player..");
 			file.Close ();
-
+			Debug.Log("Loading to player..");
 			/****************************************************************
 	 		* General
 	 		*/ 
@@ -251,8 +256,7 @@ public class SaveLoad : MonoBehaviour {
 			options.fovValue.value = optionsData.fieldOfView;
 			options.subtitlesOnOff.isOn = optionsData.subtitles;
 			options.mouseInver.isOn = optionsData.mouseInversion;
-			options.currentLanguage = optionsData.language;
-			
+			Debug.Log("Loading to player..");
 			/****************************************************************
 	 		* Audio
 	 		*/ 
@@ -260,7 +264,7 @@ public class SaveLoad : MonoBehaviour {
 			options.effectVol.value = optionsData.effectsLevel;
 			options.voiceVol.value = optionsData.voiceLevel;
 			options.musicVol.value = optionsData.musicLevel;
-			
+			Debug.Log("Loading to player..");
 			/****************************************************************
 			* Graphics
 	 		*/
@@ -268,12 +272,15 @@ public class SaveLoad : MonoBehaviour {
 			options.windowFull.isOn = optionsData.windowedOrFullscreen;
 			options.brightness.value = optionsData.brightness;
 			options.currentGraphics = optionsData.graphics;
-			
+			Debug.Log("Loading to player..");
 			/****************************************************************
 	 		* Advanced
 	 		*/ 
 			options.currentAA = optionsData.antialiasingMode;
 			options.currentFiltering = optionsData.filteringMode;
+
+			Debug.Log("Loading to player..");
+			loadToPlayer.loadOptionsToPlayer(optionsData);
 		}
 		else
 			Debug.Log("Didn't load Options");
@@ -297,7 +304,7 @@ class PlayerData
 }
 
 [Serializable]
-class OptionsData
+public class OptionsData
 {
 	/****************************************************************
 	 * General
@@ -306,7 +313,6 @@ class OptionsData
 	public float fieldOfView;
 	public bool subtitles;
 	public bool mouseInversion;
-	public int language; // We will store each language in an enum struct, the integer will represent language
 
 	/****************************************************************
 	 * Audio
@@ -320,6 +326,8 @@ class OptionsData
 	 * Graphics
 	 */ 
 	public int resolution; // We will store each resolution in an enum struct, the integer will represent resolution
+	public int resX;
+	public int resY;
 	public bool windowedOrFullscreen;
 	public float brightness;
 	public int graphics; // We will store each graphic (low, med, high, supa high) in an enum struct, the integer 

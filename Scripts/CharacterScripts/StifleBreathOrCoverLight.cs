@@ -60,7 +60,7 @@ public class StifleBreathOrCoverLight : MonoBehaviour {
 		{
 			if(InputManager.GetKey("stifleBreathORCoverLight"))
 			{
-				Debug.Log("Stifling breath");
+			//	Debug.Log("Stifling breath");
 				stifleBreath = true;
 			}
 			else
@@ -70,7 +70,7 @@ public class StifleBreathOrCoverLight : MonoBehaviour {
 		{
 			if(InputManager.GetKey("stifleBreathORCoverLight"))
 			{
-				Debug.Log("Covering light");
+			//	Debug.Log("Covering light");
 				coverLight = true;
 			}
 			else
@@ -85,7 +85,7 @@ public class StifleBreathOrCoverLight : MonoBehaviour {
 		if(hasNotStarted)
 		{
 			hasNotStarted = false;
-			Debug.Log("Cooling Down..");
+//			Debug.Log("Cooling Down..");
 			StartCoroutine(CoolDown());
 		}
 
@@ -98,7 +98,7 @@ public class StifleBreathOrCoverLight : MonoBehaviour {
 		yield return new WaitForSeconds(5.0f * timeSpentRunning);
 		breathingHard = false;
 		breathingSoft = true;
-		Debug.Log("Cooling Complete");
+//		Debug.Log("Cooling Complete");
 	}
 
 }

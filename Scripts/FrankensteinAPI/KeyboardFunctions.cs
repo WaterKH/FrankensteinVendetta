@@ -6,6 +6,7 @@ public class KeyboardFunctions : MonoBehaviour {
 	//FOR TESTING PURPOSES
 	void Update () 
 	{
+	/*
 		if(InputManager.GetKeyDown("action"))
 		{
 			Debug.Log("Performed Action.");
@@ -22,5 +23,6 @@ public class KeyboardFunctions : MonoBehaviour {
 		{
 			Debug.Log("Still performing action.");
 		}
+		*/
 	}
 }

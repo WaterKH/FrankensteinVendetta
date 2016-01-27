@@ -6,10 +6,11 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 
 	public float walkSpeed = 250.0f;
 	public float runSpeed = 475.0f;
-	public float crouchSpeed = 230.0f;
+	public float crouchSpeed = 75.0f;
 
 	float initWalkSpeed = 250.0f;
 	float initRunSpeed = 475.0f;
+	float initCrouchSpeed = 75.0f;
 	float initialHeight = 2f;
 	float elapsedTime = 0f;
 
@@ -56,10 +57,13 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 	public float groundRadius = 0.2f;
 	public LayerMask whatIsGround;
 
+	public Player_MAIN player;
+
 	void Start() {
 
 		myTransform = transform;
 		speed = walkSpeed;
+		crouchSpeed = initCrouchSpeed;
 		jumpTimer = antiBunnyHopFactor;
 
 		height = gameObject.transform.localScale.y;
@@ -155,16 +159,20 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 		if (InputManager.GetKey("run") && !crouching)
 		{
 			running = true;
-			Debug.Log ("Is running.");
+			Player_MAIN.player.setSpeed(runSpeed);
+			//Debug.Log ("Is running.");
 		} 
+		// TODO Add a run function that cancels crouching
 		else if (InputManager.GetKeyDown("crouch")) 
 		{
 			crouching = !crouching;
 			running = false;
+			Player_MAIN.player.setSpeed(crouchSpeed);
 		}
 		else
 		{
 			running = false;
+			Player_MAIN.player.setSpeed(walkSpeed);
 		}
 
 		if(crouching)
@@ -173,7 +181,6 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 			height = Mathf.Lerp(height, crouchHeight, Time.deltaTime*10);
 			walkSpeed = crouchSpeed;
 			runSpeed = crouchSpeed;
-			Debug.Log ("Is crouching.");
 		}
 		else if(!crouching)
 		{
@@ -183,7 +190,6 @@ public class FPSwalkerEnhanced: MonoBehaviour {
 			walkSpeed = initWalkSpeed;
 			runSpeed = initRunSpeed;
 		}
-
 	}
 
 	float CalculateJumpVerticalSpeed () {

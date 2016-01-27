@@ -33,15 +33,12 @@ public class InputManager : MonoBehaviour {
 		public INPUT_CLASS_FOR_DATA_STORAGE(KeyCode anInput, ButtonSerializable aKey, string aType, string aTag, 
 		                                    string aName)
 		{
-			
 			Input = anInput;
 			Key = aKey;
 			Type = aType;
 			Tag = aTag;
-			Name = aName;
-			
+			Name = aName;	
 		}
-		
 	}
 	
 	[System.Serializable]
@@ -155,7 +152,6 @@ public class InputManager : MonoBehaviour {
 
 	void Update()
 	{
-
 		if(isOn)
 		{
 

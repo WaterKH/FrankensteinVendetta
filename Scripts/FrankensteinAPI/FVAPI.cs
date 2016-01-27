@@ -176,10 +176,10 @@ public class FVAPI {
 		
 	}
 	
-	public static void lerpQuaternion(Quaternion initialQuaternion, Quaternion moveToQuaternion, float time)
+	public static void lerpQuaternion(Transform initialQuaternion, Quaternion moveToQuaternion, float time)
 	{
 		
-		initialQuaternion = Quaternion.Lerp(initialQuaternion, moveToQuaternion, time);
+		initialQuaternion.rotation = Quaternion.Lerp(initialQuaternion.rotation, moveToQuaternion, time);
 		
 	}
 	

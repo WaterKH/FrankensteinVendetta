@@ -10,9 +10,7 @@ public class FadeInOut : MonoBehaviour {
 	
 	void Awake()
 	{
-		
 		blackFader.alpha = 1;
-		
 	}
 
 	// Update is called once per frame

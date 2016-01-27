@@ -14,14 +14,16 @@ public class Player_MAIN : MonoBehaviour {
 	{
 		if(startObject != null)
 		{
-
 			player.setPosition(startObject.transform.position);
 			player.setRotation(startObject.transform.rotation);
-
 		}
-		Debug.Log(player.getName());
 		if(player.getName() != "unnamed")
 			saveLoad.Load();
+	}
+
+	void Update()
+	{
+		player.setPosition(transform.position);
 	}
 
 	public void displayDamage()

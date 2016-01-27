@@ -17,6 +17,10 @@ public class DebuggerHub : MonoBehaviour {
 
 	public Text framesPerSecond;
 
+	public Text playerName;
+	public Text playerSpeed;
+	public Text playerLocation;
+
 	int m_frameCounter = 0;
 	float m_timeCounter = 0.0f;
 	float m_lastFramerate = 0.0f;
@@ -43,29 +47,16 @@ public class DebuggerHub : MonoBehaviour {
 			framesPerSecond.text = m_lastFramerate.ToString();
 		}
 
-		if(Input.GetKeyDown(KeyCode.Minus))
-		{
-			if(Player_MAIN.player.getHealth() >= 0f)
-				Player_MAIN.player.setHealth(Player_MAIN.player.getHealth() - 25);
-			player.displayDamage();
-
-		}
-		else if(Input.GetKeyDown(KeyCode.Equals))
-		{
-			if(Player_MAIN.player.getHealth() <= 100f)
-				Player_MAIN.player.setHealth(Player_MAIN.player.getHealth() + 25);
-			player.displayDamage();
-
-		}
-
-
+		updateLocation();
+		updateSpeed();
 	}
 
 	void Awake()
 	{
-
+		assignName();
 		changeHealthOnValueChanged();
-
+		updateLocation();
+		updateSpeed();
 	}
 
 	public void displayMenu()
@@ -129,6 +120,18 @@ public class DebuggerHub : MonoBehaviour {
 		player.displayDamage();
 		
 	}
+	public void assignName()
+	{
+		playerName.text = Player_MAIN.player.getName();
+	}
+	public void updateSpeed()
+	{
+		playerSpeed.text = (Player_MAIN.player.getSpeed() / 10).ToString();
+	}
+	public void updateLocation()
+	{
+		playerLocation.text = Player_MAIN.player.getPosition().ToString();
+	}
 
 	//Toggleable
 	public void displayImageEffects()
@@ -159,7 +162,5 @@ public class DebuggerHub : MonoBehaviour {
 		//I'm not sure this is possible though. WE SHALL SEEEEEE
 
 	}
-
-
 
 }

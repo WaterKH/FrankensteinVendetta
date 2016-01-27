@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEditor;
 
 public class OptionsMenu : MonoBehaviour {
 
@@ -9,15 +10,10 @@ public class OptionsMenu : MonoBehaviour {
 	 * General
 	 */ 
 	public Slider mouseSens;
+	public Text mouseSenseValue;
 	public Slider fovValue;
+	public Text fovTextValue;
 	public Toggle subtitlesOnOff;
-	public enum languages {
-		english = 0,
-		//TODO What languages do we want?
-	};
-	public int currentLanguage = 0;
-	public Button languageButton;
-	public CanvasGroup languagesSelection; 
 	public Toggle mouseInver;
 
 	/****************************************************************
@@ -37,6 +33,9 @@ public class OptionsMenu : MonoBehaviour {
 	public int currentResolution = 0;
 	public Button resolutionButton;
 	public CanvasGroup resolutionSelection;
+	public int currResolutionX = 0;
+	public int currResolutionY = 0;
+	public Text actualCurrentResolution;
 	public Toggle windowFull;
 	public Slider brightness;
 	public enum graphics {
@@ -69,42 +68,50 @@ public class OptionsMenu : MonoBehaviour {
 	//TODO Is this needed anymore?
 	public StaticVolumeSettings volumeSettings;
 
+	public SaveLoad saveLoad;
+
 	void Awake()
 	{
-
+		actualCurrentResolution.text = UnityStats.screenRes;
 	}
 
-	//TODO Add general functions...
+	// TODO Add general functions...
+	public void changeFOVSlider(Slider fovSlider)
+	{
+		fovTextValue.text = fovSlider.value.ToString();
+	}
+	public void changeMouseSensSlider(Slider mouseSensSlider)
+	{
+		mouseSenseValue.text = mouseSensSlider.value.ToString();
+	}
 
 	public void masterVolumeLevel(Slider masterVolume)
 	{
-
 		AudioListener.volume = masterVolume.value;
-
 	}
 
 	public void effectVolumeLevel(Slider effectVolume)
 	{
-
 		StaticVolumeSettings.effectVolume = effectVolume.value;
 		volumeSettings.updateEffect(effectVolume.value);
-
 	}
 
 	public void dialogueVolumeLevel(Slider dialogueVolume)
 	{
-		
 		StaticVolumeSettings.dialogueVolume = dialogueVolume.value;
-		volumeSettings.updateDialogue(dialogueVolume.value);
-		
+		volumeSettings.updateDialogue(dialogueVolume.value);	
 	}
 
 	public void musicVolumeLevel(Slider musicVolume)
 	{
-		
 		StaticVolumeSettings.musicVolume = musicVolume.value;
 		volumeSettings.updateMusic(musicVolume.value);
+	}
 
+	public void setResolution(int x, int y)
+	{
+		currResolutionX = x;
+		currResolutionY = y;
 	}
 
 }

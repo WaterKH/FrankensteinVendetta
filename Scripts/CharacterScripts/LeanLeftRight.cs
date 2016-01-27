@@ -16,31 +16,32 @@ public class LeanLeftRight : MonoBehaviour {
 
 	void LeanLeft()
 	{
-		Debug.Log("LeanLeft");
+		//Debug.Log("LeanLeft");
 		FVAPI.lerpVectorAndQuaternionTimeMultiplied(cam, leanLeft, 5);
-		mouseLookX.enabled = false;
-		mouseLookY.enabled = false;
-		mouseLookInitCam.enabled = false;
+		//mouseLookX.enabled = false;
+		//mouseLookY.enabled = false;
+//		mouseLookInitCam.enabled = false;
 	}
 
 	void LeanRight()
 	{
-		Debug.Log("LeanRight");
+		//Debug.Log("LeanRight");
 		FVAPI.lerpVectorAndQuaternionTimeMultiplied(cam, leanRight, 5);
-		mouseLookX.enabled = false;
-		mouseLookY.enabled = false;
-		mouseLookInitCam.enabled = false;
+		//mouseLookX.enabled = false;
+		//mouseLookY.enabled = false;
+//		mouseLookInitCam.enabled = false;
 	}
 
 	void LeanBack()
 	{
+//		Debug.Log("LeanBack");
 		FVAPI.lerpVectorAndQuaternionTimeMultiplied(cam, initCam, 4);
 		if(cam.rotation.z <= 0.01f && cam.rotation.z >= -0.01f)
 		{
 			allowedToLean = true;
-			mouseLookX.enabled = true;
-			mouseLookY.enabled = true;
-			mouseLookInitCam.enabled = true;
+//			mouseLookX.enabled = true;
+//			mouseLookY.enabled = true;
+//			mouseLookInitCam.enabled = true;
 		}
 	}
 

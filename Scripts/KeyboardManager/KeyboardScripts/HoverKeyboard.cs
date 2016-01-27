@@ -19,9 +19,9 @@ public class HoverKeyboard : MonoBehaviour {
 			hovering = true;
 			hoverHelper = Instantiate(Resources.Load("HoverHelper") as GameObject);
 			hoverHelper.transform.SetParent(parent);
-			hoverHelper.transform.position = new Vector3(Input.mousePosition.x+60f, 
-			                                             Input.mousePosition.y+25f, 
-			                                             Input.mousePosition.z+5f);
+			//hoverHelper.transform.position = new Vector3(Input.mousePosition.x, 
+			  //                                           Input.mousePosition.y, 
+			    //                                         Input.mousePosition.z);
 			mousePos = hoverHelper.transform.position;
 			hoverHelper.GetComponentInChildren<Text>().text = 
 				hoverHelperText(InputManager.inputManagerList, aButton);
@@ -32,42 +32,31 @@ public class HoverKeyboard : MonoBehaviour {
 
 	public void keyboardKeyboardExit()
 	{
-
 		hovering = false;
 		if(hoverHelper != null)
 			Destroy(hoverHelper.gameObject);
-
 	}
 
 	public static string hoverHelperText(List<InputManager.INPUT_CLASS> inputManagerList, Button aButton)
-	{
-		
+	{	
 		foreach(InputManager.INPUT_CLASS inputClass in inputManagerList)
 			if(aButton.tag.Equals(inputClass.Tag)) 
 				return "\b"+inputClass.Type+"\b:\n"+inputClass.Name+":\n"+inputClass.Input.ToString();
 		
 		return "No tag associated with this.";
-		
 	}
 
 	void Update()
 	{
-
 		if(hovering)
 		{
-
 			if(Input.mousePosition != mousePos)
 			{
-
 				hoverHelper.transform.position = new Vector3(Input.mousePosition.x+60f, 
 				                                             Input.mousePosition.y+25f, 
 				                                             Input.mousePosition.z+5f);
 				mousePos = hoverHelper.transform.position;
-
 			}
-
 		}
-
 	}
-
 }

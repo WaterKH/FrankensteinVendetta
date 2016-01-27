@@ -19,10 +19,8 @@ public class Keyboard {
 
 	public static void resetKeyboard()
 	{
-
 		foreach(Button key in AllKeys.allKeys)
-			key.GetComponent<Image>().color = whiteCol;
-		
+			key.GetComponent<Image>().color = whiteCol;	
 	}
 
 	//Initial call to make another one below
